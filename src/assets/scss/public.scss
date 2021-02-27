@@ -1,0 +1,86 @@
+$hover: #0e6aff;
+
+/**
+* 溢出省略号
+* @param {Number} 行数
+*/
+@mixin ellipsis($rowCount: 1) {
+  @if $rowCount <=1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $rowCount;
+    -webkit-box-orient: vertical;
+  }
+}
+
+// 图标容器样式
+@mixin chart-container {
+  border: 1px solid #e8ecef;
+  border-radius: 10px;
+  box-shadow: 0px 0px 13px 0px rgba(231, 236, 239, 0.1);
+  padding: 20px 0 10px;
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+    span {
+      font-size: 16px;
+      font-weight: bold;
+      color: #171725;
+    }
+    .sub-title {
+      font-weight: normal;
+      font-size: 14px;
+      color: #8590b3;
+    }
+    padding-bottom: 50px;
+  }
+}
+
+// 图标默认大小
+@mixin chartdiv {
+  height: 350px;
+  position: relative;
+  &::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: "";
+    width: 62px;
+    height: 20px;
+    background-color: #fff;
+  }
+  &:empty {
+    &::after {
+      width: 327px;
+      height: 193px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: url("/static/img/nodata.png") no-repeat center/ cover;
+    }
+  }
+}
+
+// 内容滚动区域
+@mixin scrollbar($h: 300px) {
+  max-height: $h;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    background-color: #e8ecef;
+    width: 4px;
+    background-clip: padding-box;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #c2c7d9;
+    border-radius: 2px;
+  }
+}

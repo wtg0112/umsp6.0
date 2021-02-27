@@ -1,0 +1,206 @@
+.xuanxiang {
+  display: flex;
+  align-items: center;
+  font-size: 0.14rem;
+  > span {
+    width: 0.65rem;
+    display: inline-block;
+    color: #92929D;
+  }
+  /deep/ .el-radio-group{
+    flex: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    span{
+      font-size: 0.14rem;
+      padding: 0.1rem 0.1rem;
+    }
+  }
+}
+/deep/ .el-radio-group {
+  .el-radio-button {
+    > .el-radio-button__inner {
+      color: #44444F;
+      background-color: white;
+      border-color: white;
+      -webkit-box-shadow: nono;
+      box-shadow: none;
+    }
+  }
+  .is-active {
+    > .el-radio-button__inner {
+      color:#8576FF;
+      transition: all 0.5;
+    }
+  }
+}
+/deep/ .el-radio-button:focus:not(.is-focus):not(:active):not(.is-disabled) {
+  box-shadow: none;
+}
+
+.Morebox {
+  color: #92929D;
+  box-sizing: border-box;
+  padding-bottom: 0px;
+  display: flex;
+  font-size: 0.14rem;
+  margin-top: 0.2rem;
+  > span {
+    height:0.4rem;
+    line-height: 0.4rem;
+    display: inline-block;
+    margin-right: 0.1rem;
+  }
+  > .Morebox_con {
+    flex: 1;
+    > .Morebox_con_input {
+      display: flex;
+      flex-wrap: wrap;
+      > .dialog_select_item {
+        width: 24%;
+        margin-bottom: 0.15rem;
+        display: flex;
+        align-items: center;
+        margin-right: 1%;
+        > div:nth-child(1) {
+          color: #8181a5;
+          // margin-right: 4%;
+        }
+        .el-input,
+        .el-select {
+          width: 100%;
+          display: inline-block;
+        }
+      }
+    }
+    > .Morebox_con_select {
+      display: flex;
+      flex-wrap: wrap;
+      > .dialog_select_item {
+        width: 3.5rem;
+        margin-bottom: 0.15rem;
+        display: flex;
+        align-items: center;
+        margin-right: 0.2rem;
+        /deep/ .el-input {
+          width: 100%;
+          >input{
+            font-size: 0.14rem;
+            height: 0.4rem;
+          }
+        }
+        /deep/ .el-select {
+          width: 100%;
+          >input{
+            font-size: 0.14rem;
+            height: 0.4rem;
+            
+          }
+          /deep/ .el-input__suffix{
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+    }
+    // 按钮
+    .queren {
+      justify-content: flex-start;
+      margin-top: 0.06rem;
+      >button:nth-child(1){
+        color: #8576FF;
+        background: #EDEBFF;
+        border: 1px solid #CCCCCC;
+      }
+      >button{
+        padding: 0.1rem 0.3rem;
+        margin: 0 0.04rem;
+        border-radius: 0.08rem;
+        cursor: pointer;
+        display: inline-block;
+        background: rgb(255, 255, 255);
+        border-radius: 0.11rem;
+        border: 1px solid rgba(236, 236, 242, 1);
+        color: #8181a5;
+        font-size: 0.15rem;
+        outline:none;
+        &:active{
+          // box-shadow: 0 5px #666;
+          color: white;
+          background: #8576FF;
+          opacity: 0.7;
+          transform: translateY(0.5px);
+        }
+      }
+    }
+  }
+}
+
+/* 分页器 */
+.paging {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.24rem;
+  padding-top: 0.5rem;
+  align-items: center;
+  /deep/ .el-pagination{
+    .el-pager{
+      .active{
+        background-color: #8576FF !important;
+        color: #FFF !important;
+      }
+      .number:hover{
+        color:#8576FF;
+      }
+    }
+  }
+   
+}
+.paging > span {
+  font-size: 0.15rem;
+  font-weight: 400;
+  color: rgba(32, 32, 32, 1);
+  line-height: 0.2rem;
+}
+/* 精确筛选 选中 */
+// 申请专业 学生城市 查询结果框字体样式
+/deep/ .sqzyPopper .el-scrollbar .el-autocomplete-suggestion li{
+    padding: 0 0.2rem;
+    margin: 0;
+    line-height: 0.34rem;
+    cursor: pointer;
+    font-size: 0.18rem;
+    list-style: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+//输入框和下拉框 选中颜色
+/deep/ .Morebox > div > div .el-input__inner {
+  color:#8576FF;
+  font-size: 0.15rem;
+  border-radius: 0.1rem;
+  &::-webkit-input-placeholder{
+    color: #44444F;
+  }
+}
+//下拉框 列表选项
+.mb_case{
+  /deep/ .el-autocomplete-suggestion li{
+    font-size: 0.15rem;
+    font-weight: 500;
+  }
+  /deep/.el-select-dropdown__item{
+    // color:#8576FF;
+    font-size: 0.15rem;
+    font-weight: 500;
+  }
+  /deep/.el-select-dropdown__item.selected{
+    color:#8576FF;
+    font-size: 0.15rem;
+    font-weight: 500;
+  }
+} 
+/deep/ .has-gutter .is-leaf {
+  background: rgba(245, 245, 250, 1);
+}

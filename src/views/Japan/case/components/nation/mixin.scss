@@ -1,0 +1,173 @@
+.xuanxiang {
+  display: flex;
+  align-items: center;
+  > span {
+    color: #92929D;
+  }
+}
+/deep/ .el-radio-group {
+  .el-radio-button {
+    > .el-radio-button__inner {
+      color: #44444F;
+      background-color: white;
+      border-color: white;
+      -webkit-box-shadow: nono;
+      box-shadow: none;
+    }
+  }
+  .is-active {
+    > .el-radio-button__inner {
+      color:#0062FF;
+      transition: all 0.5;
+    }
+  }
+}
+/deep/ .el-radio-button:focus:not(.is-focus):not(:active):not(.is-disabled) {
+  box-shadow: none;
+}
+
+.Morebox {
+  color: #92929D;
+  box-sizing: border-box;
+  padding-bottom: 0px;
+  display: flex;
+  font-size: 15px;
+  margin-top: 20px;
+  > span {
+    height: 40px;
+    line-height: 40px;
+    display: inline-block;
+    margin-right: 0.2rem;
+  }
+  > .Morebox_con {
+    flex: 1;
+    > .Morebox_con_input {
+      display: flex;
+      flex-wrap: wrap;
+      > .dialog_select_item {
+        width: 24%;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        margin-right: 1%;
+        > div:nth-child(1) {
+          color: #8181a5;
+          // margin-right: 4%;
+        }
+        .el-input,
+        .el-select {
+          width: 100%;
+          display: inline-block;
+        }
+      }
+    }
+    > .Morebox_con_select {
+      display: flex;
+      flex-wrap: wrap;
+      > .dialog_select_item {
+        width: 24%;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: 1%;
+        > div {
+          width: 100%;
+        }
+      }
+    }
+    // 按钮
+    .queren {
+      justify-content: flex-start;
+      >button:nth-child(1){
+        color: #5e81f4;
+        background: rgba(238, 242, 253, 1);
+      }
+      >button{
+        padding: 10px 30px;
+        margin: 0 4px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: inline-block;
+        background: rgb(255, 255, 255);
+        border-radius: 11px;
+        border: 1px solid rgba(236, 236, 242, 1);
+        color: #8181a5;
+        font-size: 15px;
+        outline:none;
+        &:hover{
+          color: white;
+          background: #1B51E5;
+          opacity: 0.8;
+        }
+
+        &:active{
+          // box-shadow: 0 5px #666;
+          color: white;
+          background: #1B51E5;
+          opacity: 0.7;
+          transform: translateY(0.5px);
+        }
+      }
+    }
+  }
+}
+
+.zhankai {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #c7c7d7;
+  margin: 0px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  .zhankai_btn {
+    padding: 6px 24px;
+    font-size: 15px;
+    box-sizing: border-box;
+  }
+}
+.zhankai:hover {
+  color: #5e81f4;
+}
+
+/* 分页器 */
+.paging {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 40px;
+  align-items: center;
+}
+.paging > span {
+  font-size: 15px;
+
+  font-weight: 400;
+  color: rgba(32, 32, 32, 1);
+  line-height: 20px;
+}
+/* 精确筛选 选中 */
+// 申请专业 学生城市 查询结果框字体样式
+/deep/ .sqzyPopper .el-scrollbar .el-autocomplete-suggestion li{
+    padding: 0 20px;
+    margin: 0;
+    line-height: 34px;
+    cursor: pointer;
+    font-size: 18px;
+    list-style: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+//输入框和下拉框 选中颜色
+/deep/ .Morebox > div > div .el-input__inner {
+  color:#0062ff;
+  font-size: 15px;
+  border-radius: 10px;
+  &::-webkit-input-placeholder{
+    color: #44444F;
+  }
+}
+
+/deep/ .has-gutter .is-leaf {
+  background: rgba(245, 245, 250, 1);
+}

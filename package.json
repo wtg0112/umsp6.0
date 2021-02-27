@@ -1,0 +1,54 @@
+{
+  "name": "hi-daas",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "dev": "yarn serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@amcharts/amcharts4": "^4.10.12",
+    "@amcharts/amcharts4-geodata": "^4.1.19",
+    "axios": "^0.21.0",
+    "core-js": "^3.6.5",
+    "echarts": "^4.9.0",
+    "element-ui": "^2.14.1",
+    "js-cookie": "^2.2.1",
+    "js-md5": "^0.7.3",
+    "vue": "^2.6.11",
+    "vue-clipboard2": "^0.3.1",
+    "vue-element-loading": "^1.1.6",
+    "vue-progress": "^0.2.1",
+    "vue-router": "^3.2.0",
+    "vue-seamless-scroll": "^1.1.21",
+    "vuex": "^3.4.0",
+    "wowjs": "^1.1.3"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-standard": "^5.1.2",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^4.12.0",
+    "prettier": "^1.19.1",
+    "sass-loader": "^8.0.2",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "DingDing": {
+    "QrAppId": "dingoautmaa9bpk9vnldvh",
+    "QrAppSecret": "CJTwp1LqYB9xLR-HhQ0brVLtoC7ul6Aa-pGJyPI_u3J37c8PyMR96Mfyi6PNpof8"
+  }
+}

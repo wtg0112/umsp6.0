@@ -48,26 +48,26 @@ service.interceptors.response.use(
       return dataAxios
     } else {
       switch (code) {
-        case 201:
-          // 登录失效||重新登录
-          var doms = document.getElementsByClassName('el-message')[0]
-          if (doms == undefined) {
-            Message.error({
-              message: dataAxios.msg
-            })
-          }
-          window.location.href = '#/login?source=' + cookies.get('source')
-          break
-        case 203:
-          // 登录失效||重新登录
-          var doms2 = document.getElementsByClassName('el-message')[0]
-          if (doms2 == undefined) {
-            Message.error({
-              message: dataAxios.msg
-            })
-          }
-          window.location.href = '#/login?source=' + cookies.get('source')
-          break
+        // case 201:
+        //   // 登录失效||重新登录
+        //   var doms = document.getElementsByClassName('el-message')[0]
+        //   if (doms == undefined) {
+        //     Message.error({
+        //       message: dataAxios.msg
+        //     })
+        //   }
+        //   window.location.href = '#/login?source=' + cookies.get('source')
+        //   break
+        // case 203:
+        //   // 登录失效||重新登录
+        //   var doms2 = document.getElementsByClassName('el-message')[0]
+        //   if (doms2 == undefined) {
+        //     Message.error({
+        //       message: dataAxios.msg
+        //     })
+        //   }
+        //   window.location.href = '#/login?source=' + cookies.get('source')
+        //   break
         default:
           // 其他错误
           Message.error({

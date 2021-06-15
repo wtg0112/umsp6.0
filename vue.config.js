@@ -8,7 +8,6 @@ module.exports = {
       errors: true
     },
     open: false, // 是否打开浏览器
-    host: 'lx.hi-daas.com',
     port: '80', // 代理断就
     https: false,
     hotOnly: true // 热更新

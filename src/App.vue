@@ -1,9 +1,37 @@
 <template>
   <div id="app">
-    <router-view />
+    <topHead />
+    <leftMenu :list="list" v-if="list[0].menuList" />
+    <div class="container">
+      <router-view />
+    </div>
   </div>
 </template>
-
+<script>
+import leftMenu from '@/components/leftMenu'
+import topHead from '@/components/topHead'
+export default {
+  components: {
+    leftMenu,
+    topHead
+  },
+  data() {
+    return {
+      list: [
+        {
+          tit: '国内发送',
+          menuList: []
+        }
+      ]
+    }
+  },
+  created() {
+    this.$router.options.routes.shift()
+    console.log(this.$router.options.routes)
+    this.list[0].menuList = this.$router.options.routes
+  }
+}
+</script>
 <style lang="scss">
 html,
 body {
@@ -21,5 +49,12 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
+}
+.container{
+  height: 100%;
+  height: 100%;
+  position: relative;
+  padding: 50px 0 0 200px;
+  box-sizing: border-box;
 }
 </style>

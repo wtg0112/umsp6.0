@@ -45,4 +45,14 @@ body {
 .el-breadcrumb {
   font-size: 16px;
 }
+.h2{
+  text-indent: 20px;
+  span{
+    font-size: 14px;
+    font-weight: normal;
+  }
+}
+.el-card{
+  margin-bottom: 10px;
+}
 </style>

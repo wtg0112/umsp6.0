@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2 class="h2">近7天查询</h2>
     <el-card class="box-card">
       <el-form
         ref="formData"
@@ -110,7 +111,6 @@
     <div class="table-container">
       <el-table
         ref="filterTable"
-        border
         :data="tableData.slice((currpage - 1) * pagesize, currpage * pagesize)"
       >
         <el-table-column
@@ -220,6 +220,46 @@ export default {
       pagesize: 10,
       currpage: 1,
       tableData: [
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-17',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-18',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
         {
           id: '001',
           sCodeTime: '2016-05-02',

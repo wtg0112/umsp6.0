@@ -15,17 +15,18 @@ export default {
     leftMenu,
     topHead
   },
-  data() {
+  data () {
     return {
       list: [
         {
-          tit: '国内发送',
+          tit: '国内短信',
+          icon: 'iconfont icon-duanxin4',
           menuList: []
         }
       ]
     }
   },
-  created() {
+  created () {
     this.$router.options.routes.shift()
     console.log(this.$router.options.routes)
     this.list[0].menuList = this.$router.options.routes

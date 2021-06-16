@@ -1,0 +1,389 @@
+
+
+//自定义照片墙
+.customUpload{
+    width: 220px;
+    height: 184.75px;
+    background: #f2f2f2;
+    float: left;
+    margin-left: 20px;
+    margin-bottom:20px;
+    .downBgCircle{
+      position: relative;
+      margin-top:55px;
+      margin-left:35%;
+      width:70px;
+      height:70px;
+      border-radius: 50%;
+      background: #fff;
+      img{
+        position: absolute;
+        top:13px;
+        left:14px;
+        z-index: 2;
+      }
+    }
+    .el-icon-warning::before{
+      margin-right: 4px;
+      margin-left:6px;
+    }
+}
+.fileupload-content{
+    width: 220px;
+    height:184.75px;
+    float: left;
+    margin-left: 20px;
+    margin-bottom:20px;
+  
+    img{
+      display: block;
+      margin:auto;
+      max-width:100%;
+      max-height:123.75px;
+    }
+    audio{
+      display: block;
+      margin:auto;
+      max-width:100%;
+      max-height:123.75px;
+      // margin: 47px auto;
+    }
+    video{
+      display: block;
+      margin:auto;
+      max-width:100%;
+      max-height:123.75px;
+    }
+}
+
+//查看弹框
+.preview{
+  width:280px;
+  height: 545px;
+  margin:0 auto;
+  background:url(../img/previewPhone.png) no-repeat;
+  background-size:100%;
+  overflow: hidden;
+  position: relative;
+  .scrollBar{
+    width:237px;
+    height:370px;
+    margin-top:130px;
+    margin-left:30px;
+    overflow: hidden;
+  .contentPhone{
+    overflow-y:scroll;
+    width:100%;
+    margin-top:5px;
+    padding-left:2px;
+    .titleModule{
+      width:100%;
+      height:25px ;
+      line-height: 25px;
+      padding-top: 5px;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom:10px;
+    }
+    img{
+      width:209px;
+    }
+    .textModule{
+       width:200px;
+      height:214px;
+      margin-top: 8px;
+      padding-left:5px;
+      font-size: 14px;
+    }
+   }
+  }
+}
+
+.searchStyle{
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  span{
+    font-size: 12px;
+    display: inline-block;
+  }
+  .el-input--prefix .el-input__inner{
+    padding-right:15px;
+  }
+}
+
+.positionBlock{
+    font-size: 14px;
+    z-index: 3;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding:0 10px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.operateBtn{
+  float: left;
+}
+.main-container,.main-containe1{
+    width:100%;
+    height: 100%;
+    background: #fff;
+    .el-dialog{
+      width:20%;
+      background: #fff;
+    }
+    .el-tabs__nav-wrap::after{
+      background: transparent;
+      height:0 !important
+    }
+    .el-tabs__header{
+      width:70%;
+    }
+    .rightOperates{
+      position: absolute;
+      top:12px;
+      right: 20px;
+      z-index:88;
+    }
+    .totalNum{
+      position: absolute;
+      top:17px;
+      left: 60%;
+      z-index:88;
+      font-size: 16px;
+    }
+    .centerDec{
+      width:40%;
+      position: absolute;
+      top:17px;
+      left:55%;
+      z-index:99;
+      font-size: 12px;
+      li{
+        float: left;
+        margin-right:8px;
+        img{
+          width:10px;
+          height: 10px;
+        }
+        span{
+          font-size: 12px;
+        }
+      }
+    }
+    .rightNum{
+      position: absolute;
+      top:17px;
+      right: 20px;
+      z-index:88;
+      font-size: 14px;
+
+    }
+
+    #rightsModule{
+       .el-card__body{
+      padding:0 20px!important;
+    }
+  }
+   
+    .topNav {
+        background-color: #fff;
+        text-align: left;
+        padding-left: 30px;
+        .el-input__inner{
+          margin-top:-2px;
+          margin-right:10px;
+        }
+        .el-tabs__nav-wrap{
+          height:60px
+        }
+        .el-tabs__nav-scroll{
+          height:60px;
+        }
+        .el-tabs__nav{
+          height:60px;
+        }
+        .el-tabs__item{
+          line-height:60px;
+          font-size:14px;
+        }
+        span{
+          font-size:14px;
+        }
+    }
+    .tlAddCard {
+      margin-top: 10px;
+          >div{
+        height: 270px;
+      }
+    }
+    .tlAddList {
+      margin-top:20px;
+      // width:285px;
+      // 线上嵌入样式
+      width:270px;
+      float: left;
+      margin-right:15px;
+    }
+    .el-col-5{
+      width:23%;
+      margin-right: 20px;
+      border:2px solid transparent;
+    }
+    .listsAdd {
+      position: relative;
+      // 线上嵌入
+      width:270px;
+      height:152px;
+      border-radius: 5px;
+      border:1px solid #efefef;
+      box-shadow: 2px 1px 2px 2px #efefef;
+      overflow: hidden;
+      float: left;
+      margin-right:20px;
+      margin-top: 20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      img{
+        display: block;
+        margin:auto;
+        max-width:100%;
+        max-height:152px;
+      }
+      video{
+        width:auto;
+        display: block;
+        margin: 0 auto;
+      }
+      audio{
+        width:100%;
+        margin: 56px auto;
+      }
+   
+    }
+  .choosed{
+      border:2px solid #02A7F0;
+      border-radius:5px;
+      cursor: pointer;
+  }
+
+    .tlAdd {
+      width:100%;
+      height: 270px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      overflow: hidden;
+      img{
+        height:100%;
+        margin:0 auto;
+      }
+      video{
+        width:100%;
+        height: 100%;
+      }
+      audio{
+        width:100%;
+        margin:56px auto;
+      }
+    }
+
+    .addlist {
+      width: 100%;
+      position:relative;
+      height:140px;
+    }
+    .cover {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index:999;
+    }
+    .btnBox {
+      width: 70%;
+      height: 60%;
+      display: flex;
+      flex-wrap: wrap;
+      /* flex-direction: column; */
+      align-items: center;
+      justify-content: center;
+    }
+    .addlist img {
+      height:100%;
+      display:block;
+      margin: 0 auto;
+    }
+    .titleText {
+      padding-top:8px;
+      padding-left:13px;
+      text-align: left;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      img{
+        width:8px;
+        height: 8px;
+        margin-right: 6px;
+        border-radius: 50%;
+      }
+      span{
+        font-size:10px;
+        margin-right: 10px;
+      }
+    }
+    .tplIdText{
+      margin-top:5px;
+      bottom: 0;
+        /* position: absolute; */
+      background-color:#FFFFFF;
+      width: 100%;
+      text-align: left;
+      font-size:12px;
+      font-family:Microsoft YaHei;
+      font-weight:400;
+      color:#02A7F0;
+      line-height:20px;
+      padding-left: 14px;
+    }
+    .coverBtn {
+      float: left;
+      background-color:#02A7F0;
+      color: #fff;
+      font-size: 12px;
+      padding: 6px 3px;
+      border-radius: 5px;
+      width: 54px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    .coverBtn .iconfont{
+      font-size: 10px;
+      margin-right:4px;
+    }
+  }
+
+  
+    .addBtn {
+      float: right;
+      right: 5px;
+      background-color: #189AE0;
+      border: 1px solid #189AE0;
+      position: absolute;
+    }
+    
+  
+  
+  

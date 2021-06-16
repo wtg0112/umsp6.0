@@ -4,14 +4,15 @@
       <el-radio-button :label="false">展开</el-radio-button>
       <el-radio-button :label="true">收起</el-radio-button>
     </el-radio-group> -->
+     <!-- default-active="1-4-1" -->
     <el-menu
-      default-active="1-4-1"
+      default-active="1"
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
     >
       <el-submenu v-for="(item, index) in list" :key="index" :index="(index + 1) + ''">
         <template slot="title">
-          <i class="el-icon-location"></i>
+          <i :class="item.icon" style="margin-right:10px"></i>
           <span slot="title">{{item.tit}}</span>
         </template>
         <router-link :to="{path: menu.path}"  v-for="(menu, menuList) in item.menuList" :key="menuList">
@@ -28,7 +29,7 @@ export default {
   props: [
     'list'
   ],
-  data() {
+  data () {
     return {
       isCollapse: false
     }
@@ -36,7 +37,7 @@ export default {
   methods: {
 
   },
-  mounted() {
+  mounted () {
     console.log(this.list)
   }
 }

@@ -4,7 +4,7 @@
       <el-container style="width: inherit">
         <el-main style="margin-bottom: 20px">
           <el-row :gutter="20" style="width: 100%">
-            <el-col :span="16" style="padding-top: 40px">
+            <el-col :span="14" style="padding-top: 20px">
               <div style="width: 100%" class="elec-form">
                 <el-form
                   :model="sendRuleForm"
@@ -23,233 +23,12 @@
                       ></el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="19">
-                    <el-form-item prop="moudleTitle" label="模板标题:">
-                      <el-input
-                        size="small"
-                        disabled
-                        v-model="sendRuleForm.moudleTitle"
-                      ></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="19">
-                    <el-form-item prop="moudleTitle" label="通道账号:">
-                      <el-input
-                        size="small"
-                        disabled
-                        v-model="sendRuleForm.accountUser"
-                      ></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="19">
-                    <el-form-item prop="numberImport" label="添加号码:">
-                      <el-radio-group
-                        v-model="sendRuleForm.numberImport"
-                        @change="selectChange"
-                      >
-                        <el-radio :label="1">手动添加</el-radio>
-                        <el-radio :label="2">批量导入</el-radio>
-                        <!-- <el-radio :label="3" disabled>通讯录导入</el-radio>  -->
-                      </el-radio-group>
-                    </el-form-item>
-                  </el-col>
-                  <!-- @input="phoneTotal($event)" -->
-                  <el-col
-                    :span="19"
-                    v-if="sendRuleForm.numberImport == '1'"
-                    class="textShowClass"
-                  >
-                    <el-form-item prop="inputNumber" key="inputNumber">
-                      <el-input
-                        type="textarea"
-                        style="width: 100%; height: 200px; position: relative"
-                        v-model.trim="sendRuleForm.inputNumber"
-                        placeholder="手动添加，多个号码使用英文“,”隔开，输入框号码数不超过200个"
-                      ></el-input>
-                      <!-- <span style="position:absolute;bottom:17px;right:7px;z-index:999;background:#fff;">{{phoneNum}}/200</span> -->
-                    </el-form-item>
-                  </el-col>
-                  <el-col
-                    :span="19"
-                    v-if="sendRuleForm.numberImport == '2'"
-                    class="form-item"
-                  >
-                    <el-form-item prop="importNumber" key="importNumber">
-                      <input
-                        readonly
-                        @blur="changeFile($event)"
-                        ref="phoneFile"
-                        style="
-                          width: 348px;
-                          float: left;
-                          border-top-left-radius: 5px;
-                          border-bottom-left-radius: 5px;
-                        "
-                        v-model="sendRuleForm.importNumber[0].name"
-                        id="applyLicense"
-                        type="text"
-                        placeholder="文件支持txt、xls、xlsx格式"
-                        autocomplete="off"
-                      />
-                      <input
-                        id="fileInput"
-                        type="file"
-                        name="file"
-                        accept=".xls,.xlsx,.txt"
-                        @change="fileChange($event)"
-                      />
-                      <label for="fileInput" class="file-btn">选择文件</label>
-                      <i
-                        class="iconfont icon-wenhao"
-                        style="
-                          margin-left: 10px;
-                          font-size: 18px;
-                          color: #02a7f0;
-                        "
-                        @click="
-                          promptShow == true
-                            ? (promptShow = false)
-                            : (promptShow = true)
-                        "
-                      ></i>
-                      <div
-                        v-show="promptShow"
-                        style="
-                          width: 94.5%;
-                          height: 120px;
-                          background: #eff5fb;
-                          border: 2px solid #eee;
-                          padding: 10px;
-                          line-height: 24px;
-                          border-radius: 10px;
-                        "
-                      >
-                        <p>
-                          <i
-                            class="iconfont icon-zhuyi"
-                            style="
-                              font-size: 14px;
-                              color: #02a7f0;
-                              margin-left: 3px;
-                            "
-                          ></i
-                          ><span
-                            style="
-                              font-size: 14px;
-                              color: #000;
-                              padding-left: 8px;
-                              font-weight: 700;
-                            "
-                            >格式说明</span
-                          >
-                        </p>
-                        <p style="padding-left: 24px">文件最大支持10MB</p>
-                        <p style="padding-left: 24px">
-                          文件支持txt、xls、xlsx格式
-                        </p>
-                        <p style="padding-left: 24px">
-                          当文件是txt格式，输入时需手动换行，每行一个手机号
-                        </p>
-                      </div>
-                      <p
-                        style="
-                          font-size: 12px;
-                          color: #f56c6c;
-                          margin-top: -14px;
-                        "
-                        v-show="selectShow"
-                      >
-                        请选择文件！
-                      </p>
-                    </el-form-item>
-                  </el-col>
-                  <el-col
-                    :span="19"
-                    v-if="sendRuleForm.numberImport == '3'"
-                    class="form-item"
-                  >
-                    <el-form-item prop="importNumber1">
-                      <input
-                        readonly
-                        style="
-                          width: 268px;
-                          float: left;
-                          border-top-left-radius: 5px;
-                          border-bottom-left-radius: 5px;
-                        "
-                        v-model="bookNum[0].name"
-                        id="applyLicense1"
-                        type="text"
-                        placeholder="尚未选择联系人"
-                        autocomplete="off"
-                      />
-                      <input
-                        id="fileInput"
-                        type="file"
-                        name="file"
-                        accept=".xls,.xlsx,.txt"
-                        @change="bookfileChange($event)"
-                      />
-                      <label for="fileInput" class="file-btn">通讯录选择</label>
-                      <i
-                        class="iconfont icon-wenhao"
-                        style="
-                          margin-left: 10px;
-                          font-size: 18px;
-                          color: #02a7f0;
-                        "
-                        @click="
-                          promptShow == true
-                            ? (promptShow = false)
-                            : (promptShow = true)
-                        "
-                      ></i>
-                      <!-- <img  v-show="promptShow" src="../../../assets/promptNumber.png"  style="margin:10px 0" alt=""> -->
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="19" v-if="sendRuleForm.numberImport == '3'">
-                    <el-checkbox
-                      v-model="isBookRepeat"
-                      style="float: left; margin-left: 23%"
-                      >号码去重</el-checkbox
-                    >
-                  </el-col>
-                  <el-col :span="19">
-                    <el-form-item prop="sendTime" label="发送时间:">
-                      <el-radio-group v-model="sendRuleForm.sendTime">
-                        <el-radio :label="1">立即发送</el-radio>
-                        <!-- <el-radio :label="2" disabled>定时发送</el-radio> -->
-                      </el-radio-group>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="19" v-if="sendRuleForm.sendTime == '2'">
-                    <el-form-item prop="selectTime">
-                      <el-date-picker
-                        size="small"
-                        v-model.trim="sendRuleForm.selectTime"
-                        type="datetime"
-                        value-format="yyyy-MM-dd HH:mm:ss"
-                        placeholder="请选择发送时间"
-                      ></el-date-picker>
-                    </el-form-item>
-                  </el-col>
-                  <!-- <el-col :span="19" v-else>
-                      <el-form-item label="通讯录导入" prop="description">
-                            <el-input
-                                type="textarea"
-                                maxlength="100"
-                                style="width:48%;"
-                                v-model="saveForm.description"
-                                placeholder="请输入模板介绍,最多可输入100字"
-                            ></el-input>
-                            </el-form-item>
-                  </el-col> -->
                 </el-form>
               </div>
             </el-col>
             <el-col
               :span="8"
-              style="padding-top: 30px; border-right: 2px solid #d2d2d2"
+              style="padding-top: 20px;"
             >
               <div class="preview" style="height: 600px">
                 <div class="scrollBar">
@@ -326,10 +105,9 @@
                 <el-button
                   type="primary"
                   size="small"
-                  @click="toAudit(sendRuleForm.numberImport == '1' ? 0 : 1)"
-                  >确认提交</el-button
+                  >预览</el-button
                 >
-                <el-button size="small" @click="$router.go(-1)">返回</el-button>
+                <el-button size="small" >创建</el-button>
               </div>
             </el-col>
           </el-row>

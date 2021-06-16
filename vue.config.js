@@ -1,6 +1,7 @@
 const path = require('path')
 const resolve = dir => path.join(__dirname, dir)
 module.exports = {
+  lintOnSave: false,
   devServer: {
     disableHostCheck: true,
     overlay: { // 让浏览器 overlay 同时显示警告和错误

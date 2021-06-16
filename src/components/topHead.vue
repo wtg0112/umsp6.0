@@ -1,15 +1,11 @@
 <template>
-  <div class="top">
-
-  </div>
+  <div class="top"></div>
 </template>
 <script>
-export default {
-
-}
+export default {}
 </script>
 <style lang="scss" scoped>
-.top{
+.top {
   width: 100%;
   height: 50px;
   position: fixed;

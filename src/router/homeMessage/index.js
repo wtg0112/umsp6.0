@@ -12,8 +12,8 @@ const homeMessage = [
         meta: { title: '快速发送' }
       },
       {
-        path: '/homeMessage/fileSend',
-        name: 'fileSend',
+        path: 'fileSend',
+        name: '文件发送',
         component: () => import('@/views/homeMessage/fileSend'),
         meta: { title: '文件发送' }
       },
@@ -24,11 +24,35 @@ const homeMessage = [
         meta: { title: '近7天查询' }
       },
       {
-        path: '/homeMessage/upSearch',
-        name: 'upSearch',
+        path: 'upSearch',
+        name: '上行查询',
         component: () => import('@/views/homeMessage/upSearch'),
         meta: { title: '上行查询' }
       },
+      {
+        path: 'errorSearch',
+        name: '异常查询',
+        component: () => import('@/views/homeMessage/errorSearch'),
+        meta: { title: '异常查询' }
+      },
+      {
+        path: 'accessStatistic',
+        name: '按通道统计',
+        component: () => import('@/views/homeMessage/accessStatistic'),
+        meta: { title: '按通道统计' }
+      },
+      {
+        path: 'channelStatistic',
+        name: '按渠道统计',
+        component: () => import('@/views/homeMessage/channelStatistic'),
+        meta: { title: '按渠道统计' }
+      },
+      {
+        path: 'accountRun',
+        name: '对账重跑',
+        component: () => import('@/views/homeMessage/accountRun'),
+        meta: { title: '对账重跑' }
+      }
     ]
   }
 ]

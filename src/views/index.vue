@@ -3,7 +3,7 @@
     <topHead />
     <leftMenu :list="list" v-if="list[0].menuList" />
     <div class="container">
-      <el-row style="margin: 10px 0;" :gutter="20">
+      <el-row style="margin: 10px 0" :gutter="20">
         <el-col :span="24">
           <!-- 面包屑 -->
           <div class="breadcrumb">
@@ -24,19 +24,20 @@ export default {
   components: {
     leftMenu,
     topHead,
-    breadMenu
+    breadMenu,
   },
   data() {
     return {
       list: [
         {
           tit: '国内发送',
-          menuList: [...homeMessage[0].children]
-        }
-      ]
+          icon: 'iconfont icon-duanxin4',
+          menuList: [...homeMessage[0].children],
+        },
+      ],
     }
   },
-  created() {}
+  created() {},
 }
 </script>
 <style lang="scss" scoped>

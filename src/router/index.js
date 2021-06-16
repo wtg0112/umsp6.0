@@ -8,9 +8,17 @@ const routes = [
     path: '/',
     name: 'index',
     component: () => import('@/views/index.vue'),
-    meta: { title: '首页' }
-  },
-  ...homeMessage
+    redirect: '/home',
+    children: [
+      {
+        path: '/home',
+        name: '首页',
+        component: () => import('@/views/home.vue'),
+        meta: { title: '首页' }
+      },
+      ...homeMessage
+    ]
+  }
 ]
 
 const router = new VueRouter({

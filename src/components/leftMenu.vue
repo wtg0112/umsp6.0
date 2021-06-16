@@ -15,7 +15,7 @@
           <i :class="item.icon" style="margin-right:10px"></i>
           <span slot="title">{{item.tit}}</span>
         </template>
-        <router-link :to="{path: menu.path}"  v-for="(menu, menuList) in item.menuList" :key="menuList">
+        <router-link :to="{name: menu.name}"  v-for="(menu, menuList) in item.menuList" :key="menuList">
           <el-menu-item>
             {{menu.meta.title}}
           </el-menu-item>
@@ -37,8 +37,7 @@ export default {
   methods: {
 
   },
-  mounted () {
-    console.log(this.list)
+  mounted() {
   }
 }
 </script>
@@ -54,7 +53,8 @@ export default {
   box-sizing: border-box;
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
-    min-height: 400px;
+    height: 100%;
+    box-shadow: 0 4px 32px 0 rgba(0, 0, 0, .1);
   }
 }
 a{

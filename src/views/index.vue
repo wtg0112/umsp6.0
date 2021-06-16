@@ -1,15 +1,50 @@
 <template>
-  <div>123</div>
+  <div>
+    <topHead />
+    <leftMenu :list="list" v-if="list[0].menuList" />
+    <div class="container">
+      <el-row style="margin: 10px 0;" :gutter="20">
+        <el-col :span="24">
+          <!-- 面包屑 -->
+          <div class="breadcrumb">
+            <breadMenu />
+          </div>
+          <router-view />
+        </el-col>
+      </el-row>
+    </div>
+  </div>
 </template>
 <script>
+import leftMenu from '@/components/leftMenu'
+import breadMenu from '@/components/breadcrumb'
+import topHead from '@/components/topHead'
+import homeMessage from '@/router/homeMessage'
 export default {
+  components: {
+    leftMenu,
+    topHead,
+    breadMenu
+  },
   data() {
     return {
-
+      list: [
+        {
+          tit: '国内发送',
+          menuList: [...homeMessage[0].children]
+        }
+      ]
     }
-  }
+  },
+  created() {}
 }
 </script>
-<style lang="less" scoped>
-
+<style lang="scss" scoped>
+.container {
+  height: 100%;
+  height: 100%;
+  position: relative;
+  padding: 50px 0 0 200px;
+  box-sizing: border-box;
+}
 </style>

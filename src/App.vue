@@ -44,8 +44,9 @@ body {
 .table-container {
   margin-top: 20px;
 }
-.el-breadcrumb {
+.breadcrumb {
   font-size: 16px;
+  box-sizing: border-box;
 }
 .h2 {
   text-indent: 20px;

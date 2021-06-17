@@ -10,7 +10,7 @@
         <el-row :gutter="20">
           <el-col :span="14">
             <el-row :gutter="20">
-              <el-col :span="12">
+              <el-col :span="16">
                 <el-form-item
                   prop="taskName"
                   label="任务名称"
@@ -21,6 +21,7 @@
                   }"
                 >
                   <el-input
+                    size="small"
                     v-model="formData.taskName"
                     placeholder="任务名称"
                   ></el-input>
@@ -28,7 +29,7 @@
               </el-col>
             </el-row>
             <el-row :gutter="20">
-              <el-col :span="12">
+              <el-col :span="16">
                 <el-form-item prop="qudao" label="选择渠道">
                   <el-select v-model="formData.qudao">
                     <el-option
@@ -36,6 +37,7 @@
                       :key="item.value"
                       :label="item.label"
                       :value="item.value"
+                      size="small"
                     >
                     </el-option>
                   </el-select>
@@ -43,9 +45,9 @@
               </el-col>
             </el-row>
             <el-row :gutter="20">
-              <el-col :span="12">
+              <el-col :span="16">
                 <el-form-item prop="classify" label="信息分类">
-                  <el-select v-model="formData.classify">
+                  <el-select v-model="formData.classify" size="small">
                     <el-option
                       v-for="item in options"
                       :key="item.value"
@@ -58,9 +60,9 @@
               </el-col>
             </el-row>
             <el-row :gutter="20">
-              <el-col :span="12">
+              <el-col :span="16">
                 <el-form-item prop="sign" label="使用签名">
-                  <el-select v-model="formData.sign" disabled>
+                  <el-select v-model="formData.sign" disabled size="small">
                     <el-option
                       v-for="item in options"
                       :key="item.value"
@@ -73,13 +75,14 @@
               </el-col>
             </el-row>
             <el-row :gutter="20">
-              <el-col :span="12">
+              <el-col :span="16">
                 <el-form-item prop="search" label="搜索类型">
                   <el-select
                     v-model="formData.search"
                     clearable
                     placeholder="请选择..."
                     @change="showDialog"
+                    size="small"
                   >
                     <el-option
                       v-for="item in mailList"
@@ -100,6 +103,7 @@
                     :rows="4"
                     placeholder="手机号码"
                     v-model="formData.phone"
+                    size="small"
                   >
                   </el-input>
                 </el-form-item>
@@ -130,15 +134,39 @@
                     placeholder="发送内容"
                     v-model="formData.content"
                     @input="contentInput"
+                    size="small"
                   >
                   </el-input>
                 </el-form-item>
               </el-col>
             </el-row>
+            <el-row :gutter="20">
+              <el-col :span="16">
+                <el-form-item prop="content" label="发送时间">
+                  <el-radio-group v-model="formData.sendType">
+                    <el-radio :label="1">最大速度</el-radio>
+                    <el-radio :label="2">匀速发送</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <div style="padding-left: 50px;">
+              <el-button size="small" type="warning">预览</el-button>
+              <el-button size="small" type="primary">发送</el-button>
+              <span style="display: inline-block; margin-left: 20px;"
+                >允许的发送时间:00:00---23:59</span
+              >
+            </div>
           </el-col>
           <el-col :span="10">
             <div class="phone">
-              <div class="watchCotnentPhone">{{formData.content !== '' ? formData.sign + formData.content : '请输入内容'}}</div>
+              <div class="watchCotnentPhone">
+                {{
+                  formData.content !== ''
+                    ? formData.sign + formData.content
+                    : '请输入内容'
+                }}
+              </div>
             </div>
             <!-- <el-row :gutter="20">
               <el-col :span="16">
@@ -153,10 +181,16 @@
       :title="formData.search === '0' ? '公共通讯录' : '个人通讯录'"
       :visible.sync="mailDialog"
     >
-      <span>这是一段信息</span>
+      <el-tree
+        :data="treeList"
+        :props="defaultProps"
+        @node-click="handleNodeClick"
+      ></el-tree>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="mailDialog = false">取 消</el-button>
-        <el-button type="primary" @click="mailDialog = false">确 定</el-button>
+        <el-button @click="mailDialog = false" size="small">关 闭</el-button>
+        <el-button type="primary" @click="mailDialog = false" size="small"
+          >提 交</el-button
+        >
       </span>
     </el-dialog>
     <el-dialog title="精确搜索" :visible.sync="searchDialog">
@@ -244,7 +278,9 @@
       </el-card>
       <span slot="footer" class="dialog-footer">
         <el-button @click="searchDialog = false">取 消</el-button>
-        <el-button type="primary" @click="searchDialog = false">确 定</el-button>
+        <el-button type="primary" @click="searchDialog = false"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
   </div>
@@ -264,7 +300,8 @@ export default {
         classify: '',
         sign: '【中国农业银行】',
         search: '',
-        content: ''
+        content: '',
+        sendType: 1
       },
       searchFormData: {
         sel: '0'
@@ -288,7 +325,7 @@ export default {
           label: '蚵仔煎'
         }
       ],
-      sign:[
+      sign: [
         {
           value: '【中国农业银行】',
           label: '【中国农业银行】'
@@ -318,6 +355,255 @@ export default {
           label: '个人组'
         }
       ],
+      publicList: [
+        {
+          groupId: 'da004ceedb000005',
+          pgroupId: '1000036250',
+          name: '2020年4月7日14',
+          addrId: '',
+          job: '',
+          state: 'closed',
+          opt: '',
+          opt2: '',
+          mobile: '',
+          grade: '-1',
+          opt1: "<a style='cursor:pointer;color:red'> 删除 </a>",
+          birthday: null,
+          isLinkModel: null,
+          memo: '',
+          checked: 'false',
+          chkDisabled: 'false',
+          open: false,
+          parent: true
+        },
+        {
+          groupId: 'fa00444964300007',
+          pgroupId: 'da004ceedb000005',
+          name: 'hello',
+          addrId: '',
+          job: '',
+          state: 'closed',
+          opt: '',
+          opt2: '',
+          mobile: '',
+          grade: '-1',
+          opt1: "<a style='cursor:pointer;color:red'> 删除 </a>",
+          birthday: null,
+          isLinkModel: null,
+          memo: '',
+          checked: 'false',
+          chkDisabled: 'false',
+          open: false,
+          parent: false
+        },
+        {
+          groupId: 'da006c2a2f600016',
+          pgroupId: '1000036250',
+          name: '333',
+          addrId: '',
+          job: '',
+          state: 'closed',
+          opt: '',
+          opt2: '',
+          mobile: '',
+          grade: '-1',
+          opt1: "<a style='cursor:pointer;color:red'> 删除 </a>",
+          birthday: null,
+          isLinkModel: null,
+          memo: '',
+          checked: 'false',
+          chkDisabled: 'false',
+          open: false,
+          parent: false
+        },
+        {
+          groupId: '1000036250',
+          pgroupId: '',
+          name: '公共通讯录',
+          addrId: '',
+          job: '',
+          state: 'closed',
+          opt: '',
+          opt2: '',
+          mobile: '',
+          grade: '-1',
+          opt1: "<a style='cursor:pointer;color:red'> 删除 </a>",
+          birthday: null,
+          isLinkModel: null,
+          memo: '',
+          checked: 'false',
+          chkDisabled: 'true',
+          open: false,
+          parent: true
+        }
+      ],
+      personalList: [
+        {
+          groupId: '100610',
+          pgroupId: '1',
+          name: 'a',
+          addrId: '',
+          job: '',
+          state: 'closed',
+          opt: '',
+          opt2: '',
+          mobile: '',
+          grade: '-1',
+          opt1: "<a style='cursor:pointer;color:red'> 删除 </a>",
+          birthday: null,
+          isLinkModel: null,
+          memo: '',
+          checked: 'false',
+          chkDisabled: 'false',
+          open: false,
+          parent: true
+        },
+        {
+          groupId: 'da006c2a4ba0001d',
+          pgroupId: '100610',
+          name: '111',
+          addrId: '',
+          job: '',
+          state: 'closed',
+          opt: '',
+          opt2: '',
+          mobile: '',
+          grade: '-1',
+          opt1: "<a style='cursor:pointer;color:red'> 删除 </a>",
+          birthday: null,
+          isLinkModel: null,
+          memo: '',
+          checked: 'false',
+          chkDisabled: 'false',
+          open: false,
+          parent: false
+        },
+        {
+          groupId: 'da006d10bd000004',
+          pgroupId: '100610',
+          name: '23456',
+          addrId: '',
+          job: '',
+          state: 'closed',
+          opt: '',
+          opt2: '',
+          mobile: '',
+          grade: '-1',
+          opt1: "<a style='cursor:pointer;color:red'> 删除 </a>",
+          birthday: null,
+          isLinkModel: null,
+          memo: '',
+          checked: 'false',
+          chkDisabled: 'false',
+          open: false,
+          parent: false
+        },
+        {
+          groupId: 'da006d10be400008',
+          pgroupId: '100610',
+          name: 'bbbbbbbb',
+          addrId: '',
+          job: '',
+          state: 'closed',
+          opt: '',
+          opt2: '',
+          mobile: '',
+          grade: '-1',
+          opt1: "<a style='cursor:pointer;color:red'> 删除 </a>",
+          birthday: null,
+          isLinkModel: null,
+          memo: '',
+          checked: 'false',
+          chkDisabled: 'false',
+          open: false,
+          parent: false
+        },
+        {
+          groupId: 'da004fb08c200003',
+          pgroupId: '1',
+          name: 'b',
+          addrId: '',
+          job: '',
+          state: 'closed',
+          opt: '',
+          opt2: '',
+          mobile: '',
+          grade: '-1',
+          opt1: "<a style='cursor:pointer;color:red'> 删除 </a>",
+          birthday: null,
+          isLinkModel: null,
+          memo: '',
+          checked: 'false',
+          chkDisabled: 'false',
+          open: false,
+          parent: true
+        },
+        {
+          groupId: 'da006c2ae6100007',
+          pgroupId: 'da004fb08c200003',
+          name: '123',
+          addrId: '',
+          job: '',
+          state: 'closed',
+          opt: '',
+          opt2: '',
+          mobile: '',
+          grade: '-1',
+          opt1: "<a style='cursor:pointer;color:red'> 删除 </a>",
+          birthday: null,
+          isLinkModel: null,
+          memo: '',
+          checked: 'false',
+          chkDisabled: 'false',
+          open: false,
+          parent: false
+        },
+        {
+          groupId: 'da004fb1d3a0000b',
+          pgroupId: '1',
+          name: 'cccccc',
+          addrId: '',
+          job: '',
+          state: 'closed',
+          opt: '',
+          opt2: '',
+          mobile: '',
+          grade: '-1',
+          opt1: "<a style='cursor:pointer;color:red'> 删除 </a>",
+          birthday: null,
+          isLinkModel: null,
+          memo: '',
+          checked: 'false',
+          chkDisabled: 'false',
+          open: false,
+          parent: false
+        },
+        {
+          groupId: '1',
+          pgroupId: '',
+          name: '个人通讯录',
+          addrId: '',
+          job: '',
+          state: 'closed',
+          opt: '',
+          opt2: '',
+          mobile: '',
+          grade: '-1',
+          opt1: "<a style='cursor:pointer;color:red'> 删除 </a>",
+          birthday: null,
+          isLinkModel: null,
+          memo: '',
+          checked: 'false',
+          chkDisabled: 'true',
+          open: false,
+          parent: true
+        }
+      ],
+      treeList: [],
+      defaultProps: {
+        children: 'children',
+        label: 'name'
+      }
     }
   },
   methods: {
@@ -326,6 +612,12 @@ export default {
       if (this.formData.search === '2') {
         this.searchDialog = true
       } else if (this.formData.search === '0' || this.formData.search === '1') {
+        this.treeList = []
+        if(this.formData.search === '0') {
+          this.treeList = this.handleTree(this.publicList)
+        } else if(this.formData.search === '1') {
+          this.treeList = this.handleTree(this.personalList)
+        }
         this.mailDialog = true
       }
     },
@@ -338,14 +630,32 @@ export default {
     },
     // 内容框输入
     contentInput(val) {
-      if(val.length !== 0) {
+      if (val.length !== 0) {
         this.word = val.length + this.formData.sign.length
       } else {
         this.word = 0
       }
       console.log(val)
-    }
-  }
+    },
+    // 通讯录树图click
+    handleNodeClick(data) {
+      console.log(data)
+    },
+    handleTree(arr) {
+      let cloneData = JSON.parse(JSON.stringify(arr)) // 对源数据深度克隆
+      return cloneData.filter((father) => {
+        let branchArr = cloneData.filter(
+          (child) => father.groupId == child.pgroupId
+        ) //返回每一项的子级数组
+        branchArr.length > 0 ? (father.children = branchArr) : '' //如果存在子级，则给父级添加一个children属性，并赋值
+        return father.pgroupId == 0 //返回第一层
+      })
+    },
+  },
+  mounted() {
+    console.log(this.publicList)
+    console.log(this.handleTree(this.publicList))
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -356,29 +666,29 @@ export default {
 .fastSend /deep/ .el-dialog {
   width: 60%;
 }
-.phone{
-    border: 1px solid #f7f7f7;
-    width: 310px;
-    height: 600px;
-    position: relative;
-    display: block;
-    background: url('../../assets/img/previewPhone.png') no-repeat center;
-    background-size: cover;
-    .watchCotnentPhone{
-      font-family: Arial;
-      background-color: #e9e8ed;
-      border-radius: 5px;
-      max-width: 200px;
-      width: auto;
-      max-height: 208px;
-      padding-left: 5px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      padding-right: 5px;
-      word-break: break-all;
-      margin-top: 140px;
-      margin-left: 35px;
-      overflow: auto;
-    }
+.phone {
+  border: 1px solid #f7f7f7;
+  width: 310px;
+  height: 600px;
+  position: relative;
+  display: block;
+  background: url('../../assets/img/previewPhone.png') no-repeat center;
+  background-size: cover;
+  .watchCotnentPhone {
+    font-family: Arial;
+    background-color: #e9e8ed;
+    border-radius: 5px;
+    max-width: 200px;
+    width: auto;
+    max-height: 208px;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    word-break: break-all;
+    margin-top: 140px;
+    margin-left: 35px;
+    overflow: auto;
+  }
 }
 </style>

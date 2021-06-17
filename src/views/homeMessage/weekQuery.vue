@@ -13,12 +13,13 @@
               <el-input
                 v-model="formData.phone"
                 placeholder="手机号"
+                size="small"
               ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item prop="qudao" label="渠道名称">
-              <el-select v-model="formData.qudao">
+              <el-select v-model="formData.qudao" size="small">
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -31,7 +32,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item prop="user" label="用户">
-              <el-select v-model="formData.user">
+              <el-select v-model="formData.user" size="small">
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -44,14 +45,14 @@
           </el-col>
           <el-col :span="6">
             <el-form-item prop="pici" label="批次号">
-              <el-input v-model="formData.pici" placeholder="批次号"></el-input>
+              <el-input v-model="formData.pici" placeholder="批次号" size="small"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="6">
             <el-form-item prop="sCode" label="状态报告">
-              <el-select v-model="formData.sCode">
+              <el-select v-model="formData.sCode" size="small">
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -64,7 +65,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item prop="eCode" label="提交状态">
-              <el-select v-model="formData.eCode">
+              <el-select v-model="formData.eCode" size="small">
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -84,6 +85,7 @@
                 align="right"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 :picker-options="pickerOptions"
+                size="small"
               >
               </el-date-picker>
             </el-form-item>
@@ -97,16 +99,15 @@
                 align="right"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 :picker-options="pickerOptions"
+                size="small"
               >
               </el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-button type="primary">查询</el-button>
-        <el-button type="primary">导出表格（全部）</el-button>
-        <span>
-          (开始日期与结束日期，在同一个月，且包含今天和前六天请到近7天查询)</span
-        >
+        <el-button type="primary" size="small">查询</el-button>
+        <el-button type="primary" size="small">导出表格（全部）</el-button>
+        <span> (开始时间和结束时间在最近7天,请加入手机号精准查询)</span>
       </el-form>
     </el-card>
     <div class="table-container">

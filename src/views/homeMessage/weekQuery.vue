@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2 class="h2">近7天查询</h2>
     <el-card class="box-card">
       <el-form
         ref="formData"
@@ -104,60 +105,50 @@
         </el-row>
         <el-button type="primary">查询</el-button>
         <el-button type="primary">导出表格（全部）</el-button>
-        <span> (开始日期与结束日期，在同一个月，且包含今天和前六天请到近7天查询)</span>
+        <span>
+          (开始日期与结束日期，在同一个月，且包含今天和前六天请到近7天查询)</span
+        >
       </el-form>
     </el-card>
     <div class="table-container">
-      <el-table
-        ref="filterTable"
-        border
-        :data="tableData.slice((currpage - 1) * pagesize, currpage * pagesize)"
-      >
-        <el-table-column
-          prop="account"
-          label="用户"
-        ></el-table-column>
-        <el-table-column
-          prop="channel"
-          label="渠道名称"
-        ></el-table-column>
-        <el-table-column
-          prop="classify"
-          label="信息分类"
-        ></el-table-column>
-        <el-table-column
-          prop="number"
-          label="号码"
-        ></el-table-column>
-        <el-table-column
-          prop="startTime"
-          label="短信发送时间"
-          sortable
-          column-key="date"
+      <el-card class="box-card">
+        <el-table
+          ref="filterTable"
+          :data="
+            tableData.slice((currpage - 1) * pagesize, currpage * pagesize)
+          "
         >
-        </el-table-column>
-        <el-table-column
-          prop="sCodeTime"
-          label="状态报告时间"
-          sortable
-          column-key="date"
+          <el-table-column prop="account" label="用户"></el-table-column>
+          <el-table-column prop="channel" label="渠道名称"></el-table-column>
+          <el-table-column prop="classify" label="信息分类"></el-table-column>
+          <el-table-column prop="number" label="号码"></el-table-column>
+          <el-table-column
+            prop="startTime"
+            label="短信发送时间"
+            sortable
+            column-key="date"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="sCodeTime"
+            label="状态报告时间"
+            sortable
+            column-key="date"
+          >
+          </el-table-column>
+          <el-table-column prop="content" label="内容"></el-table-column>
+        </el-table>
+        <el-pagination
+          background
+          layout="prev, pager, next, sizes, total, jumper"
+          :page-sizes="[5, 10, 15, 20]"
+          :page-size="pagesize"
+          :total="this.tableData.length"
+          @current-change="handleCurrentChange"
+          @size-change="handleSizeChange"
         >
-        </el-table-column>
-        <el-table-column
-          prop="content"
-          label="内容"
-        ></el-table-column>
-      </el-table>
-      <el-pagination
-        background
-        layout="prev, pager, next, sizes, total, jumper"
-        :page-sizes="[5, 10, 15, 20]"
-        :page-size="pagesize"
-        :total="this.tableData.length"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      >
-      </el-pagination>
+        </el-pagination>
+      </el-card>
     </div>
   </div>
 </template>
@@ -220,6 +211,46 @@ export default {
       pagesize: 10,
       currpage: 1,
       tableData: [
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-17',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-18',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
         {
           id: '001',
           sCodeTime: '2016-05-02',

@@ -85,7 +85,7 @@
                                  <p style="padding-left:24px;">文件支持txt、xls、xlsx格式</p>
                                  <p style="padding-left:24px">当文件是txt格式，输入时需手动换行，每行一个手机号</p>
                               </div> -->
-                                <img style="width:75%;margin:10px;"v-show="promptShow"   src="../../assets/img/prompt4.png" alt="">
+                                <img style="width:75%;margin:10px;" v-show="promptShow"  src="../../assets/img/prompt4.png" alt="">
                               <p style="font-size:12px;color:#F56C6C;margin-top:-14px" v-show="selectShow">请选择文件！</p>
                         </el-form-item>
                   </el-col>

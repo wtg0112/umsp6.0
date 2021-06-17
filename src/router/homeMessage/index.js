@@ -9,13 +9,15 @@ const homeMessage = [
         path: 'fastSend',
         name: '快速发送',
         component: () => import('@/views/homeMessage/fastSend'),
-        meta: { title: '快速发送' }
+        meta: { title: '快速发送' },
+        tips:'最多1000个手机号'
       },
       {
         path: 'fileSend',
         name: '文件发送',
         component: () => import('@/views/homeMessage/fileSend'),
-        meta: { title: '文件发送' }
+        meta: { title: '文件发送' },
+        tips:'建议：任务名称不能相同'
       },
       {
         path: 'weekQuery',

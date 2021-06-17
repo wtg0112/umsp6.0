@@ -6,15 +6,8 @@
         :key="index"
         v-show="index === $route.matched.length - 1 && item.name"
       >
-        <i
-          :class="index == 2 ? 'iconfont icon-V' : ''"
-          style="font-size: 15px; margin-right: 6px"
-        ></i>
-        <template v-if="item.path !== '/home'">
-          {{ $route.matched[1].name }}
-          <span> > </span>
-        </template>
-        <span>{{ item.name }}</span>
+        <span style="font-size:18px;font-weight:700;color:#555">{{ item.name }}</span>
+        <!-- <span v-if="item.tips" style="font-size:14px;color:#555">({{item.tips}})</span> -->
       </el-breadcrumb-item>
     </el-breadcrumb>
   </div>

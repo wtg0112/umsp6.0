@@ -9,6 +9,10 @@
           <div class="breadcrumb">
             <breadMenu />
           </div>
+          <!-- 标题 -->
+          <div class="breadcrumb" style="margin-bottom:0px;box-shadow:none;border-radius:0px;border-bottom:2px solid #eee">
+             <topTitle/>
+          </div>
           <router-view />
         </el-col>
       </el-row>
@@ -20,11 +24,13 @@ import leftMenu from '@/components/leftMenu'
 import breadMenu from '@/components/breadcrumb'
 import topHead from '@/components/topHead'
 import homeMessage from '@/router/homeMessage'
+import topTitle from '../components/topTitle.vue'
 export default {
   components: {
     leftMenu,
     topHead,
     breadMenu,
+    topTitle
   },
   data() {
     return {
@@ -35,9 +41,13 @@ export default {
           menuList: [...homeMessage[0].children],
         },
       ],
+      titleList:{
+        txtList:[...homeMessage[0].children],
+        otherTip:homeMessage[0].children.tips?[...homeMessage[0].children.tips]:[]
+      }
     }
   },
-  created() {},
+  created() { console.log(this.$route)},
 }
 </script>
 <style lang="scss" scoped>

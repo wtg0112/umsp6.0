@@ -6,9 +6,10 @@
     </el-radio-group> -->
     <!-- default-active="1-4-1" -->
     <el-menu
-      default-active="1-1"
+      :default-active="active"
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
+      :unique-opened="true"
     >
       <el-submenu
         v-for="(item, index) in list"
@@ -24,7 +25,7 @@
           v-for="(menu, menuList) in item.menuList"
           :key="menuList"
         >
-          <el-menu-item>
+          <el-menu-item :index="menu.name">
             {{ menu.meta.title }}
           </el-menu-item>
         </router-link>
@@ -38,9 +39,13 @@ export default {
   data() {
     return {
       isCollapse: false,
+      active: null
     }
   },
   methods: {},
+  created() {
+    this.active = this.$route.name
+  },
   mounted() {},
 }
 </script>

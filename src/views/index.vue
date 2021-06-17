@@ -36,7 +36,7 @@ export default {
     return {
       list: [
         {
-          tit: '国内发送',
+          tit: '国内短信',
           icon: 'iconfont icon-duanxin4',
           menuList: [...homeMessage[0].children],
         },

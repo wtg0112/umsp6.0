@@ -37,7 +37,9 @@ body {
 }
 
 .el-pagination {
-  margin: 10px 0 20px 10px;
+  margin-top: 20px;
+  text-align: right;
+  padding-right: 50px !important;
 }
 .table-container {
   margin-top: 20px;
@@ -45,14 +47,17 @@ body {
 .el-breadcrumb {
   font-size: 16px;
 }
-.h2{
+.h2 {
   text-indent: 20px;
-  span{
+  span {
     font-size: 14px;
     font-weight: normal;
   }
 }
-.el-card{
+.el-card {
   margin-bottom: 10px;
+}
+.el-select {
+  width: 100%;
 }
 </style>

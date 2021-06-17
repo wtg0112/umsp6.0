@@ -12,6 +12,12 @@ const homeMessage = [
         meta: { title: '快速发送' }
       },
       {
+        path: 'templateSend',
+        name: '模板发送',
+        component: () => import('@/views/homeMessage/templateSend'),
+        meta: { title: '模板发送' }
+      },
+      {
         path: 'fileSend',
         name: '文件发送',
         component: () => import('@/views/homeMessage/fileSend'),
@@ -24,6 +30,12 @@ const homeMessage = [
         meta: { title: '近7天查询' }
       },
       {
+        path: 'historyQuery',
+        name: '历史查询',
+        component: () => import('@/views/homeMessage/historyQuery'),
+        meta: { title: '历史查询' }
+      },
+      {
         path: 'upSearch',
         name: '上行查询',
         component: () => import('@/views/homeMessage/upSearch'),
@@ -34,6 +46,18 @@ const homeMessage = [
         name: '异常查询',
         component: () => import('@/views/homeMessage/errorSearch'),
         meta: { title: '异常查询' }
+      },
+      {
+        path: 'organStatistic',
+        name: '按机构统计',
+        component: () => import('@/views/homeMessage/organStatistic'),
+        meta: { title: '按机构统计' }
+      },
+      {
+        path: 'operatorStatistic',
+        name: '按操作员统计',
+        component: () => import('@/views/homeMessage/operatorStatistic'),
+        meta: { title: '按操作员统计' }
       },
       {
         path: 'accessStatistic',

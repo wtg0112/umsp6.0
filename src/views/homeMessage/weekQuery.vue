@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2 class="h2">近7天查询</h2>
     <el-card class="box-card">
       <el-form
         ref="formData"

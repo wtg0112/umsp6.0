@@ -60,4 +60,7 @@ body {
 .el-select {
   width: 100%;
 }
+.el-form-item{
+  margin-bottom: 8px !important;
+}
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div class="fastSend">
-    <h2 class="h2">快速发送 <span>(最多1000个手机号)</span></h2>
     <el-card class="box-card">
       <el-form
         ref="formData"

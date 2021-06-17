@@ -1,6 +1,5 @@
 <template>
   <div class="templateSend">
-    <h2 class="h2">模板发送</h2>
     <el-card class="box-card">
       <el-form
         ref="formData"
@@ -48,7 +47,7 @@
         <el-table-column prop="operate" label="操作">
           <template slot-scope="scope">
             <el-button type="primary" round>使用</el-button>
-            <el-button type="success" round>修改</el-button>
+            <el-button type="success" round @click="templateEdit(scope.row)">修改</el-button>
             <el-button type="info" round>停止</el-button>
           </template>
         </el-table-column>
@@ -69,7 +68,13 @@
       </el-pagination>
     </el-card>
     <el-dialog :title="isAdd ? '添加模板' : '编辑模板'" :visible.sync="showDialog">
+      <el-form
+        ref="formData"
+        :model="formData"
+        label-suffix="："
+        label-width="100px">
 
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -92,6 +97,12 @@ export default {
     },
     handleSizeChange(psize) {
       this.pagesize = psize
+    },
+    templateAdd() {
+
+    },
+    templateEdit(data) {
+
     }
   }
 }

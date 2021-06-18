@@ -39,12 +39,11 @@ export default {
   data() {
     return {
       isCollapse: false,
-      active: null
+      active: this.$route.name
     }
   },
   methods: {},
   created() {
-    this.active = this.$route.name
   },
   mounted() {},
 }

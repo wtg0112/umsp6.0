@@ -64,4 +64,7 @@ body {
 .el-form-item{
   margin-bottom: 8px !important;
 }
+.el-tag{
+  margin-right: 10px;
+}
 </style>

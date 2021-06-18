@@ -23,7 +23,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .breadcrumb-container{
   width:100%;
 }

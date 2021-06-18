@@ -45,7 +45,11 @@
           </el-col>
           <el-col :span="6">
             <el-form-item prop="pici" label="批次号">
-              <el-input v-model="formData.pici" placeholder="批次号" size="small"></el-input>
+              <el-input
+                v-model="formData.pici"
+                placeholder="批次号"
+                size="small"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -76,28 +80,16 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item prop="startTime" label="开始日期">
+          <el-col :span="10">
+            <el-form-item prop="time" label="选择日期范围" label-width="150px">
               <el-date-picker
-                v-model="formData.startTime"
-                type="datetime"
-                placeholder="选择开始日期"
+                v-model="formData.time"
+                type="daterange"
                 align="right"
-                value-format="yyyy-MM-dd HH:mm:ss"
-                :picker-options="pickerOptions"
-                size="small"
-              >
-              </el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item prop="endTime" label="结束日期">
-              <el-date-picker
-                v-model="formData.endTime"
-                type="datetime"
-                placeholder="选择结束日期"
-                align="right"
-                value-format="yyyy-MM-dd HH:mm:ss"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
                 :picker-options="pickerOptions"
                 size="small"
               >
@@ -107,7 +99,9 @@
         </el-row>
         <el-button type="primary" size="small">查询</el-button>
         <el-button type="primary" size="small">导出表格（全部）</el-button>
-        <span> (开始日期与结束日期，在同一个月，且包含今天和前六天请到近7天查询)</span>
+        <span>
+          (开始日期与结束日期，在同一个月，且包含今天和前六天请到近7天查询)</span
+        >
       </el-form>
     </el-card>
     <div class="table-container">

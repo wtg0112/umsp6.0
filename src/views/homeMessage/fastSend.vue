@@ -97,19 +97,66 @@
             </el-row>
             <el-row :gutter="20">
               <el-col :span="16">
-                <el-form-item prop="phone" label="手机号">
-                  <el-input
-                    type="textarea"
-                    :rows="4"
-                    placeholder="手机号码"
-                    v-model="formData.phone"
-                    size="small"
+                <template
+                  v-if="
+                    (!publicShowData || publicShowData.length == 0) &&
+                      (!personalShowData || personalShowData.length == 0)
+                  "
+                >
+                  <el-form-item
+                    prop="phone"
+                    label="手机号"
+                    :rules="{
+                      required: true,
+                      message: '请输入手机号',
+                      trigger: 'blur'
+                    }"
                   >
-                  </el-input>
-                </el-form-item>
-                <p style="color: red; text-indent: 100px;">
-                  (注意：多个手机号请换行隔开)
-                </p>
+                    <el-input
+                      type="textarea"
+                      :rows="4"
+                      placeholder="手机号码"
+                      v-model="formData.phone"
+                      size="small"
+                    >
+                    </el-input>
+                  </el-form-item>
+                  <p style="color: red; text-indent: 100px; margin-top: 20px;">
+                    (注意：多个手机号请换行隔开)
+                  </p>
+                </template>
+                <template v-else>
+                  <el-form-item prop="phone" label="手机号">
+                    <div
+                      class="tag-group"
+                      v-if="publicShowData && publicShowData.length != 0"
+                    >
+                      <span class="tag-group__title">公共：</span>
+                      <el-tag
+                        v-for="(item, index) in publicShowData"
+                        :key="item.groupId"
+                        closable
+                        @close="mailClose(0, index)"
+                      >
+                        {{ item.name }}
+                      </el-tag>
+                    </div>
+                    <div
+                      class="tag-group"
+                      v-if="personalShowData && personalShowData.length != 0"
+                    >
+                      <span class="tag-group__title">个人：</span>
+                      <el-tag
+                        v-for="(item, index) in personalShowData"
+                        :key="item.groupId"
+                        closable
+                        @close="mailClose(1, index)"
+                      >
+                        {{ item.name }}
+                      </el-tag>
+                    </div>
+                  </el-form-item>
+                </template>
               </el-col>
             </el-row>
             <el-row :gutter="20">
@@ -144,17 +191,32 @@
               <el-col :span="16">
                 <el-form-item prop="content" label="发送时间">
                   <el-radio-group v-model="formData.sendType">
-                    <el-radio :label="1">最大速度</el-radio>
-                    <el-radio :label="2">匀速发送</el-radio>
+                    <el-radio :label="1">即时发送</el-radio>
+                    <el-radio :label="2">定时发送</el-radio>
                   </el-radio-group>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :span="16" v-if="formData.sendType == '2'">
+                <el-form-item prop="selectTime">
+                  <el-date-picker
+                    size="small"
+                    v-model.trim="formData.selectTime"
+                    type="datetime"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    placeholder="请选择发送时间"
+                  ></el-date-picker>
                 </el-form-item>
               </el-col>
             </el-row>
             <div style="padding-left: 50px;">
               <el-button size="small" type="warning">预览</el-button>
-              <el-button size="small" type="primary">发送</el-button>
+              <el-button size="small" type="primary" @click="commit"
+                >发送</el-button
+              >
               <span style="display: inline-block; margin-left: 20px;"
-                >允许的发送时间:00:00---23:59</span
+                >允许的发送时间: {{ startTime }}---{{ endTime }}</span
               >
             </div>
           </el-col>
@@ -168,11 +230,6 @@
                 }}
               </div>
             </div>
-            <!-- <el-row :gutter="20">
-              <el-col :span="16">
-
-              </el-col>
-            </el-row> -->
           </el-col>
         </el-row>
       </el-form>
@@ -182,13 +239,16 @@
       :visible.sync="mailDialog"
     >
       <el-tree
+        ref="mailTree"
         :data="treeList"
         :props="defaultProps"
-        @node-click="handleNodeClick"
+        show-checkbox
+        :check-strictly="true"
+        node-key="groupId"
       ></el-tree>
       <span slot="footer" class="dialog-footer">
         <el-button @click="mailDialog = false" size="small">关 闭</el-button>
-        <el-button type="primary" @click="mailDialog = false" size="small"
+        <el-button type="primary" @click="checkTree" size="small"
           >提 交</el-button
         >
       </span>
@@ -207,6 +267,7 @@
                 <el-input
                   v-model="searchFormData.phone"
                   placeholder="手机号"
+                  size="small"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -215,6 +276,7 @@
                 <el-input
                   v-model="searchFormData.userName"
                   placeholder="用户名称"
+                  size="small"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -222,7 +284,7 @@
           <el-row :gutter="20">
             <el-col :span="10">
               <el-form-item prop="sel" label="组类别">
-                <el-select v-model="searchFormData.sel">
+                <el-select v-model="searchFormData.sel" size="small">
                   <el-option
                     v-for="item in organizeList"
                     :key="item.value"
@@ -238,7 +300,7 @@
                 prop="organize"
                 :label="searchFormData.sel === '0' ? '公共组' : '个人组'"
               >
-                <el-select v-model="searchFormData.organize">
+                <el-select v-model="searchFormData.organize" size="small">
                   <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -251,10 +313,12 @@
             </el-col>
           </el-row>
         </el-form>
+        <el-button type="primary" size="small">查询</el-button>
       </el-card>
       <el-card class="box-card">
         <el-table
           ref="filterTable"
+          size="small"
           :data="
             tableData.slice((currpage - 1) * pagesize, currpage * pagesize)
           "
@@ -273,12 +337,13 @@
           :total="this.tableData.length"
           @current-change="handleCurrentChange"
           @size-change="handleSizeChange"
+          size="small"
         >
         </el-pagination>
       </el-card>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="searchDialog = false">取 消</el-button>
-        <el-button type="primary" @click="searchDialog = false"
+        <el-button @click="searchDialog = false" size="small">取 消</el-button>
+        <el-button type="primary" @click="searchDialog = false" size="small"
           >确 定</el-button
         >
       </span>
@@ -289,10 +354,14 @@
 export default {
   data() {
     return {
-      word: 0,
-      slip: 0,
-      mailDialog: false,
-      searchDialog: false,
+      startTime: '00:00', // 配置的允许发送开始时间
+      endTime: '23:59', // 配置的允许发送结束时间
+      word: 0, // 字数
+      slip: 0, // 条数
+      publicShowData: null, // 选择完公共通讯录显示数组
+      personalShowData: null, // 选择完个人通讯录显示数组
+      mailDialog: false, // 通讯录弹框显隐
+      searchDialog: false, // 精确搜索弹框显隐
       pagesize: 10,
       currpage: 1,
       formData: {
@@ -302,11 +371,11 @@ export default {
         search: '',
         content: '',
         sendType: 1
-      },
+      }, // 外部表单
       searchFormData: {
         sel: '0'
-      },
-      tableData: [],
+      }, // 精确搜索表单
+      tableData: [], // 表格数据
       options: [
         {
           value: '',
@@ -372,7 +441,7 @@ export default {
           isLinkModel: null,
           memo: '',
           checked: 'false',
-          chkDisabled: 'false',
+          chkDisabled: false,
           open: false,
           parent: true
         },
@@ -392,7 +461,7 @@ export default {
           isLinkModel: null,
           memo: '',
           checked: 'false',
-          chkDisabled: 'false',
+          chkDisabled: false,
           open: false,
           parent: false
         },
@@ -412,7 +481,7 @@ export default {
           isLinkModel: null,
           memo: '',
           checked: 'false',
-          chkDisabled: 'false',
+          chkDisabled: false,
           open: false,
           parent: false
         },
@@ -432,7 +501,7 @@ export default {
           isLinkModel: null,
           memo: '',
           checked: 'false',
-          chkDisabled: 'true',
+          chkDisabled: true,
           open: false,
           parent: true
         }
@@ -454,7 +523,7 @@ export default {
           isLinkModel: null,
           memo: '',
           checked: 'false',
-          chkDisabled: 'false',
+          chkDisabled: false,
           open: false,
           parent: true
         },
@@ -474,7 +543,7 @@ export default {
           isLinkModel: null,
           memo: '',
           checked: 'false',
-          chkDisabled: 'false',
+          chkDisabled: false,
           open: false,
           parent: false
         },
@@ -494,7 +563,7 @@ export default {
           isLinkModel: null,
           memo: '',
           checked: 'false',
-          chkDisabled: 'false',
+          chkDisabled: false,
           open: false,
           parent: false
         },
@@ -514,7 +583,7 @@ export default {
           isLinkModel: null,
           memo: '',
           checked: 'false',
-          chkDisabled: 'false',
+          chkDisabled: false,
           open: false,
           parent: false
         },
@@ -534,7 +603,7 @@ export default {
           isLinkModel: null,
           memo: '',
           checked: 'false',
-          chkDisabled: 'false',
+          chkDisabled: false,
           open: false,
           parent: true
         },
@@ -554,7 +623,7 @@ export default {
           isLinkModel: null,
           memo: '',
           checked: 'false',
-          chkDisabled: 'false',
+          chkDisabled: false,
           open: false,
           parent: false
         },
@@ -574,7 +643,7 @@ export default {
           isLinkModel: null,
           memo: '',
           checked: 'false',
-          chkDisabled: 'false',
+          chkDisabled: false,
           open: false,
           parent: false
         },
@@ -594,7 +663,7 @@ export default {
           isLinkModel: null,
           memo: '',
           checked: 'false',
-          chkDisabled: 'true',
+          chkDisabled: true,
           open: false,
           parent: true
         }
@@ -602,7 +671,8 @@ export default {
       treeList: [],
       defaultProps: {
         children: 'children',
-        label: 'name'
+        label: 'name',
+        disabled: 'chkDisabled'
       }
     }
   },
@@ -613,9 +683,9 @@ export default {
         this.searchDialog = true
       } else if (this.formData.search === '0' || this.formData.search === '1') {
         this.treeList = []
-        if(this.formData.search === '0') {
+        if (this.formData.search === '0') {
           this.treeList = this.handleTree(this.publicList)
-        } else if(this.formData.search === '1') {
+        } else if (this.formData.search === '1') {
           this.treeList = this.handleTree(this.personalList)
         }
         this.mailDialog = true
@@ -635,27 +705,51 @@ export default {
       } else {
         this.word = 0
       }
-      console.log(val)
     },
-    // 通讯录树图click
-    handleNodeClick(data) {
-      console.log(data)
-    },
+    // 通讯录树图数据处理func
     handleTree(arr) {
       let cloneData = JSON.parse(JSON.stringify(arr)) // 对源数据深度克隆
-      return cloneData.filter((father) => {
+      return cloneData.filter(father => {
         let branchArr = cloneData.filter(
-          (child) => father.groupId == child.pgroupId
+          child => father.groupId == child.pgroupId
         ) //返回每一项的子级数组
         branchArr.length > 0 ? (father.children = branchArr) : '' //如果存在子级，则给父级添加一个children属性，并赋值
         return father.pgroupId == 0 //返回第一层
       })
     },
+    // 选择通讯录提交按钮click
+    checkTree() {
+      // 0 => 公共通讯录 ， 1 => 个人通讯录
+      if (this.formData.search === '0') {
+        this.publicShowData = this.$refs.mailTree.getCheckedNodes()
+      } else if (this.formData.search === '1') {
+        this.personalShowData = this.$refs.mailTree.getCheckedNodes()
+      }
+      this.mailDialog = false
+      // console.log(this.$refs.mailTree.getCheckedNodes())
+    },
+    // 删除所选通讯录
+    mailClose(type, index) {
+      // 0 => 公共通讯录 ， 1 => 个人通讯录
+      if (type == 0) {
+        this.publicShowData.splice(index, 1)
+      } else if (type == 1) {
+        this.personalShowData.splice(index, 1)
+      }
+    },
+    // 验证提交
+    commit() {
+      this.$refs.formData.validate(valid => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    }
   },
-  mounted() {
-    console.log(this.publicList)
-    console.log(this.handleTree(this.publicList))
-  },
+  mounted() {}
 }
 </script>
 <style lang="scss" scoped>

@@ -15,6 +15,10 @@ import { phoneValidate } from './utils/validate'
 // 全局使用验证（表单）
 Vue.prototype.phoneValidate = phoneValidate
 
+import echarts from 'echarts'
+
+Vue.prototype.$echarts = echarts
+
 // 动效js文件
 // import './utils/pageScrolling'
 Vue.config.productionTip = false

@@ -76,28 +76,16 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item prop="startTime" label="开始日期">
+          <el-col :span="10">
+            <el-form-item prop="time" label="选择日期范围" label-width="150px">
               <el-date-picker
-                v-model="formData.startTime"
-                type="datetime"
-                placeholder="选择开始日期"
+                v-model="formData.time"
+                type="daterange"
                 align="right"
-                value-format="yyyy-MM-dd HH:mm:ss"
-                :picker-options="pickerOptions"
-                size="small"
-              >
-              </el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item prop="endTime" label="结束日期">
-              <el-date-picker
-                v-model="formData.endTime"
-                type="datetime"
-                placeholder="选择结束日期"
-                align="right"
-                value-format="yyyy-MM-dd HH:mm:ss"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
                 :picker-options="pickerOptions"
                 size="small"
               >

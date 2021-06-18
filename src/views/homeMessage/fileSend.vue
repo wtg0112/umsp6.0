@@ -1,22 +1,23 @@
 <template>
-  <div class="realRight">
+  <div class="realLeft">
     <el-card class="mainSet" v-loading="loading">
       <el-container style="width: inherit">
         <el-main style="margin-bottom: 20px">
-          <el-row :gutter="20">
-            <el-col :span="12">
-              <div class="elec-form">
-                <el-form
+            <el-form
                   :model="sendRuleForm"
                   :rules="ruleFormRule"
                   ref="sendRuleForm"
                   class="Note-ruleForm"
                   :inline-message="true"
-                  label-width="60"
-                  text-align="right"
+                  label-width="100px"
+                  label-suffix=":"
                 >
-                  <el-col>
-                    <el-form-item prop="taskName" label="任务名称:" class="taskStyle">
+          <el-row :gutter="20">
+            <el-col :span="14" style="height:560px;overflow-y:scroll">
+           
+                 <el-row :gutter="20">
+                  <el-col :span="16">
+                    <el-form-item prop="taskName" label="任务名称" class="taskStyle">
                       <el-input
                         size="small"
                         v-model="sendRuleForm.taskName"
@@ -24,81 +25,102 @@
                       ></el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col>
-                  <el-form-item prop="selectChannel" label="选择渠道:">
-                     <el-select  size="small" v-model="sendRuleForm.selectChannel"  placeholder="请选择渠道">
-                        <el-option
-                          v-for="item in channelArr"
-                          :key="item.value"
-                          :label="item.name"
-                          :value="item.value">
-                        </el-option>
-                      </el-select>
-                  </el-form-item>
-                  </el-col>
-                   <el-col>
-                  <el-form-item prop="infoList" label="信息分类:">
+                 </el-row>
+
+                  <el-row :gutter="20">
+                      <el-col :span="16">
+                      <el-form-item prop="selectChannel" label="选择渠道">
+                        <el-select  size="small" v-model="sendRuleForm.selectChannel"  placeholder="请选择渠道">
+                            <el-option
+                              v-for="item in channelArr"
+                              :key="item.value"
+                              :label="item.name"
+                              :value="item.value">
+                            </el-option>
+                          </el-select>
+                      </el-form-item>
+                      </el-col>
+                  </el-row>
+
+                  <el-row :gutter="20">
+                    <el-col :span="16">
+                      <el-form-item prop="infoList" label="信息分类">
                        <el-select  size="small" v-model="sendRuleForm.infoList"  placeholder="请选择信息分类">
                         <el-option
                           v-for="item in infoArr"
                           :key="item.value"
                           :label="item.name"
                           :value="item.value">
-                        </el-option>
-                      </el-select>
-                  </el-form-item>
-                  </el-col>
-                   <el-col>
-                   <el-form-item prop="useLabel" label="使用签名:">
-                       <el-select  size="small" v-model="sendRuleForm.useLabel"  placeholder="请选择使用签名">
-                        <el-option
+                         </el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row :gutter="20">
+                      <el-col :span="16">
+                       <el-form-item prop="useLabel" label="使用签名">
+                       <el-select  disabled size="small" v-model="sendRuleForm.useLabel"  placeholder="请选择使用签名">
+                         <el-option
                           v-for="item in labelArr"
                           :key="item.value"
                           :label="item.name"
                           :value="item.value">
-                        </el-option>
-                      </el-select>
-                  </el-form-item>
-                </el-col>
-                <el-col>
-                  <el-form-item prop="auditor" label="审核员:" style="padding-left:14px;width:100%;">
-                       <el-select  size="small" v-model="sendRuleForm.auditor"  placeholder="请选择审核员">
-                        <el-option
-                          v-for="item in auditArr"
-                          :key="item.value"
-                          :label="item.name"
-                          :value="item.value">
-                        </el-option>
-                      </el-select>
-                  </el-form-item>
-                </el-col>
-                 <el-col  class="form-item">
-                         <el-form-item  prop="importTxt" label="选择文件:" >
-                              <input readonly  @blur="changeFile($event)"  ref="phoneFile" style="width: 250px;float:left;border-top-left-radius:5px;;border-bottom-left-radius:5px;" v-model="sendRuleForm.importTxt[0].name"  id="applyLicense" type="text" placeholder="文件支持txt、xls、xlsx格式" autocomplete="off">
+                          </el-option>
+                          </el-select>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row :gutter="20">
+                    <el-col :span="16">
+                      <el-form-item prop="auditor" label="审核员" style="width:100%;">
+                          <el-select  size="small" v-model="sendRuleForm.auditor"  placeholder="请选择审核员">
+                            <el-option
+                              v-for="item in auditArr"
+                              :key="item.value"
+                              :label="item.name"
+                              :value="item.value">
+                            </el-option>
+                          </el-select>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                   <el-row :gutter="20">
+                    <el-col :span="16" class="form-item">
+                         <el-form-item  prop="importTxt" label="选择文件" >
+                              <input readonly  @blur="changeFile($event)"  ref="phoneFile" style="width: 46%;float:left;border-top-left-radius:5px;;border-bottom-left-radius:5px;" v-model="sendRuleForm.importTxt[0].name"  id="applyLicense" type="text" placeholder="文件支持txt、xls、xlsx格式" autocomplete="off">
                               <input  id="fileInput" type="file" name="file" accept=".xls,.xlsx,.txt"  @change="fileChange($event)">
                               <label for="fileInput" class="file-btn">选择文件</label>
                                <i class="iconfont icon-wenhao" style="margin-left: 10px;font-size: 18px;color:#409EFF;" @click="promptShow==true?promptShow=false:promptShow=true"></i>
-                               <p style="color:red;font-size:12px;width:72%;padding-left:10px;line-height:20px;">*只能发送编码为GBK和带boom头的utf-8的文件,文件最大50mb,上传含中文的内容时,请先上传测试文件,测试上传内容是否乱码,不同内容的短信，内容中禁止含有'|','#',分隔符</p>
+                               <p style="color:red;font-size:12px;width:61%;line-height:20px;">*只能发送编码为GBK和带boom头的utf-8的文件,文件最大50mb,上传含中文的内容时,请先上传测试文件,测试上传内容是否乱码,不同内容的短信，内容中禁止含有'|','#',分隔符</p>
                               <!-- <div  v-show="promptShow"  style="width:94.5%;height:120px;background:#EFF5FB;border:2px solid #eee;padding:10px;line-height:24px;border-radius:10px">
                                  <p><i class="iconfont icon-zhuyi" style="font-size:14px;color:#02A7F0;margin-left:3px;"></i><span style="font-size:14px;color:#000;padding-left:8px;font-weight:700">格式说明</span></p>
                                  <p style="padding-left:24px;">文件最大支持10MB</p>
                                  <p style="padding-left:24px;">文件支持txt、xls、xlsx格式</p>
                                  <p style="padding-left:24px">当文件是txt格式，输入时需手动换行，每行一个手机号</p>
                               </div> -->
-                                <img style="width:75%;margin:10px;"v-show="promptShow"   src="../../assets/img/prompt4.png" alt="">
-                              <p style="font-size:12px;color:#F56C6C;margin-top:-14px" v-show="selectShow">请选择文件！</p>
+                                <img style="width:60%;margin-top:10px;" v-show="promptShow"  src="../../assets/img/prompt4.png" alt="">
+                              <!-- <p style="font-size:12px;color:#F56C6C;margin-top:-14px" v-show="selectShow">请选择文件！</p> -->
                         </el-form-item>
-                  </el-col>
-                  <el-col>
-                      <el-form-item prop="fileType" label="文件类型:">
+                   </el-col>
+                   </el-row>
+
+                  <el-row :gutter="20">
+                    <el-col :span="16">
+                      <el-form-item prop="fileType" label="文件类型">
                            <el-radio-group v-model="sendRuleForm.fileType" @change="selectChange">
                                 <el-radio :label="1">发送内容相同</el-radio>
                                 <el-radio :label="2">发送内容不同</el-radio>
                             </el-radio-group>
                     </el-form-item>
-                    <p style="padding:20px 120px;">您的短信已经输入{{numTxt}}个字，拆分后，短信条数为0条</p>
+                    <p style="margin-top:10px;margin-left:100px;color:#555">您的短信已经输入{{numTxt}}个字，拆分后，短信条数为0条</p>
                   </el-col>
-                  <el-col class="textShowClass">
+                  </el-row>
+
+                  <el-row :gutter="20">
+                    <el-col :span="16" class="textShowClass">
                       <el-form-item  prop="sendNote" label="发送内容:">
                             <el-input
                                :style="{ background: sendRuleForm.fileType=='1'  ? '#fff' : '#eee' }"
@@ -110,16 +132,22 @@
                             <!-- <span style="position:absolute;bottom:17px;right:7px;z-index:999;background:#fff;">{{phoneNum}}/200</span> -->
                             </el-form-item>
                   </el-col>
-                  <el-col>
-                      <el-form-item prop="sendType" label="发送方式:">
+                  </el-row>
+                 
+                   <el-row :gutter="20">
+                    <el-col :span="16">
+                      <el-form-item prop="sendType" label="发送方式">
                            <el-radio-group v-model="sendRuleForm.sendType" @change="selectChange">
                                 <el-radio :label="1">最大速度</el-radio>
                                 <el-radio :label="2">匀速发送</el-radio>
                             </el-radio-group>
                     </el-form-item>
                   </el-col>
-                  <el-col >
-                      <el-form-item prop="sendTime" label="发送时间:">
+                  </el-row>
+
+                 <el-row :gutter="20">
+                    <el-col :span="16">
+                      <el-form-item prop="sendTime" label="发送时间">
                           <el-radio-group v-model="sendRuleForm.sendTime">
                                 <el-radio :label="1">即时发送</el-radio>
                                 <el-radio :label="2" >定时发送</el-radio>
@@ -127,7 +155,10 @@
                             </el-radio-group>
                       </el-form-item>
                   </el-col>
-                  <el-col  v-if="sendRuleForm.sendTime=='2'">
+                 </el-row>
+
+                  <el-row :gutter="20">
+                    <el-col :span="16" v-if="sendRuleForm.sendTime=='2'"> 
                       <el-form-item prop="selectTime">
                              <el-date-picker
                               size="small"
@@ -137,47 +168,103 @@
                               placeholder="请选择发送时间"
                               ></el-date-picker>
                             </el-form-item>
-                  </el-col>
-                  <el-col v-else-if="sendRuleForm.sendTime=='3'">
-                      <el-form-item label="通讯录导入" prop="description">
-                            <el-input
-                                type="textarea"
-                                maxlength="100"
-                                style="width:48%;"
-                                v-model="sendRuleForm.description"
-                                placeholder="请输入模板介绍,最多可输入100字"
-                            ></el-input>
-                            </el-form-item>
-                  </el-col>
-                </el-form>
-              </div>
+                      </el-col>
+                      <el-col  v-else-if="sendRuleForm.sendTime=='3'">
+                            <el-col :span="7" style="text-align:left;color:#666666;margin-left:10%;">发送开始</el-col>
+                            <el-col :span="7" style="text-align:left;color:#666666">手机号数量（条）</el-col>
+                             <el-col :span="7" style="text-align:left;color:#666666">发送结束</el-col>
+                    </el-col>
+                  </el-row>
+
+                   <el-row :gutter="20" v-if="sendRuleForm.sendTime=='3'" style="background-color: #FBF9FB; padding-top:10px;">
+                    <!-- <el-form :model="ruleForm" ref='batchSendList'> -->
+                    <el-col :span="23" v-for="(item,index) in sendRuleForm.batchSendList" :key="index" class="sendTimeList" >
+                      <div class="operateSendTime">
+                            <el-col :span="1"><span>{{index+1}}</span></el-col>
+                            <el-col :span="8">
+                              <el-form-item
+                                ref="cashCouponRuleListClear"
+                                style="margin-bottom:0px;margin-left:0px;"
+                                :prop="'batchSendList.'+index+'.startTime'"
+                              >
+                                <el-date-picker
+                                  size="small"
+                                  v-model="sendRuleForm.batchSendList[index].startTime"
+                                  type="datetime"
+                                  value-format="yyyy-MM-dd HH:mm:ss"
+                                  placeholder="请选择发送时间"
+                                  ></el-date-picker>
+                                </el-form-item>
+                            </el-col>
+
+                            <el-col :span="6">
+                              <el-form-item
+                                style="margin-bottom:0px;"
+                                :prop="'batchSendList.'+index+'.phoneNum'"
+                              >
+                                <!-- @blur="onBlur(item.minLimit,index)" -->
+                                <el-input  size="small" v-model="sendRuleForm.batchSendList[index].phoneNum"  placeholder="请输入手机号数量" type="text" maxlength="18"  style="width: 100%"></el-input>
+                              </el-form-item>
+                            </el-col>
+
+                              <el-col :span="8">
+                                  <el-form-item
+                                ref="cashCouponRuleListClear"
+                                style="margin-bottom:0px;"
+                                :prop="'batchSendList.'+index+'.startTime'"
+                                :rules="radioValueArr"
+                              >
+                                <el-date-picker
+                                  size="small"
+                                  v-model="sendRuleForm.batchSendList[index].endTime"
+                                  type="datetime"
+                                  value-format="yyyy-MM-dd HH:mm:ss"
+                                  placeholder="请选择结束时间"
+                                  ></el-date-picker>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="1"  class="delBtn">
+                              <i class="el-icon-delete"
+                                v-if="sendRuleForm.batchSendList.length!=0"
+                                @click="handleDeleteType(index)"
+                              ></i>
+                              <el-button v-else><i class="el-icon-delete" @click.stop ></i></el-button>
+                            </el-col>
+                          </div>
+                          <el-col :span="2" style="margin-top:10px">
+                              <el-button size="small"
+                                type="primary"
+                                class="el-icon-plus"
+                                v-if="index == sendRuleForm.batchSendList.length -1"
+                                @click="handleAddType(index)"
+                              >添加</el-button>
+                              <div v-else style="width:68px"></div>
+                          </el-col>
+                    </el-col>
+                    <!-- </el-form> -->
+                  </el-row>
+
             </el-col>
-            <el-col
-              :span="8"
-              style="padding-top: 20px;"
-            >
-              <div class="preview" style="height: 600px">
+             <el-col :span="10" style="border-left:2px solid rgb(210,210,210);">
+              <div class="preview" style="height: 600px;margin-top:-40px;">
                 <div class="scrollBar">
                   <div class="contentPhone">
                     <div style="width: 100%; height: 350px">
-               
-              </div>
-              </div>
-                </div>
-              </div>
+                           <div class="previewPhone">{{sendRuleForm.sendNote!=''?sendRuleForm.useLabel+sendRuleForm.sendNote:'请输入内容'}}</div>
+                      </div>
+                      </div>
+                        </div>
+                      </div>
             </el-col>
           </el-row>
-          <el-row>
-            <el-col :span="16">
-              <div style="text-align: center; margin-top: 150px">
-                <el-button
-                  type="primary"
-                  size="small"
-                  >预览</el-button
-                >
-                <el-button size="small" >创建</el-button>
-              </div>
-            </el-col>
+          </el-form>
+            <el-row :gutter="20">
+                    <el-col style="position:fixed;bottom:0px;background:#fff;border-top:1px solid rgb(210,210,210);">
+                       <div style="margin:14px 20%;">
+                          <el-button type="primary" size="small">预览</el-button>
+                          <el-button type="primary" plain size="small" >创建</el-button>
+                      </div>
+                    </el-col>
           </el-row>
         </el-main>
       </el-container>
@@ -231,7 +318,7 @@ export default {
       labelArr:[
          {
           name:'【广西农信社】',
-          value:0
+          value:'0'
         }
       ],
       auditArr:[
@@ -248,18 +335,35 @@ export default {
       lookReturnData: [],
       sendRuleForm: {
         taskName: '',
-        selectChannel:0,
-        infoList: 0,
-        useLabel: 0,
-        auditor: 0,
+        selectChannel:'',
+        infoList: '',
+        useLabel: '【广西农信社】',
+        auditor: '',
         importTxt:[{name:''}],
         fileType: 1,
         sendType: 1,
         sendTime: 1,
+        sendNote:'',
         selectTime:'',
-        description:''
+        description:'',
+
+
+        //
+          batchSendList: [
+          {
+            couponRuleId: "",
+            createTime: "",
+            id: "",
+            maxLimit: "",
+            minLimit: "",
+            ratio: "",
+            rightId: "",
+            updateTime: ""
+          }
+        ],
 
       },
+    
       mobilPhone: '',
       ruleFormRule: {
         //   {validator:limitPhone,trigger:['blur']
@@ -267,28 +371,28 @@ export default {
           { required: true, message: '请编辑您的任务名称!', trigger: 'blur' }
         ],
         selectChannel: [
-          { required: true, message: '请选择渠道!', trigger: 'blur' }
+          { required: true, message: '请选择渠道!', trigger: ['blur','change'] }
         ],
         infoList: [
-          { required: true, message: '请选择信息分类!', tigger: 'blur' }
+          { required: true, message: '请选择信息分类!', trigger: ['blur','change'] }
         ],
         useLabel: [
-          { required: true, message: '请选择使用签名!', trigger: 'blur' }
+          { required: true, message: '请选择使用签名!', trigger: ['blur','change'] }
         ],
         auditor: [
-          { required: true, message: '请选择审核员!', trigger: 'change' }
+          { required: true, message: '请选择审核员!', trigger: ['blur','change']}
         ],
         importTxt: [
-          { required: true, message: '请选择文件!', trigger: 'blur' }
+          { required: true, message: '请选择文件!', trigger: ['blur','change']}
         ],
         fileType: [
-          { required: true, message: '请选择文件类型!', trigger: 'blur' }
+          { required: true, message: '请选择文件类型!', trigger: ['blur','change'] }
         ],
         sendType: [
-          { required: true, message: '请选择发送方式!', trigger: 'blur' }
+          { required: true, message: '请选择发送方式!', trigger: ['blur','change'] }
         ],
         sendTime:[
-          { required: true, message: '请选择发送时间!', trigger: 'blur' }
+          { required: true, message: '请选择发送时间!', trigger: ['blur','change'] }
         ],
         sendNote:[
           { required: true, message: '请编辑您的短信内容!', trigger: 'blur' }
@@ -301,6 +405,21 @@ export default {
   methods: {
       selectChange(){
 
+    },
+    //添加分时分量
+      handleAddType(index) {
+        this.sendRuleForm.batchSendList.push({
+          startTime: '',
+          phoneNum:'',
+          endTime:''
+        });
+     
+    },
+    //删除分时分量
+    handleDeleteType(index) {
+      if (this.sendRuleForm.batchSendList.length > 1) {
+        this.sendRuleForm.batchSendList.splice(index, 1);
+      }
     },
   }
 }
@@ -316,7 +435,6 @@ export default {
     align-items: center;
     font-size: 14px;
     color: #333333;
-    margin-bottom:10px;
 }
 
 .form-item span {
@@ -370,78 +488,17 @@ export default {
     border: 1px solid #DCDFE6 !important;
 }
 
-.lengthChange {
-  position: absolute;
-  right: 8px;
-  bottom: -5px;
-}
-.uploadfile {
-  display: inline-block;
-  margin-left: 10px;
-}
 .redStar{
   color: #ff4949;
   margin-right: 2px;
 }
-.loadingDialog {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  width: 300px;
-  height: 50px;
-  line-height: 50px;
-  background: rgba(0,0,0,0.6);
-  border-radius: 10px;
-  color: #fff;
-  font-size: 16px;
-  text-align: center;
-}
-.uploadCreate {
-  width: 100%;
-  background-color: rgba(250,250,252,1);
-  padding: 10px;
-}
-.uploadCreate1 {
-  width: 100%;
-  background-color: rgba(250,250,252,1);
-  padding: 0px 10px;
-}
-.createHandle {
-  width: 100%;
-  background-color: rgba(250,250,252,1);
-  padding: 10px;
-  border-top: 1px solid rgba(241,241,241,1);
-}
-.createHandle1 {
-  width: 100%;
-  background-color: rgba(250,250,252,1);
-  padding: 0px 10px;
-  border-top: 1px solid rgba(241,241,241,1);
-}
+
 .uploadButton {
   display: inline-block;
 }
 .downLoad {
   float: right;
   color: #189AE0;
-}
-.content {
-  width: 200px;
-  margin-left: 100px;
-}
-.content  .right{
-  width: 120px;
-  margin-left: 70px;
-  text-align: left;
-}
-.sceneSelect {
-  position: relative;
-}
-.sceneSelect .floatSen {
-  position: absolute;
-  top:0;
-
 }
 
 .showLength{
@@ -452,27 +509,6 @@ export default {
 .paramsStyle{
   margin-left:6px;
 }
-.ruleBrief {
-  flex: 1;
-}
-.ruleBtn {
-  cursor: pointer;
-  z-index: 10;
-}
-.prizeInfo-time {
-  color: #b5b5b5;
-  font-size: 8px;
-}
-// .footer {
-//  border-top: 1px solid #ddd6d6;
-//   position: fixed;
-//   width: 82%;
-//   text-align: center;
-//   bottom: 0;
-//   padding: 10px;
-//   background-color: rgb(255, 255, 255);
-//   z-index: 1;
-// }
 .table {
   border-collapse: collapse;
   text-align: center;
@@ -487,55 +523,54 @@ export default {
 
 </style>
  <style lang="less">
- .taskStyle .el-input__inner{
-   width:85% !important;
+ //批量发送时间
+ .sendTimeList{
+.operateSendTime{
+       width:99%;
+       height:40px;
+       line-height: 40px;
+      background-color:#fff;
+      padding:5px 16px;
+      .el-form-item__content{
+        margin-left:0  !important;
+      }
+   }
  }
- .Note-ruleForm .el-input{
-  width:70% !important;
+
+.delBtn{
+  cursor: pointer;
 }
-.Note-ruleForm .el-select{
-  width:85%;
-}
+//  .taskStyle .el-input__inner{
+//    width:85% !important;
+//  }
+//  .Note-ruleForm .el-input{
+//   width:70% !important;
+// }
+// .Note-ruleForm .el-select{
+//   width:85%;
+// }
 .textShowClass{
     .el-textarea__inner{
         height: 200px;
     }
 }
 
-.changeErr .el-form-item__error--inline{
-    position: relative;
-    top: 0px !important;
-    left: 16px !important;
-    margin-left:0 !important;
-}
-.tyj-ruleForm .el-form-item__error:before{
-    display:block;
-    width:12px;
-    height:12px;
-    position: absolute;
-    top:5px;
-    left:-15px;
-    z-index:1;
-    content: '';
-    /* background-image:url(../../assets/imgs/errorMsg.png); */
-    background-size:12px 12px;
-}
 .mainSet .el-card__body{
   padding:0 !important;
 }
 
-.realRight .el-form-item__error--inline{
+.realLeft .el-form-item__error--inline{
   display: block;
 }
 .containerPrize .el-scrollbar__wrap{
   overflow-x: hidden;
 }
-.realRight .el-form-item.is-required .el-form-item__label:before {
+.realLeft .el-form-item.is-required .el-form-item__label:before {
   content: "*";
   color: #ff4949;
   margin-right: 2px;
 }
-.realRight .el-form-item.is-required .el-form-item__label:after {
+.realLeft .el-form-item.is-required .el-form-item__label:after {
   content: "";
   color: #ff4949;
   margin-left: 0;
@@ -543,12 +578,6 @@ export default {
 .quill-editor:not(.bubble) .ql-container,
 .quill-editor:not(.bubble) .ql-container .ql-editor {
   height: 200px;
-}
-.elec-form .el-form-item {
-  margin-bottom: 5px;
-}
-.elec-form .el-form-item__content {
-  font-size: 12px;
 }
 .table {
   border-collapse: collapse;

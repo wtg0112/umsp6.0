@@ -1,14 +1,14 @@
 <template>
   <div>
     <topHead :name="'平台超级管理员'" />
-    <leftMenu :list="list"  :openPath="openPath"  :currentPath="currentPath" v-if="list[0].menuList" />
-    <div class="container">
+    <leftMenu :list="list"  :openPath="openPath"  :currentPath="currentPath" v-if="list[0].menuList" @itemClick="cpnClick"/>
+    <div class="container" :style="isCollapse ? 'padding-left: 64px;' : ''">
       <el-row style="margin: 10px 0;" :gutter="20">
         <el-col :span="24">
           <!-- 分页 -->
-          <div class="pagination">
+          <!-- <div class="pagination">
             <pagination />
-          </div>
+          </div> -->
           <!-- 面包屑 -->
           <div class="breadcrumb">
             <breadMenu />
@@ -54,7 +54,8 @@ export default {
         }
       ],
       openPath:[],
-      currentPath:this.$route.name
+      currentPath:this.$route.name,
+      isCollapse: false, // 是否折叠
     }
   },
   watch:{
@@ -66,6 +67,9 @@ export default {
           this.openPath=[]
           this.currentPath=null
         }
+      },
+      cpnClick(item) {
+       this.isCollapse = item
       }
  },
   created() {},
@@ -78,6 +82,6 @@ export default {
   height: 100%;
   position: relative;
   padding: 50px 0 0 200px;
-  box-sizing: border-box;
+  transition: all .6s;
 }
 </style>

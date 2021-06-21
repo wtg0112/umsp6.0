@@ -406,7 +406,6 @@ export default {
                 formatter:function(params){
                     let tar=params[0]
                     let value=self.getBalance(tar.value)
-                    console.log("21231231231",value)
                     return tar.name + '<br/>' + tar.seriesName + ' : ' + value
                 },
             },

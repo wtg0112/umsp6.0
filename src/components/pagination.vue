@@ -29,6 +29,14 @@ export default {
       this.tags.splice(index, 1)
     }
   },
+  // 列表页面的activated
+// activated() {
+//  if(!this.$route.meta.isUseCache){ //isUseCache 时添加中router中的元信息，判读是否要缓存
+//     this.tags = [] //清空原有数据
+//     this.onload() // 重新加载
+//   }
+//  this.$route.meta.isUseCache = false // 通过这个控制刷新
+// },
   watch: {
     $route(to, from) {
       console.log(this.$route)

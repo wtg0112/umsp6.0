@@ -1,10 +1,20 @@
 <template>
   <div id="app">
-    <router-view />
+    <keep-alive>     <!--使用keep-alive会将页面缓存-->
+       <router-view v-if="$route.meta.keepAlive"></router-view>
+   </keep-alive> 
+       <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
 <script>
-export default {}
+export default {
+  data() {
+    return {
+    }
+  },
+  created(){
+  }
+}
 </script>
 <style lang="scss">
 html,

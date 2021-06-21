@@ -21,12 +21,9 @@
           >
             <topTitle />
           </div>
-          <keep-alive>
-            <!-- 需要缓存的视图组件 -->
-            <router-view v-if="$route.meta.keepAlive"></router-view>
-          </keep-alive>
-          <!-- 不需要缓存的视图组件 -->
-          <router-view v-if="!$route.meta.keepAlive"></router-view>
+          <div class="page-container">
+                <router-view />
+          </div>
         </el-col>
       </el-row>
     </div>
@@ -56,7 +53,6 @@ export default {
           menuList: [...homeMessage[0].children]
         }
       ],
-<<<<<<< HEAD
       openPath:[],
       currentPath:this.$route.name
     }
@@ -72,21 +68,8 @@ export default {
         }
       }
  },
-  created() {}
-=======
-      titleList: {
-        txtList: [...homeMessage[0].children],
-        otherTip: homeMessage[0].children.tips
-          ? [...homeMessage[0].children.tips]
-          : []
-      },
-      active: this.$route.name
-    }
-  },
-  created() {
-    // console.log(this.$route)
-  }
->>>>>>> 1ad0a6a63d4a104092d46919603b83dd80af8411
+  created() {},
+
 }
 </script>
 <style lang="scss" scoped>

@@ -54,6 +54,7 @@ export default {
                 right: '4%',
                 feature: {
                     saveAsImage: {},
+                    magicType: {type: ['line', 'bar']},
                 },
             },
             legend: {
@@ -212,6 +213,7 @@ export default {
                 right: '4%',
                 feature: {
                     saveAsImage: {},
+                    magicType: {type: ['line', 'bar']},
                 },
             },
             legend: {
@@ -312,13 +314,63 @@ export default {
         };
         myChart.setOption(option);
     },
+    //Y轴坐标轴单位特殊处理
+    getBalance(value) {
+        var balance
+        if (value < 10) {
+          return value * 100 + '条'
+        } else if ((balance = value - 10) < 10) {
+          balance = new String(balance).substring(0, 4)
+          if (balance <= 1) {
+            return '一百多条'
+          }
+          return balance + '(百)条'
+        } else if ((balance = value - 20) < 10) {
+          balance = new String(balance).substring(0, 4)
+          if (balance <= 1) {
+            return '一千多条'
+          }
+          return balance + '(千)条'
+        } else if ((balance = value - 30) < 10) {
+          balance = new String(balance).substring(0, 4)
+          if (balance <= 1) {
+            return '1万多条'
+          }
+          return balance + '(万)条'
+        } else if ((balance = value - 40) < 10) {
+          balance = new String(balance).substring(0, 4)
+          if (balance <= 1) {
+            return '十万多条'
+          }
+          return balance + '(十万)条'
+        } else if ((balance = value - 50) < 10) {
+          balance = new String(balance).substring(0, 4)
+          if (balance <= 1) {
+            return '一百万多条'
+          }
+          return balance + '(百万)条'
+        } else if ((balance = value - 60) < 10) {
+          balance = new String(balance).substring(0, 4)
+          if (balance <= 1) {
+            return '一千万多条'
+          }
+          return balance + '(千万)条'
+        } else if ((balance = value - 70) < 10) {
+          balance = new String(balance).substring(0, 4)
+          if (balance <= 1) {
+            return '一亿多条'
+          }
+          return balance + '(亿)条'
+        }
+      },
     // 单个柱状图方法
-    column(myChart, xAxisData, barDate, title, company, barWidth) {
+    column(myChart, xAxisData, barDate, title, legend,company,max,min,splitNum,barWidth) {
+        const self = this
         if (barWidth == undefined || '') {
             barWidth = 'auto';
         }
         if (company == undefined || company == '') {
-            company = '人';
+            company = '个';
         }
         let option = {
             title: {
@@ -330,15 +382,33 @@ export default {
                     fontSize: '12',
                 },
             },
+            legend: {
+                data: legend,
+                left: 10
+              },
             toolbox: {
                 right: '4%',
+                show: true,
                 feature: {
-                    saveAsImage: {},
+                    mark: { show: false },
+                    dataView: { show: false, readOnly: false },
+                    magicType: { show: true, type: ['line', 'bar'] },
+                    restore: { show: false },
+                    saveAsImage: { show: false }
                 },
             },
             tooltip: {
-                trigger: 'item',
-                formatter: '{a} <br/>{b} : {c}' + company,
+                trigger: 'axis',
+                axisPointer: {
+                    // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                  },
+                formatter:function(params){
+                    let tar=params[0]
+                    let value=self.getBalance(tar.value)
+                    console.log("21231231231",value)
+                    return tar.name + '<br/>' + tar.seriesName + ' : ' + value
+                },
             },
             color: 'rgb(137,87,161)',
             grid: {
@@ -372,10 +442,13 @@ export default {
             yAxis: [
                 {
                     type: 'value',
-                    name: '(单位：' + company + ')',
+                    name: company,
                     nameLocation: 'end',
                     nameGap: 12,
                     nameRotate: 0,
+                    max: max,
+                    min: min,
+                    splitNumber:splitNum,
                     //默认以千分位显示，不想用的可以在这加一段
                     axisLabel: {
                         //调整左侧Y轴刻度， 直接按对应数据显示
@@ -383,11 +456,49 @@ export default {
                         showMinLabel: true,
                         showMaxLabel: true,
                         formatter: function(value) {
-                            return value;
+                            if (value == 10) {
+                                return '百条以上'
+                              } else if (value == 20) {
+                                return '千条以上'
+                              } else if (value == 30) {
+                                return '万条以上'
+                              } else if (value == 40) {
+                                return '十万条以上'
+                              } else if (value == 50) {
+                                return '百万条以上'
+                              } else if (value == 60) {
+                                return '千万条以上'
+                              } else if (value == 70) {
+                                return '亿条以上'
+                              } else if (value == 80) {
+                                return '十亿条以上'
+                              } else {
+                                return ''
+                              }
                         },
                     },
                 },
             ],
+            dataZoom: [
+                {
+                  show: true,
+                  start: 0,
+                  end: 100
+                },
+                {
+                  type: 'inside',
+                  start: 0,
+                  end: 100
+                },
+                {
+                  show: true,
+                  filterMode: 'empty',
+                  width: 30,
+                  height: '80%',
+                  showDataShadow: false,
+                  left: '93%'
+                }
+              ],
             series: [
                 {
                     name: '',
@@ -407,6 +518,8 @@ export default {
             ],
         };
         myChart.setOption(option);
+
+        
     }
 }
 

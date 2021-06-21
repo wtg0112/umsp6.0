@@ -21,7 +21,7 @@ export default {
     // 下拉菜单事件总括
     handleCommand(command) {
       if(command == 'home') { // 主页
-        this.toHome()
+        this.toHome(command)
       } else if(command == 'plus') { // 充值记录
 
       } else if(command == 'cost') { // 消费记录
@@ -33,8 +33,10 @@ export default {
       }
     },
     // 主页
-    toHome() {
-      this.$router.push('/home')
+    toHome(item) {
+      if(this.$route.path !== item){
+         this.$router.push('/'+item)
+      }
     },
   }
 }

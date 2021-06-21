@@ -1,7 +1,7 @@
 <template>
   <div>
     <topHead :name="'平台超级管理员'" />
-    <leftMenu :list="list" v-if="list[0].menuList" />
+    <leftMenu :list="list"  :openPath="openPath"  :currentPath="currentPath" v-if="list[0].menuList" />
     <div class="container">
       <el-row style="margin: 10px 0;" :gutter="20">
         <el-col :span="24">
@@ -45,17 +45,22 @@ export default {
           menuList: [...homeMessage[0].children]
         }
       ],
-      titleList: {
-        txtList: [...homeMessage[0].children],
-        otherTip: homeMessage[0].children.tips
-          ? [...homeMessage[0].children.tips]
-          : []
-      }
+      openPath:[],
+      currentPath:this.$route.name
     }
   },
-  created() {
-    console.log(this.$route)
-  }
+  watch:{
+    '$route':'getPath'
+  },
+  methods:{
+      getPath(){
+        if(this.$route.name=='首页'){
+          this.openPath=[]
+          this.currentPath=null
+        }
+      }
+ },
+  created() {}
 }
 </script>
 <style lang="scss" scoped>

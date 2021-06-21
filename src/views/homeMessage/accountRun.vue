@@ -1,6 +1,6 @@
 <template>
     <div>
-      <el-card class="box-card">
+      <el-card class="box-card"  style="margin-top:20px">
         <el-table
           ref="filterTable"
           :data="

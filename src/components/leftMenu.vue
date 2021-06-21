@@ -6,7 +6,8 @@
     </el-radio-group> -->
     <!-- default-active="1-4-1" -->
     <el-menu
-      :default-active="active"
+      :default-openeds="openPath"
+      :default-active="currentPath"
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
       :unique-opened="true"
@@ -35,14 +36,25 @@
 </template>
 <script>
 export default {
-  props: ['list'],
+  props: {
+      list: {
+        type: Array,
+        default: () => { return [] }
+      },
+      openPath: {
+        type: Array,
+        default: () => { return [] }
+      },
+      currentPath:{
+        type: String,
+        default:''
+      }
+    },
   data() {
     return {
       isCollapse: false,
-      active: this.$route.name
     }
   },
-  methods: {},
   created() {
   },
   mounted() {},

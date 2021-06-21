@@ -7,7 +7,7 @@
         label-suffix="："
         label-width="100px"
       >
-        <div style="border-bottom:2px solid rgb(238,238,238);padding-bottom:10px;">
+        <div style="padding-bottom:10px;">
           <el-row :gutter="20">
           <el-col :span="5">
            <el-form-item prop="searchTimeRange" label="查询维度">
@@ -73,7 +73,7 @@
       </el-form>
     </el-card>
     <div>
-      <el-card class="box-card">
+      <el-card class="box-card" style="margin-top:20px;">
        
          <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
             <el-tab-pane label="数据表" name="first">

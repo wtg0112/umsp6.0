@@ -7,7 +7,7 @@
         label-suffix="："
         label-width="100px"
       >
-        <div style="border-bottom:2px solid rgb(238,238,238);padding-bottom:10px;">
+        <div style="padding-bottom:10px;">
           <el-row :gutter="20">
           <el-col :span="5">
            <el-form-item prop="searchTimeRange" label="查询维度">
@@ -73,7 +73,7 @@
       </el-form>
     </el-card>
     <div>
-      <el-card class="box-card">
+      <el-card class="box-card" style="margin-top:20px;">
        
          <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
             <el-tab-pane label="数据表" name="first">
@@ -135,15 +135,17 @@ export default {
 
       },
         totalData:{
+          legend: ['北京国都'],
           xAxisData: ['2021-06-08','2021-06-09','2021-06-10','2021-06-11'],
-          barData: [1200, 800, 3000, 10000, 150000, 16000, 18000, 2000000],
-          title:'发总量数据图',
+          barData: [10,10,20,30,40,50,30,20,60,70],
+          title:'发送量对比图',
           company:'短信条数'
       },
         successData:{
+          legend: ['北京国都'],
           xAxisData:['2021-06-08','2021-06-09','2021-06-10','2021-06-11'],
           barData:['0.1','0.5','0.6','0.3','0.2','0.8','0.9'],
-          title:'成功率数据图',
+          title:'成功率',
           company:'百分比'
       },
       dateTime:[
@@ -262,7 +264,7 @@ export default {
     handleClick(tab, event) {
         if(tab.index=='1'){
             this.$nextTick(() => {
-                this.example.column(this.echarts.init(this.$refs.totalData),this.totalData.xAxisData,this.totalData.barData,this.totalData.title,this.totalData.company);
+                this.example.column(this.echarts.init(this.$refs.totalData),this.totalData.xAxisData,this.totalData.barData,this.totalData.title,this.totalData.legend,this.totalData.company,80,0,10);
             })
         }else if(tab.index=='2'){
               this.$nextTick(() => {

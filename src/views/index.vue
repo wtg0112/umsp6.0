@@ -1,8 +1,8 @@
 <template>
   <div>
     <topHead :name="'平台超级管理员'" />
-    <leftMenu :list="list" :active="active" v-if="list[0].menuList" />
-    <div class="container">
+    <leftMenu @itemclick="cpnclick" :list="list" :active="active" v-if="list[0].menuList" />
+    <div class="container" :style="isCollapse ? 'padding-left: 64px;' : ''">
       <el-row style="margin: 10px 0;" :gutter="20">
         <el-col :span="24">
           <!-- 分页 -->
@@ -62,7 +62,13 @@ export default {
           ? [...homeMessage[0].children.tips]
           : []
       },
-      active: this.$route.name
+      active: this.$route.name,
+      isCollapse: false, // 是否折叠
+    }
+  },
+  methods:{
+    cpnclick(item) {
+      this.isCollapse = item
     }
   },
   created() {
@@ -76,6 +82,6 @@ export default {
   height: 100%;
   position: relative;
   padding: 50px 0 0 200px;
-  box-sizing: border-box;
+  transition: all .6s;
 }
 </style>

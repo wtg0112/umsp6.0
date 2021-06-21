@@ -1,5 +1,8 @@
 <template>
   <div class="menu">
+    <div class="btn" @click="btnClick">
+      {{ isCollapse ? '' : '' }}
+    </div>
     <!-- <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
       <el-radio-button :label="false">展开</el-radio-button>
       <el-radio-button :label="true">收起</el-radio-button>
@@ -41,46 +44,70 @@ export default {
       isCollapse: false
     }
   },
-  methods: {},
-  created() {
-  },
-  mounted() {},
+  methods: {
+    btnClick() {
+      this.isCollapse = !this.isCollapse
+      // 子组件向父组件发射自定义事件（自定义事件名字，自定义事件参数）
+      this.$emit('itemclick', this.isCollapse)
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
 .menu {
-  width: 200px;
-  height: 100%;
+  // width: 200px;
+  height: calc( 100% - 50px );
   position: fixed;
   left: 0;
-  z-index: 2000;
-  top: 0;
-  padding-top: 50px;
-  box-sizing: border-box;
+  z-index: 9999;
+  bottom: 0;
+  border-right: solid 1px #e6e6e6;
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     height: 100%;
     box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.1);
   }
+  & /deep/ .el-menu {
+    border-right: 0;
+  }
+  .btn{
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    text-align: right;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    font-size: 24px;
+    transition: all .3s;
+    cursor: pointer;
+    z-index: -1;
+  }
+  &:hover .btn{
+    top: -24px;
+  }
 }
-
-
 
 a {
   text-decoration: none;
 }
 </style>
 <style lang="less">
-.el-submenu__title:hover,.el-submenu__title:focus{
-   color:#fff;
-   background:#62abf5 !important;
-   i{
-     color:#fff !important;
-   }
+.el-submenu__title:hover,
+.el-submenu__title:focus {
+  color: #fff;
+  background: #62abf5 !important;
+  i {
+    color: #fff !important;
+  }
 }
 .el-menu-item:focus,
 .el-menu-item:hover {
-  color:#fff;
-  background:#62abf5 !important;
+  color: #fff;
+  background: #62abf5 !important;
 }
 </style>

@@ -6,9 +6,9 @@
       <el-row style="margin: 10px 0;" :gutter="20">
         <el-col :span="24">
           <!-- 分页 -->
-          <div class="pagination">
+          <!-- <div class="pagination">
             <pagination />
-          </div>
+          </div> -->
           <!-- 面包屑 -->
           <div class="breadcrumb">
             <breadMenu />

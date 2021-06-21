@@ -35,11 +35,10 @@
 </template>
 <script>
 export default {
-  props: ['list'],
+  props: ['list', 'active'],
   data() {
     return {
-      isCollapse: false,
-      active: this.$route.name
+      isCollapse: false
     }
   },
   methods: {},

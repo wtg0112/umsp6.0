@@ -1,7 +1,7 @@
 <template>
   <div>
     <topHead :name="'平台超级管理员'" />
-    <leftMenu :list="list" v-if="list[0].menuList" />
+    <leftMenu :list="list" :active="active" v-if="list[0].menuList" />
     <div class="container">
       <el-row style="margin: 10px 0;" :gutter="20">
         <el-col :span="24">
@@ -50,11 +50,12 @@ export default {
         otherTip: homeMessage[0].children.tips
           ? [...homeMessage[0].children.tips]
           : []
-      }
+      },
+      active: this.$route.name
     }
   },
   created() {
-    console.log(this.$route)
+    // console.log(this.$route)
   }
 }
 </script>

@@ -19,7 +19,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item prop="qudao" label="渠道名称">
-              <el-select v-model="formData.qudao" size="small">
+              <el-select v-model="formData.qudao" size="small" filterable>
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -32,7 +32,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item prop="user" label="用户">
-              <el-select v-model="formData.user" size="small">
+              <el-select v-model="formData.user" size="small" filterable>
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -52,7 +52,7 @@
         <el-row :gutter="20">
           <el-col :span="6">
             <el-form-item prop="sCode" label="状态报告">
-              <el-select v-model="formData.sCode" size="small">
+              <el-select v-model="formData.sCode" size="small" filterable>
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -65,7 +65,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item prop="eCode" label="提交状态">
-              <el-select v-model="formData.eCode" size="small">
+              <el-select v-model="formData.eCode" size="small" filterable>
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -155,25 +155,30 @@ export default {
       pickerOptions: {
         shortcuts: [
           {
-            text: '今天',
+            text: '最近一周',
             onClick(picker) {
-              picker.$emit('pick', new Date())
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', [start, end])
             }
           },
           {
-            text: '昨天',
+            text: '最近一个月',
             onClick(picker) {
-              const date = new Date()
-              date.setTime(date.getTime() - 3600 * 1000 * 24)
-              picker.$emit('pick', date)
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
             }
           },
           {
-            text: '一周前',
+            text: '最近三个月',
             onClick(picker) {
-              const date = new Date()
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
-              picker.$emit('pick', date)
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+              picker.$emit('pick', [start, end])
             }
           }
         ]

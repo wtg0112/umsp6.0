@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import homeMessage from './homeMessage' // 国内发送
+import homeMessage from './homeMessage' // 国内短信
 
 Vue.use(VueRouter)
 const routes = [

@@ -10,7 +10,7 @@
         <el-row :gutter="20">
           <el-col :span="6">
             <el-form-item prop="type" label="显示类型">
-              <el-select v-model="formData.type" size="small">
+              <el-select v-model="formData.type" size="small" filterable>
                 <el-option
                   v-for="item in timeType"
                   :key="item.value"
@@ -41,7 +41,7 @@
         <el-row :gutter="20">
           <el-col :span="6">
             <el-form-item prop="organ" label="用户">
-              <el-select v-model="formData.organ" multiple size="small">
+              <el-select v-model="formData.organ" multiple size="small" filterable>
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -54,7 +54,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item prop="messageType" label="信息类型">
-              <el-select v-model="formData.messageType" size="small">
+              <el-select v-model="formData.messageType" size="small" filterable>
                 <el-option
                   v-for="item in options"
                   :key="item.value"

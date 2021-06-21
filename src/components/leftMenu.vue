@@ -18,7 +18,7 @@
         :index="index + 1 + ''"
       >
         <template slot="title">
-          <i :class="item.icon" style="margin-right: 10px;color:#303133"></i>
+          <i :class="item.icon" style="margin-right: 10px; color: #303133;"></i>
           <span slot="title">{{ item.tit }}</span>
         </template>
         <router-link
@@ -61,7 +61,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
 .menu {
   width: 200px;
   height: 100%;

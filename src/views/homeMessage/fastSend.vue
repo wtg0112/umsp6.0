@@ -31,13 +31,12 @@
             <el-row :gutter="20">
               <el-col :span="16">
                 <el-form-item prop="qudao" label="选择渠道">
-                  <el-select v-model="formData.qudao">
+                  <el-select v-model="formData.qudao" filterable size="small">
                     <el-option
                       v-for="item in options"
                       :key="item.value"
                       :label="item.label"
                       :value="item.value"
-                      size="small"
                     >
                     </el-option>
                   </el-select>
@@ -47,7 +46,7 @@
             <el-row :gutter="20">
               <el-col :span="16">
                 <el-form-item prop="classify" label="信息分类">
-                  <el-select v-model="formData.classify" size="small">
+                  <el-select v-model="formData.classify" size="small" filterable>
                     <el-option
                       v-for="item in options"
                       :key="item.value"
@@ -62,7 +61,7 @@
             <el-row :gutter="20">
               <el-col :span="16">
                 <el-form-item prop="sign" label="使用签名">
-                  <el-select v-model="formData.sign" disabled size="small">
+                  <el-select v-model="formData.sign" disabled size="small" filterable>
                     <el-option
                       v-for="item in options"
                       :key="item.value"
@@ -83,6 +82,7 @@
                     placeholder="请选择..."
                     @change="showDialog"
                     size="small"
+                    filterable
                   >
                     <el-option
                       v-for="item in mailList"
@@ -107,8 +107,7 @@
                     prop="phone"
                     label="手机号"
                     :rules="{
-                      required: true,
-                      message: '请输入手机号',
+                      validator: phoneMulValidate,
                       trigger: 'blur'
                     }"
                   >
@@ -122,7 +121,7 @@
                     </el-input>
                   </el-form-item>
                   <p style="color: red; text-indent: 100px; margin-top: 20px;">
-                    (注意：多个手机号请换行隔开)
+                    (注意：多个手机号请换行隔开，最多1000个手机号)
                   </p>
                 </template>
                 <template v-else>
@@ -284,7 +283,7 @@
           <el-row :gutter="20">
             <el-col :span="10">
               <el-form-item prop="sel" label="组类别">
-                <el-select v-model="searchFormData.sel" size="small">
+                <el-select v-model="searchFormData.sel" size="small" filterable>
                   <el-option
                     v-for="item in organizeList"
                     :key="item.value"
@@ -300,7 +299,7 @@
                 prop="organize"
                 :label="searchFormData.sel === '0' ? '公共组' : '个人组'"
               >
-                <el-select v-model="searchFormData.organize" size="small">
+                <el-select v-model="searchFormData.organize" size="small" filterable>
                   <el-option
                     v-for="item in options"
                     :key="item.value"

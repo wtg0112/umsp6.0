@@ -5,6 +5,10 @@
     <div class="container">
       <el-row style="margin: 10px 0;" :gutter="20">
         <el-col :span="24">
+          <!-- 分页 -->
+          <div class="pagination">
+            <pagination />
+          </div>
           <!-- 面包屑 -->
           <div class="breadcrumb">
             <breadMenu />
@@ -17,7 +21,12 @@
           >
             <topTitle />
           </div>
-          <router-view />
+          <keep-alive>
+            <!-- 需要缓存的视图组件 -->
+            <router-view v-if="$route.meta.keepAlive"></router-view>
+          </keep-alive>
+          <!-- 不需要缓存的视图组件 -->
+          <router-view v-if="!$route.meta.keepAlive"></router-view>
         </el-col>
       </el-row>
     </div>
@@ -25,12 +34,14 @@
 </template>
 <script>
 import leftMenu from '@/components/leftMenu'
+import pagination from '@/components/pagination'
 import breadMenu from '@/components/breadcrumb'
 import topHead from '@/components/topHead'
 import homeMessage from '@/router/homeMessage'
 import topTitle from '../components/topTitle.vue'
 export default {
   components: {
+    pagination,
     leftMenu,
     topHead,
     breadMenu,

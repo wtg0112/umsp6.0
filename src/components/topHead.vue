@@ -13,7 +13,7 @@
             ><i class="el-icon-circle-plus"></i> 充值记录</el-dropdown-item
           >
           <el-dropdown-item command="cost"
-            ><i class="el-icon-remove"></i> 消费记录</el-dropdown-item
+            ><i class="el-icon-remove"></i> 扣费记录</el-dropdown-item
           >
           <el-dropdown-item command="edit"
             ><i class="el-icon-edit"></i> 修改密码</el-dropdown-item
@@ -108,7 +108,7 @@ export default {
       admin: 'admin', // 用户account
       toMenu: null,
       rechargeDialog: false, // 充值记录弹框显隐
-      costDialog: false, // 消费记录弹框显隐
+      costDialog: false, // 扣费记录弹框显隐
       pagesize: 5,
       currpage: 1,
       pagesizeCost: 5,
@@ -339,7 +339,7 @@ export default {
         // 充值记录
         this.recharge()
       } else if (command == 'cost') {
-        // 消费记录
+        // 扣费记录
         this.cost()
       } else if (command == 'edit') {
         // 修改密码
@@ -355,18 +355,18 @@ export default {
     recharge() {
       this.rechargeDialog = true
     },
-    // 消费记录
+    // 扣费记录
     cost() {
       this.costDialog = true
     },
-    // 切换页 方法
+    // 切换页 方法 => 充值记录
     handleCurrentChange(cpage) {
       this.currpage = cpage
     },
     handleSizeChange(psize) {
       this.pagesize = psize
     },
-    // 切换页 方法
+    // 切换页 方法 => 扣费记录
     handleCurrentChangeCost(cpage) {
       this.currpageCost = cpage
     },

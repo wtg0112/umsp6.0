@@ -1,4 +1,5 @@
 function getNowTime(isHour) {
+  // 获取当前时间
   var now = new Date()
   var year = now.getFullYear() // 得到年份
   var month = now.getMonth() // 得到月份
@@ -19,13 +20,37 @@ function getNowTime(isHour) {
   return defaultDate
 }
 
-function phoneValidate(data) {
-  var validate = data
-  if (/^1[3456789]d{9}$/.test(validate)) {
-    return true
+function phoneValidate(rule, value, callback) {
+  // 手机号验证
+  if (!value) {
+    return callback(new Error('手机号不能为空！'))
   } else {
-    return false
+    const reg = /^1[3456789]\d{9}$/
+    if (reg.test(value.replace(/(^\s*)|(\s*$)/g, ''))) { // 去除空格
+      callback()
+    } else {
+      return callback(new Error('请输入正确的手机号！'))
+    }
   }
 }
 
-export { getNowTime, phoneValidate }
+function phoneMulValidate(rule, value, callback) {
+  // 多行手机号验证
+  if (!value) {
+    return callback(new Error('手机号不能为空！'))
+  } else {
+    const reg = /^1[3456789]\d{9}$/
+    let data = value.split('\n')
+    if (data.length > 1000) {
+      return callback(new Error('手机号数量超过一千个！'))
+    } else {
+      data.forEach(item => {
+        if (!reg.test(item.replace(/(^\s*)|(\s*$)/g, ''))) { // 去除空格
+          return callback(new Error('请输入正确的手机号!'))
+        }
+      })
+    }
+  }
+}
+
+export { getNowTime, phoneValidate, phoneMulValidate }

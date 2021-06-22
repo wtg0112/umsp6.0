@@ -1,8 +1,8 @@
 <template>
   <div>
     <topHead :name="'平台超级管理员'" />
-    <leftMenu :list="list"  :openPath="openPath"  :currentPath="currentPath"  :isActive="isActive" v-if="list[0].menuList"/>
-    <div class="container" :class="{hasTagsView:needTagsView}" :style="isActive ? 'padding-left: 64px;' : ''">
+    <leftMenu :list="list"  :openPath="openPath"  :currentPath="currentPath" :isActive="isActive" v-if="list[0].menuList"/>
+    <div class="container" :class="{hasTagsView:needTagsView}" :style="isActive ? '' : 'padding-left: 64px;'">
       <el-row style="margin: 10px 0;" :gutter="20">
         <el-col :span="24">
           <!-- 左侧菜单栏折叠 -->

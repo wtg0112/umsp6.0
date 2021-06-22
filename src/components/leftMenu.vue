@@ -9,8 +9,10 @@
       :default-openeds="openPath"
       :default-active="currentPath"
       class="el-menu-vertical-demo"
-      :collapse="isActive"
+      :collapse="iscollapse"
       :unique-opened="true"
+      :collapse-transition="false"
+       mode="vertical"
     >
       <el-submenu
         v-for="(item, index) in list"
@@ -54,6 +56,11 @@ export default {
         default:false
       }
     },
+    computed: {
+    iscollapse() {
+      return !this.isActive
+    }
+  },
   data() {
     return {
     }

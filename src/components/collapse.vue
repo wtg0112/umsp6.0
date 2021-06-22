@@ -1,7 +1,6 @@
 <template>
   <div style="padding: 0 15px;" @click="toggleClick">
     <svg
-      :class="isActive"
       class="hamburger"
       viewBox="0 0 1024 1024"
       xmlns="http://www.w3.org/2000/svg"
@@ -18,12 +17,11 @@ export default {
   name: 'collapse',
     data() {
     return {
-      isActive: false,
     }
   },
   methods: {
     toggleClick() {
-      this.$emit('toggleClick',this.isActive)
+      this.$emit('toggleClick')
     }
   }
 }

@@ -13,10 +13,11 @@ export default {
   name: 'AppMain',
   computed: {
     cachedViews() {
+      console.log("ppooppp",this.$store.state.tagsView.cachedViews)
       return this.$store.state.tagsView.cachedViews
     },
     key() {
-      return this.$route.path
+      return this.$route.name
     }
   }
 }

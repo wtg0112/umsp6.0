@@ -91,6 +91,7 @@
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
                 :picker-options="pickerOptions"
+                value-format="yyyy-MM-dd"
                 size="small"
               >
               </el-date-picker>
@@ -156,7 +157,8 @@ export default {
         qudao: '',
         user: '',
         sCode: '',
-        eCode: ''
+        eCode: '',
+        time:[]
       },
       pickerOptions: {
         shortcuts: [
@@ -347,8 +349,8 @@ export default {
     }
   },
   created() {
-    this.formData.startTime = getNowTime(0) + ' 00:00:00'
-    this.formData.endTime = getNowTime(0) + ' 23:59:59'
+    this.formData.time[0] = getNowTime(0)
+    this.formData.time[1] = getNowTime(0)
   }
 }
 </script>

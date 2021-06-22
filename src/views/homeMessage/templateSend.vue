@@ -144,6 +144,7 @@
 </template>
 <script>
 export default {
+    name:'templateSend',
   data() {
     return {
       formData: {},

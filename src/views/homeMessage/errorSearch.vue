@@ -102,6 +102,7 @@
 import { getNowTime } from '@/utils/validate'
 
 export default {
+  name:'errorSearch',
   data() {
     return {
       ruleForm: {

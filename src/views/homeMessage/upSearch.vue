@@ -100,6 +100,7 @@
 import { getNowTime } from '@/utils/validate'
 
 export default {
+  name:'upSearch',
   data() {
     return {
       ruleForm: {

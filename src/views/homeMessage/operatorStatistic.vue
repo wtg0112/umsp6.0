@@ -159,6 +159,7 @@
 </template>
 <script>
 export default {
+  name:'operatorStatistic',
   data() {
     return {
       formData: {
@@ -442,7 +443,7 @@ export default {
       } else if ((balance = value - 30) < 10) {
         balance = new String(balance).substring(0, 4)
         if (balance <= 1) {
-          return '1万多条'
+          return '一万多条'
         }
         return balance + '(万)条'
       } else if ((balance = value - 40) < 10) {

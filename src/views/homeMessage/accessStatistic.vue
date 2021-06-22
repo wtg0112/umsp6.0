@@ -123,6 +123,7 @@
 import { getNowTime } from '@/utils/validate'
 
 export default {
+  name:'accessStatistic',
   data() {
     return {
      activeName: 'first',
@@ -135,16 +136,37 @@ export default {
 
       },
         totalData:{
-          legend: ['北京国都'],
-          xAxisData: ['2021-06-08','2021-06-09','2021-06-10','2021-06-11'],
-          barData: [10,10,20,30,40,50,30,20,60,70],
+          legend: '北京国都',
+          xAxisData: [
+            '2021-06-08',
+            '2021-06-09',
+            '2021-06-10',
+            '2021-06-11',
+            '2021-06-12',
+            '2021-06-13',
+            '2021-06-14',
+            '2021-06-15',
+            '2021-06-16',
+            '2021-06-17'],
+          barData: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
           title:'发送量对比图',
           company:'短信条数'
       },
         successData:{
-          legend: ['北京国都'],
-          xAxisData:['2021-06-08','2021-06-09','2021-06-10','2021-06-11'],
-          barData:['0.1','0.5','0.6','0.3','0.2','0.8','0.9'],
+          legend: '北京国都',
+          xAxisData:[
+            '2021-06-08',
+            '2021-06-09',
+            '2021-06-10',
+            '2021-06-11',
+            '2021-06-12',
+            '2021-06-13',
+            '2021-06-14',
+            '2021-06-15',
+            '2021-06-16',
+            '2021-06-17'
+            ],
+          barData:[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
           title:'成功率',
           company:'百分比'
       },
@@ -268,7 +290,7 @@ export default {
             })
         }else if(tab.index=='2'){
               this.$nextTick(() => {
-                  this.example.singleLine(this.echarts.init(this.$refs.successData),this.successData.xAxisData,this.successData.barData,this.successData.title,this.successData.company); 
+                  this.example.singleLine(this.echarts.init(this.$refs.successData),this.successData.xAxisData,this.successData.barData,this.successData.title,this.successData.company,this.totalData.legend); 
               })
         }
     }

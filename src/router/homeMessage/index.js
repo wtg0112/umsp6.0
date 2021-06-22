@@ -53,7 +53,7 @@ const homeMessage = [
         path: 'organStatistic',
         name: 'organStatistic',
         component: () => import('@/views/homeMessage/organStatistic'),
-        meta: {noCache: true,ititle: '按机构统计' }
+        meta: {noCache: true,title: '按机构统计' }
       },
       {
         path: 'operatorStatistic',

@@ -45,7 +45,11 @@
           </el-col>
           <el-col :span="6">
             <el-form-item prop="pici" label="批次号">
-              <el-input v-model="formData.pici" placeholder="批次号" size="small"></el-input>
+              <el-input
+                v-model="formData.pici"
+                placeholder="批次号"
+                size="small"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -96,11 +100,14 @@
         </el-row>
         <el-button type="primary" size="small">查询</el-button>
         <el-button type="primary" size="small">导出表格（全部）</el-button>
-        <span> (开始时间和结束时间在最近7天,请加入手机号精准查询)</span>
+        <span> (开始时间和结束时间在最近7天，请加入手机号精准查询)</span>
       </el-form>
     </el-card>
     <div class="table-container">
       <el-card class="box-card">
+        <!-- <el-popover placement="bottom" width="300" trigger="click">
+          <el-col :span="12"><el-checkbox v-model="checked" @change="showHide()">备选项</el-checkbox></el-col>
+        </el-popover> -->
         <el-table
           ref="filterTable"
           :data="
@@ -153,7 +160,7 @@ export default {
         user: '',
         sCode: '',
         eCode: '',
-        time:[]
+        time: []
       },
       pickerOptions: {
         shortcuts: [

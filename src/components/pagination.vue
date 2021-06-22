@@ -29,14 +29,6 @@ export default {
       this.tags.splice(index, 1)
     }
   },
-  // 列表页面的activated
-// activated() {
-//  if(!this.$route.meta.isUseCache){ //isUseCache 时添加中router中的元信息，判读是否要缓存
-//     this.tags = [] //清空原有数据
-//     this.onload() // 重新加载
-//   }
-//  this.$route.meta.isUseCache = false // 通过这个控制刷新
-// },
   watch: {
     $route(to, from) {
       console.log(this.$route)
@@ -46,6 +38,20 @@ export default {
       }
     }
   }
+  //     $route(to, from) {
+  //     // 如果要to(进入)的页面是需要keepAlive缓存的，把name push进include数组中
+  //     if (to.meta.keepAlive) {
+  //       !this.include.includes(to.name) && this.include.push(to.name);
+  //     }
+  //     // 如果 要 form(离开) 的页面是 keepAlive缓存的，
+  //     // 再根据 deepth 来判断是前进还是后退
+  //     // 如果是后退：
+  //     if (from.meta.keepAlive && to.meta.deepth < from.meta.deepth) {
+  //       const index = this.include.indexOf(from.name);
+  //       index !== -1 && this.include.splice(index, 1);
+  //     }
+  //   }
+  // }
 }
 </script>
 

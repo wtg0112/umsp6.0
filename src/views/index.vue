@@ -2,28 +2,29 @@
   <div>
     <topHead :name="'平台超级管理员'" />
     <leftMenu :list="list"  :openPath="openPath"  :currentPath="currentPath" v-if="list[0].menuList" @itemClick="cpnClick"/>
-    <div class="container" :style="isCollapse ? 'padding-left: 64px;' : ''">
+    <div class="container" :class="{hasTagsView:needTagsView}"  :style="isCollapse ? 'padding-left: 64px;' : ''">
       <el-row style="margin: 10px 0;" :gutter="20">
         <el-col :span="24">
           <!-- 分页 -->
           <!-- <div class="pagination">
             <pagination />
           </div> -->
+           
           <!-- 面包屑 -->
           <div class="breadcrumb">
             <breadMenu />
           </div>
+            <tags-view v-if="needTagsView" />
+         
           <!-- 标题 -->
-          <div
+          <!-- <div
             class="breadcrumb"
             v-if="$route.name != '首页'"
             style="margin-bottom: 0px; box-shadow: none; border-radius: 0px; border-bottom: 2px solid #eee;"
           >
             <topTitle />
-          </div>
-          <div class="page-container">
-                <router-view />
-          </div>
+          </div> -->
+            <app-main />
         </el-col>
       </el-row>
     </div>
@@ -32,17 +33,28 @@
 <script>
 import leftMenu from '@/components/leftMenu'
 import pagination from '@/components/pagination'
+import tagsView from '@/components/tagsView'
+import appMain from '@/components/AppMain'
 import breadMenu from '@/components/breadcrumb'
 import topHead from '@/components/topHead'
 import homeMessage from '@/router/homeMessage'
 import topTitle from '../components/topTitle.vue'
+import { mapState } from 'vuex'
 export default {
   components: {
     pagination,
+    tagsView,
     leftMenu,
     topHead,
     breadMenu,
-    topTitle
+    topTitle,
+    appMain
+  },
+    computed: {
+   
+  },
+    computed: {
+    ...mapState({needTagsView: state => state.settings.tagsView}),
   },
   data() {
     return {

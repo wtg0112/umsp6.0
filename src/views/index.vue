@@ -1,21 +1,18 @@
 <template>
   <div>
     <topHead :name="'平台超级管理员'" />
-    <leftMenu :list="list"  :openPath="openPath"  :currentPath="currentPath" v-if="list[0].menuList" @itemClick="cpnClick"/>
-    <div class="container" :class="{hasTagsView:needTagsView}"  :style="isCollapse ? 'padding-left: 64px;' : ''">
+    <leftMenu :list="list"  :openPath="openPath"  :currentPath="currentPath"  :isActive="isActive" v-if="list[0].menuList"/>
+    <div class="container" :class="{hasTagsView:needTagsView}" :style="isActive ? 'padding-left: 64px;' : ''">
       <el-row style="margin: 10px 0;" :gutter="20">
         <el-col :span="24">
-          <!-- 分页 -->
-          <!-- <div class="pagination">
-            <pagination />
-          </div> -->
-           
+          <!-- 左侧菜单栏折叠 -->
+           <collapse id="hamburger-container"  class="hamburger-container" @toggleClick="toggleSideBar" />
           <!-- 面包屑 -->
           <div class="breadcrumb">
             <breadMenu />
           </div>
+          <!-- 标签导航 -->
             <tags-view v-if="needTagsView" />
-         
           <!-- 标题 -->
           <!-- <div
             class="breadcrumb"
@@ -24,7 +21,7 @@
           >
             <topTitle />
           </div> -->
-            <app-main />
+            <router-view/>
         </el-col>
       </el-row>
     </div>
@@ -32,29 +29,30 @@
 </template>
 <script>
 import leftMenu from '@/components/leftMenu'
-import pagination from '@/components/pagination'
 import tagsView from '@/components/tagsView'
-import appMain from '@/components/AppMain'
 import breadMenu from '@/components/breadcrumb'
 import topHead from '@/components/topHead'
 import homeMessage from '@/router/homeMessage'
+import collapse from '@/components/collapse'
 import topTitle from '../components/topTitle.vue'
-import { mapState } from 'vuex'
+import { mapState,mapGetters } from 'vuex'
 export default {
   components: {
-    pagination,
     tagsView,
     leftMenu,
     topHead,
     breadMenu,
     topTitle,
-    appMain
+    collapse
   },
     computed: {
    
   },
     computed: {
     ...mapState({needTagsView: state => state.settings.tagsView}),
+    ...mapGetters([
+      'sidebar'
+    ])
   },
   data() {
     return {
@@ -67,22 +65,22 @@ export default {
       ],
       openPath:[],
       currentPath:this.$route.name,
-      isCollapse: false, // 是否折叠
+      isActive: true, // 是否折叠
     }
   },
   watch:{
     '$route':'getPath'
   },
   methods:{
+       toggleSideBar() {
+         this.isActive=!this.isActive
+     },
       getPath(){
         if(this.$route.name=='首页'){
           this.openPath=[]
           this.currentPath=null
         }
       },
-      cpnClick(item) {
-       this.isCollapse = item
-      }
  },
   created() {},
 
@@ -96,4 +94,16 @@ export default {
   padding: 50px 0 0 200px;
   transition: all .6s;
 }
+  .hamburger-container {
+    line-height: 46px;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+    transition: background .3s;
+    -webkit-tap-highlight-color:transparent;
+
+    &:hover {
+      background: rgba(0, 0, 0, .025)
+    }
+  }
 </style>

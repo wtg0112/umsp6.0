@@ -1,8 +1,5 @@
 <template>
   <div class="menu">
-    <div class="btn" @click="btnClick">
-      {{ isCollapse ? '' : '' }}
-    </div>
     <!-- <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
       <el-radio-button :label="false">展开</el-radio-button>
       <el-radio-button :label="true">收起</el-radio-button>
@@ -12,7 +9,7 @@
       :default-openeds="openPath"
       :default-active="currentPath"
       class="el-menu-vertical-demo"
-      :collapse="isCollapse"
+      :collapse="isActive"
       :unique-opened="true"
     >
       <el-submenu
@@ -51,19 +48,17 @@ export default {
       currentPath:{
         type: String,
         default:''
+      },
+      isActive:{
+        type:Boolean,
+        default:false
       }
     },
   data() {
     return {
-      isCollapse: false,
     }
   },
   methods: {
-    btnClick() {
-      this.isCollapse = !this.isCollapse
-      // 子组件向父组件发射自定义事件（自定义事件名字，自定义事件参数）
-      this.$emit('itemClick', this.isCollapse)
-    }
   }
 }
 </script>

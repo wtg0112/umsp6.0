@@ -136,15 +136,38 @@ export default {
 
       },
         totalData:{
-          xAxisData: ['2021-06-08','2021-06-09','2021-06-10','2021-06-11'],
-          barData: [1200, 800, 3000, 10000, 150000, 16000, 18000, 2000000],
-          title:'发总量数据图',
+          legend: '北京国都',
+          xAxisData: [
+            '2021-06-08',
+            '2021-06-09',
+            '2021-06-10',
+            '2021-06-11',
+            '2021-06-12',
+            '2021-06-13',
+            '2021-06-14',
+            '2021-06-15',
+            '2021-06-16',
+            '2021-06-17'],
+          barData: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+          title:'发送量对比图',
           company:'短信条数'
       },
         successData:{
-          xAxisData:['2021-06-08','2021-06-09','2021-06-10','2021-06-11'],
-          barData:['0.1','0.5','0.6','0.3','0.2','0.8','0.9'],
-          title:'成功率数据图',
+          legend: '北京国都',
+          xAxisData:[
+            '2021-06-08',
+            '2021-06-09',
+            '2021-06-10',
+            '2021-06-11',
+            '2021-06-12',
+            '2021-06-13',
+            '2021-06-14',
+            '2021-06-15',
+            '2021-06-16',
+            '2021-06-17'
+            ],
+          barData:[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+          title:'成功率',
           company:'百分比'
       },
       dateTime:[
@@ -250,13 +273,13 @@ export default {
     },
     handleClick(tab, event) {
         if(tab.index=='1'){
-              this.$nextTick(() => {
-                  this.example.column(this.echarts.init(this.$refs.totalData),this.totalData.xAxisData,this.totalData.barData,this.totalData.title,this.totalData.company);
-              })
+            this.$nextTick(() => {
+                this.example.column(this.echarts.init(this.$refs.totalData),this.totalData.xAxisData,this.totalData.barData,this.totalData.title,this.totalData.legend,this.totalData.company,80,0,10);
+            })
         }else if(tab.index=='2'){
               this.$nextTick(() => {
-                 this.example.singleLine(this.echarts.init(this.$refs.successData),this.successData.xAxisData,this.successData.barData,this.successData.title,this.successData.company);
-              }) 
+                  this.example.singleLine(this.echarts.init(this.$refs.successData),this.successData.xAxisData,this.successData.barData,this.successData.title,this.successData.company,this.totalData.legend); 
+              })
         }
     }
   },

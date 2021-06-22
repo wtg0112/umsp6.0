@@ -39,46 +39,46 @@ const homeMessage = [
       },
       {
         path: 'upSearch',
-        name: '上行查询',
+        name: 'upSearch',
         component: () => import('@/views/homeMessage/upSearch'),
         meta: {noCache: true,  title: '上行查询' }
       },
       {
         path: 'errorSearch',
-        name: '异常查询',
+        name: 'errorSearch',
         component: () => import('@/views/homeMessage/errorSearch'),
         meta: {noCache: true, title: '异常查询' }
       },
-      // {
-      //   path: 'organStatistic',
-      //   name: '按机构统计',
-      //   component: () => import('@/views/homeMessage/organStatistic'),
-      //   meta: { keepAlive: true, isUseCache: false, title: '按机构统计' }
-      // },
-      // {
-      //   path: 'operatorStatistic',
-      //   name: '按操作员统计',
-      //   component: () => import('@/views/homeMessage/operatorStatistic'),
-      //   meta: { keepAlive: true,isUseCache: false,  title: '按操作员统计' }
-      // },
-      // {
-      //   path: 'accessStatistic',
-      //   name: '按通道统计',
-      //   component: () => import('@/views/homeMessage/accessStatistic'),
-      //   meta: { keepAlive: true, isUseCache: false, title: '按通道统计' }
-      // },
-      // {
-      //   path: 'channelStatistic',
-      //   name: '按渠道统计',
-      //   component: () => import('@/views/homeMessage/channelStatistic'),
-      //   meta: { keepAlive: true,isUseCache: false,  title: '按渠道统计' }
-      // },
-      // {
-      //   path: 'accountRun',
-      //   name: '对账重跑',
-      //   component: () => import('@/views/homeMessage/accountRun'),
-      //   meta: { keepAlive: true, isUseCache: false, title: '对账重跑' }
-      // }
+      {
+        path: 'organStatistic',
+        name: 'organStatistic',
+        component: () => import('@/views/homeMessage/organStatistic'),
+        meta: {noCache: true,ititle: '按机构统计' }
+      },
+      {
+        path: 'operatorStatistic',
+        name: 'operatorStatistic',
+        component: () => import('@/views/homeMessage/operatorStatistic'),
+        meta: { noCache: true,title: '按操作员统计' }
+      },
+      {
+        path: 'accessStatistic',
+        name: 'accessStatistic',
+        component: () => import('@/views/homeMessage/accessStatistic'),
+        meta: { noCache: true,title: '按通道统计' }
+      },
+      {
+        path: 'channelStatistic',
+        name: 'channelStatistic',
+        component: () => import('@/views/homeMessage/channelStatistic'),
+        meta: { noCache: true,title: '按渠道统计' }
+      },
+      {
+        path: 'accountRun',
+        name: 'accountRun',
+        component: () => import('@/views/homeMessage/accountRun'),
+        meta: {  noCache: true,title: '对账重跑' }
+      }
     ]
   }
 ]

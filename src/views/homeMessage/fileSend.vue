@@ -274,6 +274,7 @@
 <script>
 // import qs from 'qs';
 export default {
+  name:'fileSend',
   data () {
     return {
       numTxt:0,

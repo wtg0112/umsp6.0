@@ -145,6 +145,7 @@
 import { getNowTime } from '@/utils/validate'
 
 export default {
+  name:'weekQuery',
   data() {
     return {
       formData: {

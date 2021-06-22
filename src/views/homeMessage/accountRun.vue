@@ -70,6 +70,7 @@
 import { getNowTime } from '@/utils/validate'
 
 export default {
+  name:'accountRun',
   data() {
     return {
       addRunDialog:false,

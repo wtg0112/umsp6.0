@@ -159,6 +159,7 @@
 </template>
 <script>
 export default {
+  name:'organStatistic',
   data() {
     return {
       formData: {

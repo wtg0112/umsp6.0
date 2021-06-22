@@ -351,6 +351,7 @@
 </template>
 <script>
 export default {
+  name:'fastSend',
   data() {
     return {
       startTime: '00:00', // 配置的允许发送开始时间

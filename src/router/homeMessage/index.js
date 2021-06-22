@@ -1,40 +1,40 @@
 const homeMessage = [
   {
     path: '/homeMessage',
-    name: '国内短信',
+    name: 'homeMessage',
     component: () => import('@/views/homeMessage'),
     meta: { noCache: true,title: '国内短信' },
     
     children: [
       {
-        path: 'fastSend',
-        name: '快速发送',
+        path: '/fastSend',
+        name: 'fastSend',
         component: () => import('@/views/homeMessage/fastSend'),
         meta: { noCache: true,title: '快速发送' },
         tips:'最多1000个手机号'
       },
       {
-        path: 'templateSend',
-        name: '模板发送',
+        path: '/templateSend',
+        name: 'templateSend',
         component: () => import('@/views/homeMessage/templateSend'),
         meta: { noCache: true, title: '模板发送' }
       },
       {
-        path: 'fileSend',
-        name: '文件发送',
+        path: '/fileSend',
+        name: 'fileSend',
         component: () => import('@/views/homeMessage/fileSend'),
         meta: {noCache: true, title: '文件发送' },
         tips:'建议：任务名称不能相同'
       },
       {
         path: 'weekQuery',
-        name: '近7天查询',
+        name: 'weekQuery',
         component: () => import('@/views/homeMessage/weekQuery'),
         meta: {title: '近7天查询' }
       },
       {
         path: 'historyQuery',
-        name: '历史查询',
+        name: 'historyQuery',
         component: () => import('@/views/homeMessage/historyQuery'),
         meta: {title: '历史查询' }
       },

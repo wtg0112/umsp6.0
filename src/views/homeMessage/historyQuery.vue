@@ -151,6 +151,7 @@
 import { getNowTime } from '@/utils/validate'
 
 export default {
+  name:'historyQuery',
   data() {
     return {
       formData: {

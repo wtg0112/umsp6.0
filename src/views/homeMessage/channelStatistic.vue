@@ -123,6 +123,7 @@
 import { getNowTime } from '@/utils/validate'
 
 export default {
+  name:'channelStatistic',
   data() {
     return {
      activeName: 'first',

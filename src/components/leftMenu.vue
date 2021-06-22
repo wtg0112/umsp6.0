@@ -10,7 +10,7 @@
     <!-- default-active="1-4-1" -->
     <el-menu
       :default-openeds="openPath"
-      :default-active="currentPath"
+      :default-active="activePath ? activePath : currentPath"
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
       :unique-opened="true"
@@ -56,6 +56,7 @@ export default {
   data() {
     return {
       isCollapse: false,
+      activePath: null
     }
   },
   methods: {
@@ -63,6 +64,12 @@ export default {
       this.isCollapse = !this.isCollapse
       // 子组件向父组件发射自定义事件（自定义事件名字，自定义事件参数）
       this.$emit('itemClick', this.isCollapse)
+    }
+  },
+  watch:{
+    // 监听路由，控制侧边栏显隐
+    $route(to, from) {
+      this.activePath = to.name
     }
   }
 }
@@ -73,7 +80,7 @@ export default {
   height: calc( 100% - 50px );
   position: fixed;
   left: 0;
-  z-index: 9999;
+  z-index: 1000;
   bottom: 0;
   border-right: solid 1px #e6e6e6;
   .el-menu-vertical-demo:not(.el-menu--collapse) {

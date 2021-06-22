@@ -335,9 +335,9 @@ export default {
       if(command == 'home') { // 主页
         this.toHome(command)
       } else if(command == 'plus') { // 充值记录
-
+        this.recharge()
       } else if(command == 'cost') { // 消费记录
-
+        this.cost()
       } else if(command == 'edit') { // 修改密码
 
       } else if(command == 'exit') { // 退出
@@ -387,7 +387,7 @@ export default {
     top: 0;
     left: 0;
     background-color: #303440;
-    z-index: 9999;
+    z-index: 999;
     text-align: right;
     .user {
       height: 30px;

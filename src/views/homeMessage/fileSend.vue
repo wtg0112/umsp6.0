@@ -322,7 +322,6 @@
                               <div v-else style="width:68px"></div>
                           </el-col>
                     </el-col>
-                  </el-col>
                   <!-- </el-form> -->
                 </el-row>
               </el-col>

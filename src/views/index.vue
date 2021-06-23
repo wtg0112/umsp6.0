@@ -1,12 +1,12 @@
 <template>
   <div>
-    <topHead :name="'平台超级管理员'" />
+    <topHead :name="'平台超级管理员'" @toggleClick="toggleSideBar" />
     <leftMenu :list="list"  :openPath="openPath"  :currentPath="currentPath" :isActive="isActive" v-if="list[0].menuList"/>
     <div class="container" :class="{hasTagsView:needTagsView}" :style="isActive ? '' : 'padding-left: 64px;'">
       <el-row style="margin: 10px 0;" :gutter="20">
         <el-col :span="24">
           <!-- 左侧菜单栏折叠 -->
-           <collapse id="hamburger-container"  class="hamburger-container" @toggleClick="toggleSideBar" />
+           <!-- <collapse id="hamburger-container"  class="hamburger-container" /> -->
           <!-- 面包屑 -->
           <div class="breadcrumb">
             <breadMenu />
@@ -46,7 +46,7 @@ export default {
     collapse
   },
     computed: {
-   
+
   },
     computed: {
     ...mapState({needTagsView: state => state.settings.tagsView}),
@@ -94,16 +94,16 @@ export default {
   padding: 50px 0 0 200px;
   transition: all .6s;
 }
-  .hamburger-container {
-    line-height: 46px;
-    height: 100%;
-    float: left;
-    cursor: pointer;
-    transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
+  // .hamburger-container {
+  //   line-height: 46px;
+  //   height: 100%;
+  //   float: left;
+  //   cursor: pointer;
+  //   transition: background .3s;
+  //   -webkit-tap-highlight-color:transparent;
 
-    &:hover {
-      background: rgba(0, 0, 0, .025)
-    }
-  }
+  //   &:hover {
+  //     background: rgba(0, 0, 0, .025)
+  //   }
+  // }
 </style>

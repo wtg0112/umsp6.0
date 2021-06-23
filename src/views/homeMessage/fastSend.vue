@@ -1,237 +1,281 @@
 <template>
   <div class="fastSend">
-    <el-card class="box-card">
-      <el-form
-        ref="formData"
-        :model="formData"
-        label-suffix="："
-        label-width="100px"
-      >
-        <el-row :gutter="20">
-          <el-col :span="14">
+    <el-card class="mainSet" v-loading="loading">
+      <el-container style="width: inherit">
+        <el-main style="margin-bottom: 20px">
+          <el-form
+            ref="formData"
+            :model="formData"
+            label-suffix="："
+            label-width="100px"
+          >
             <el-row :gutter="20">
-              <el-col :span="16">
-                <el-form-item
-                  prop="taskName"
-                  label="任务名称"
-                  :rules="{
-                    required: true,
-                    message: '请输入任务名称',
-                    trigger: 'blur'
-                  }"
-                >
-                  <el-input
-                    size="small"
-                    v-model="formData.taskName"
-                    placeholder="任务名称"
-                  ></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row :gutter="20">
-              <el-col :span="16">
-                <el-form-item prop="qudao" label="选择渠道">
-                  <el-select v-model="formData.qudao" filterable size="small">
-                    <el-option
-                      v-for="item in options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
+              <el-col :span="14">
+                <el-row :gutter="20">
+                  <el-col :span="16">
+                    <el-form-item
+                      prop="taskName"
+                      label="任务名称"
+                      :rules="{
+                        required: true,
+                        message: '请输入任务名称',
+                        trigger: 'blur'
+                      }"
                     >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row :gutter="20">
-              <el-col :span="16">
-                <el-form-item prop="classify" label="信息分类">
-                  <el-select v-model="formData.classify" size="small" filterable>
-                    <el-option
-                      v-for="item in options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row :gutter="20">
-              <el-col :span="16">
-                <el-form-item prop="sign" label="使用签名">
-                  <el-select v-model="formData.sign" disabled size="small" filterable>
-                    <el-option
-                      v-for="item in options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row :gutter="20">
-              <el-col :span="16">
-                <el-form-item prop="search" label="搜索类型">
-                  <el-select
-                    v-model="formData.search"
-                    clearable
-                    placeholder="请选择..."
-                    @change="showDialog"
-                    size="small"
-                    filterable
-                  >
-                    <el-option
-                      v-for="item in mailList"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row :gutter="20">
-              <el-col :span="16">
-                <template
-                  v-if="
-                    (!publicShowData || publicShowData.length == 0) &&
-                      (!personalShowData || personalShowData.length == 0)
-                  "
-                >
-                  <el-form-item
-                    prop="phone"
-                    label="手机号"
-                    :rules="{
-                      validator: phoneMulValidate,
-                      trigger: 'blur'
-                    }"
-                  >
-                    <el-input
-                      type="textarea"
-                      :rows="4"
-                      placeholder="手机号码"
-                      v-model="formData.phone"
-                      size="small"
-                    >
-                    </el-input>
-                  </el-form-item>
-                  <p style="color: red; text-indent: 100px; margin-top: 20px;">
-                    (注意：多个手机号请换行隔开，最多1000个手机号)
-                  </p>
-                </template>
-                <template v-else>
-                  <el-form-item prop="phone" label="手机号">
-                    <div
-                      class="tag-group"
-                      v-if="publicShowData && publicShowData.length != 0"
-                    >
-                      <span class="tag-group__title">公共：</span>
-                      <el-tag
-                        v-for="(item, index) in publicShowData"
-                        :key="item.groupId"
-                        closable
-                        @close="mailClose(0, index)"
+                      <el-input
+                        size="small"
+                        v-model="formData.taskName"
+                        placeholder="任务名称"
+                      ></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="16">
+                    <el-form-item prop="qudao" label="选择渠道">
+                      <el-select
+                        v-model="formData.qudao"
+                        filterable
+                        size="small"
                       >
-                        {{ item.name }}
-                      </el-tag>
-                    </div>
-                    <div
-                      class="tag-group"
-                      v-if="personalShowData && personalShowData.length != 0"
-                    >
-                      <span class="tag-group__title">个人：</span>
-                      <el-tag
-                        v-for="(item, index) in personalShowData"
-                        :key="item.groupId"
-                        closable
-                        @close="mailClose(1, index)"
+                        <el-option
+                          v-for="item in options"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                        >
+                        </el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="16">
+                    <el-form-item prop="classify" label="信息分类">
+                      <el-select
+                        v-model="formData.classify"
+                        size="small"
+                        filterable
                       >
-                        {{ item.name }}
-                      </el-tag>
-                    </div>
-                  </el-form-item>
-                </template>
-              </el-col>
-            </el-row>
-            <el-row :gutter="20">
-              <el-col :span="16">
-                <p style="text-indent: 100px; margin-bottom: 20px;">
-                  您的短信已经输入
-                  <span class="p_span">{{ word }}</span> 个字,拆分后,短信条数为
-                  <span class="p_span">{{ slip }}</span> 条
-                </p>
-                <el-form-item
-                  prop="content"
-                  label="发送内容"
-                  :rules="{
-                    required: true,
-                    message: '请输入发送内容',
-                    trigger: 'blur'
-                  }"
-                >
-                  <el-input
-                    type="textarea"
-                    :rows="4"
-                    placeholder="发送内容"
-                    v-model="formData.content"
-                    @input="contentInput"
-                    size="small"
+                        <el-option
+                          v-for="item in options"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                        >
+                        </el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="16">
+                    <el-form-item prop="sign" label="使用签名">
+                      <el-select
+                        v-model="formData.sign"
+                        disabled
+                        size="small"
+                        filterable
+                      >
+                        <el-option
+                          v-for="item in options"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                        >
+                        </el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="16">
+                    <el-form-item prop="search" label="搜索类型">
+                      <el-select
+                        v-model="formData.search"
+                        clearable
+                        placeholder="请选择..."
+                        @change="showDialog"
+                        size="small"
+                        filterable
+                      >
+                        <el-option
+                          v-for="item in mailList"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                        >
+                        </el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="16">
+                    <template
+                      v-if="
+                        (!publicShowData || publicShowData.length == 0) &&
+                          (!personalShowData || personalShowData.length == 0)
+                      "
+                    >
+                      <el-form-item
+                        prop="phone"
+                        label="手机号"
+                        :rules="{
+                          validator: phoneMulValidate,
+                          trigger: 'blur'
+                        }"
+                      >
+                        <el-input
+                          type="textarea"
+                          :rows="4"
+                          placeholder="手机号码"
+                          v-model="formData.phone"
+                          size="small"
+                        >
+                        </el-input>
+                      </el-form-item>
+                      <p
+                        style="color: red; text-indent: 100px; margin-top: 20px;"
+                      >
+                        (注意：多个手机号请换行隔开，最多1000个手机号)
+                      </p>
+                    </template>
+                    <template v-else>
+                      <el-form-item prop="phone" label="手机号">
+                        <div
+                          class="tag-group"
+                          v-if="publicShowData && publicShowData.length != 0"
+                        >
+                          <span class="tag-group__title">公共：</span>
+                          <el-tag
+                            v-for="(item, index) in publicShowData"
+                            :key="item.groupId"
+                            closable
+                            @close="mailClose(0, index)"
+                          >
+                            {{ item.name }}
+                          </el-tag>
+                        </div>
+                        <div
+                          class="tag-group"
+                          v-if="
+                            personalShowData && personalShowData.length != 0
+                          "
+                        >
+                          <span class="tag-group__title">个人：</span>
+                          <el-tag
+                            v-for="(item, index) in personalShowData"
+                            :key="item.groupId"
+                            closable
+                            @close="mailClose(1, index)"
+                          >
+                            {{ item.name }}
+                          </el-tag>
+                        </div>
+                      </el-form-item>
+                    </template>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="16">
+                    <p style="text-indent: 100px; margin-bottom: 20px;">
+                      您的短信已经输入
+                      <span class="p_span">{{ word }}</span>
+                      个字,拆分后,短信条数为
+                      <span class="p_span">{{ slip }}</span> 条
+                    </p>
+                    <el-form-item
+                      prop="content"
+                      label="发送内容"
+                      :rules="{
+                        required: true,
+                        message: '请输入发送内容',
+                        trigger: 'blur'
+                      }"
+                    >
+                      <el-input
+                        type="textarea"
+                        :rows="4"
+                        placeholder="发送内容"
+                        v-model="formData.content"
+                        @input="contentInput"
+                        size="small"
+                      >
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="16">
+                    <el-form-item prop="content" label="发送时间">
+                      <el-radio-group v-model="formData.sendType">
+                        <el-radio :label="1">即时发送</el-radio>
+                        <el-radio :label="2">定时发送</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="16" v-if="formData.sendType == '2'">
+                    <el-form-item prop="selectTime">
+                      <el-date-picker
+                        size="small"
+                        v-model.trim="formData.selectTime"
+                        type="datetime"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        placeholder="请选择发送时间"
+                      ></el-date-picker>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <!-- <div style="padding-left: 50px;">
+                  <el-button size="small" type="warning">预览</el-button>
+                  <el-button size="small" type="primary" @click="commit"
+                    >发送</el-button
                   >
-                  </el-input>
-                </el-form-item>
+                  <span style="display: inline-block; margin-left: 20px;"
+                    >允许的发送时间: {{ startTime }}---{{ endTime }}</span
+                  >
+                </div> -->
               </el-col>
-            </el-row>
-            <el-row :gutter="20">
-              <el-col :span="16">
-                <el-form-item prop="content" label="发送时间">
-                  <el-radio-group v-model="formData.sendType">
-                    <el-radio :label="1">即时发送</el-radio>
-                    <el-radio :label="2">定时发送</el-radio>
-                  </el-radio-group>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row :gutter="20">
-              <el-col :span="16" v-if="formData.sendType == '2'">
-                <el-form-item prop="selectTime">
-                  <el-date-picker
-                    size="small"
-                    v-model.trim="formData.selectTime"
-                    type="datetime"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    placeholder="请选择发送时间"
-                  ></el-date-picker>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <div style="padding-left: 50px;">
-              <el-button size="small" type="warning">预览</el-button>
-              <el-button size="small" type="primary" @click="commit"
-                >发送</el-button
+              <el-col
+                :span="10"
+                style="border-left:2px solid rgb(210,210,210);"
               >
-              <span style="display: inline-block; margin-left: 20px;"
-                >允许的发送时间: {{ startTime }}---{{ endTime }}</span
-              >
-            </div>
-          </el-col>
-          <el-col :span="10">
-            <div class="phone">
-              <div class="watchCotnentPhone">
-                {{
-                  formData.content !== ''
-                    ? formData.sign + formData.content
-                    : '请输入内容'
-                }}
+                <div class="preview" style="height: 600px;margin-top:-40px;">
+                  <div class="scrollBar">
+                    <div class="contentPhone">
+                      <div style="width: 100%; height: 350px">
+                        <div class="previewPhone">
+                          {{
+                            formData.content !== ''
+                              ? formData.sign + formData.content
+                              : '请输入内容'
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
+          </el-form>
+          <el-row :gutter="20">
+            <el-col
+              style="position:fixed;bottom:0px;background:#fff;border-top:1px solid rgb(210,210,210);"
+            >
+              <div style="margin:14px 20%;">
+                <el-button type="primary" size="small">预览</el-button>
+                <el-button type="primary" plain size="small">发送</el-button>
+                <span style="display: inline-block; margin-left: 20px;"
+                  >允许的发送时间: {{ startTime }}---{{ endTime }}</span
+                >
               </div>
-            </div>
-          </el-col>
-        </el-row>
-      </el-form>
+            </el-col>
+          </el-row>
+        </el-main>
+      </el-container>
     </el-card>
     <el-dialog
       :title="formData.search === '0' ? '公共通讯录' : '个人通讯录'"
@@ -299,7 +343,11 @@
                 prop="organize"
                 :label="searchFormData.sel === '0' ? '公共组' : '个人组'"
               >
-                <el-select v-model="searchFormData.organize" size="small" filterable>
+                <el-select
+                  v-model="searchFormData.organize"
+                  size="small"
+                  filterable
+                >
                   <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -351,7 +399,7 @@
 </template>
 <script>
 export default {
-  name:'fastSend',
+  name: 'fastSend',
   data() {
     return {
       startTime: '00:00', // 配置的允许发送开始时间
@@ -673,7 +721,8 @@ export default {
         children: 'children',
         label: 'name',
         disabled: 'chkDisabled'
-      }
+      },
+      loading: false
     }
   },
   methods: {
@@ -752,6 +801,9 @@ export default {
   mounted() {}
 }
 </script>
+<style lang="less" scoped>
+@import '../../assets/less/index.less';
+</style>
 <style lang="scss" scoped>
 .p_span {
   font-size: 20px;
@@ -784,5 +836,9 @@ export default {
     margin-left: 35px;
     overflow: auto;
   }
+}
+
+.mainSet .el-card__body {
+  padding: 0 !important;
 }
 </style>

@@ -7,7 +7,7 @@
     <!-- default-active="1-4-1" -->
     <el-menu
       :default-openeds="openPath"
-      :default-active="currentPath"
+      :default-active="activeRoute ? activeRoute : currentPath"
       class="el-menu-vertical-demo"
       :collapse="iscollapse"
       :unique-opened="true"
@@ -63,9 +63,15 @@ export default {
   },
   data() {
     return {
+      activeRoute: null,
     }
   },
   methods: {
+  },
+  watch:{
+    $route(to, from) {
+      this.activeRoute = to.name
+    }
   }
 }
 </script>

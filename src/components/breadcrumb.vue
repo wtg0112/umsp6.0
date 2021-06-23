@@ -11,7 +11,7 @@
           style="font-size: 15px; margin-right: 6px"
         ></i>
         <template v-if="item.path !== '/home'">
-          {{ $route.matched[1].meta.title }}
+          <span>{{ $route.matched[1].meta.title }}</span>
           <span> > </span>
         </template>
         <span>{{ item.meta.title }}</span>

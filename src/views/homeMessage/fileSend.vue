@@ -30,7 +30,7 @@
                   <el-row :gutter="20">
                       <el-col :span="16">
                       <el-form-item prop="selectChannel" label="选择渠道">
-                        <el-select  size="small" v-model="sendRuleForm.selectChannel"  placeholder="请选择渠道">
+                        <el-select  filterable size="small" v-model="sendRuleForm.selectChannel"  placeholder="请选择渠道">
                             <el-option
                               v-for="item in channelArr"
                               :key="item.value"
@@ -45,7 +45,7 @@
                   <el-row :gutter="20">
                     <el-col :span="16">
                       <el-form-item prop="infoList" label="信息分类">
-                       <el-select  size="small" v-model="sendRuleForm.infoList"  placeholder="请选择信息分类">
+                       <el-select  filterable size="small" v-model="sendRuleForm.infoList"  placeholder="请选择信息分类">
                         <el-option
                           v-for="item in infoArr"
                           :key="item.value"
@@ -75,7 +75,7 @@
                   <el-row :gutter="20">
                     <el-col :span="16">
                       <el-form-item prop="auditor" label="审核员" style="width:100%;">
-                          <el-select  size="small" v-model="sendRuleForm.auditor"  placeholder="请选择审核员">
+                          <el-select  filterable size="small" v-model="sendRuleForm.auditor"  placeholder="请选择审核员">
                             <el-option
                               v-for="item in auditArr"
                               :key="item.value"
@@ -212,7 +212,6 @@
                                 ref="cashCouponRuleListClear"
                                 style="margin-bottom:0px;"
                                 :prop="'batchSendList.'+index+'.startTime'"
-                                :rules="radioValueArr"
                               >
                                 <el-date-picker
                                   size="small"

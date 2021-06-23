@@ -17,10 +17,10 @@
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-      <li @click="refreshSelectedTag(selectedTag)">Refresh</li>
-      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">Close</li>
-      <li @click="closeOthersTags">Close Others</li>
-      <li @click="closeAllTags(selectedTag)">Close All</li>
+      <!-- <li @click="refreshSelectedTag(selectedTag)">Refresh</li> -->
+      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">关闭当前标签</li>
+      <li @click="closeOthersTags">关闭其它标签</li>
+      <li @click="closeAllTags(selectedTag)">关闭全部标签</li>
     </ul>
   </div>
 </template>
@@ -129,7 +129,7 @@ export default {
         const { fullPath } = view
         this.$nextTick(() => {
           this.$router.replace({
-            path: '/redirect' + fullPath
+            path: fullPath
           })
         })
       })

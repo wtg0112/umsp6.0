@@ -11,7 +11,7 @@
           <el-row :gutter="20">
           <el-col :span="5">
            <el-form-item prop="searchTimeRange" label="查询维度">
-                  <el-select v-model="ruleForm.searchTimeRange">
+                  <el-select filterable v-model="ruleForm.searchTimeRange">
                     <el-option
                       v-for="item in dateTime"
                       :key="item.value"
@@ -45,7 +45,7 @@
           </el-col>
            <el-col :span="6">
             <el-form-item prop="access" label="通道">
-               <el-select v-model="ruleForm.access">
+               <el-select filterable v-model="ruleForm.access">
                     <el-option
                       v-for="item in accessList"
                       :key="item.value"

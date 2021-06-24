@@ -60,15 +60,14 @@
         <el-table-column prop="time" label="时间"></el-table-column>
         <el-table-column prop="operate" label="操作" width="240">
           <template slot-scope="scope">
-            <el-button type="primary" round size="small">使用</el-button>
+            <el-button type="primary" size="small">使用</el-button>
             <el-button
               type="success"
-              round
               @click="templateEdit(scope.row)"
               size="small"
               >修改</el-button
             >
-            <el-button type="info" round size="small">停止</el-button>
+            <el-button type="info" size="small">停止</el-button>
           </template>
         </el-table-column>
       </el-table>

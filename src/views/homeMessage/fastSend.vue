@@ -25,7 +25,7 @@
                       <el-input
                         size="small"
                         v-model="formData.taskName"
-                        placeholder="任务名称"
+                        placeholder="请输入任务名称"
                       ></el-input>
                     </el-form-item>
                   </el-col>
@@ -129,7 +129,7 @@
                         <el-input
                           type="textarea"
                           :rows="4"
-                          placeholder="手机号码"
+                          placeholder="请输入手机号"
                           v-model="formData.phone"
                           size="small"
                         >

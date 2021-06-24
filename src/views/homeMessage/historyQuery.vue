@@ -99,7 +99,7 @@
           </el-col>
         </el-row>
         <el-button type="primary" size="small">查询</el-button>
-        <el-button type="primary" size="small">导出表格（全部）</el-button>
+        <el-button type="primary" size="small">导出表格</el-button>
         <span>
           (开始日期与结束日期，在同一个月，且包含今天和前六天请到近7天查询)</span
         >

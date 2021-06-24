@@ -36,7 +36,7 @@ export default {
   font-size: 16px;
   box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.1);
   border-radius: 6px;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
 }
 .avue-menu {
   position: absolute;

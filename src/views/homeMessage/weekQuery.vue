@@ -99,7 +99,7 @@
           </el-col>
         </el-row>
         <el-button type="primary" size="small">查询</el-button>
-        <el-button type="primary" size="small">导出表格（全部）</el-button>
+        <el-button type="primary" size="small">导出表格</el-button>
         <span> (开始时间和结束时间在最近7天，请加入手机号精准查询)</span>
       </el-form>
     </el-card>

@@ -38,6 +38,18 @@
       </el-form>
     </el-card>
     <el-card class="box-card">
+          <el-button-group class="buttonGroup">
+          <el-button
+            type="primary"
+
+            @click="templateAdd"
+            size="small"
+            >新增模板</el-button
+          >
+        <!-- <el-button type="primary"  size="small"
+          >删除</el-button -->
+        <!-- > -->
+      </el-button-group>
       <el-table
         ref="filterTable"
         :data="tableData.slice((currpage - 1) * pagesize, currpage * pagesize)"
@@ -60,29 +72,19 @@
         <el-table-column prop="time" label="时间"></el-table-column>
         <el-table-column prop="operate" label="操作" width="240">
           <template slot-scope="scope">
-            <el-button type="primary" size="small">使用</el-button>
+            <el-button type="primary"  size="small">使用</el-button>
             <el-button
               type="success"
+
               @click="templateEdit(scope.row)"
               size="small"
               >修改</el-button
             >
-            <el-button type="info" size="small">停止</el-button>
+            <el-button type="info"  size="small">停止</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-button-group class="buttonGroup">
-        <el-button
-          type="primary"
-          icon="el-icon-edit"
-          @click="templateAdd"
-          size="small"
-          >新增</el-button
-        >
-        <el-button type="primary" icon="el-icon-delete" size="small"
-          >删除</el-button
-        >
-      </el-button-group>
+
       <el-pagination
         background
         layout="prev, pager, next, sizes, total, jumper"
@@ -209,12 +211,17 @@ export default {
   position: relative;
 }
 .buttonGroup {
-  position: absolute;
-  bottom: 15px;
-  left: 40px;
+  // position: absolute;
+  // top: 0;
+  // left: 40px;
   button {
     margin-right: 20px !important;
     border-radius: 4px !important;
   }
 }
+</style>
+<style>
+.el-table th{
+   background:#f0f0f0;
+ }
 </style>

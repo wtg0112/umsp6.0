@@ -11,7 +11,7 @@
           <el-row :gutter="20">
              <el-col :span="6">
                     <el-form-item prop="channelName" label="渠道名称">
-                    <el-select v-model="ruleForm.channelName" size="small">
+                    <el-select filterable v-model="ruleForm.channelName" size="small">
                         <el-option
                         v-for="item in options"
                         :key="item.value"

@@ -30,34 +30,25 @@
                   </el-col>
                 </el-row>
 
-                <el-row :gutter="20">
-                  <el-col :span="16">
-                    <el-form-item prop="selectChannel" label="选择渠道">
-                      <el-select
-                        size="small"
-                        v-model="sendRuleForm.selectChannel"
-                        placeholder="请选择渠道"
-                      >
-                        <el-option
-                          v-for="item in channelArr"
-                          :key="item.value"
-                          :label="item.name"
-                          :value="item.value"
-                        >
-                        </el-option>
-                      </el-select>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
+                  <el-row :gutter="20">
+                      <el-col :span="16">
+                      <el-form-item prop="selectChannel" label="选择渠道">
+                        <el-select  filterable size="small" v-model="sendRuleForm.selectChannel"  placeholder="请选择渠道">
+                            <el-option
+                              v-for="item in channelArr"
+                              :key="item.value"
+                              :label="item.name"
+                              :value="item.value">
+                            </el-option>
+                          </el-select>
+                      </el-form-item>
+                      </el-col>
+                  </el-row>
 
-                <el-row :gutter="20">
-                  <el-col :span="16">
-                    <el-form-item prop="infoList" label="信息分类">
-                      <el-select
-                        size="small"
-                        v-model="sendRuleForm.infoList"
-                        placeholder="请选择信息分类"
-                      >
+                  <el-row :gutter="20">
+                    <el-col :span="16">
+                      <el-form-item prop="infoList" label="信息分类">
+                       <el-select  filterable size="small" v-model="sendRuleForm.infoList"  placeholder="请选择信息分类">
                         <el-option
                           v-for="item in infoArr"
                           :key="item.value"
@@ -91,29 +82,20 @@
                   </el-col>
                 </el-row>
 
-                <el-row :gutter="20">
-                  <el-col :span="16">
-                    <el-form-item
-                      prop="auditor"
-                      label="审核员"
-                      style="width:100%;"
-                    >
-                      <el-select
-                        size="small"
-                        v-model="sendRuleForm.auditor"
-                        placeholder="请选择审核员"
-                      >
-                        <el-option
-                          v-for="item in auditArr"
-                          :key="item.value"
-                          :label="item.name"
-                          :value="item.value"
-                        >
-                        </el-option>
-                      </el-select>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
+                  <el-row :gutter="20">
+                    <el-col :span="16">
+                      <el-form-item prop="auditor" label="审核员" style="width:100%;">
+                          <el-select  filterable size="small" v-model="sendRuleForm.auditor"  placeholder="请选择审核员">
+                            <el-option
+                              v-for="item in auditArr"
+                              :key="item.value"
+                              :label="item.name"
+                              :value="item.value">
+                            </el-option>
+                          </el-select>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
 
                 <el-row :gutter="20">
                   <el-col :span="16" class="form-item">
@@ -307,45 +289,39 @@
                         </el-form-item>
                       </el-col>
 
-                      <el-col :span="8">
-                        <el-form-item
-                          ref="cashCouponRuleListClear"
-                          style="margin-bottom:0px;"
-                          :prop="'batchSendList.' + index + '.startTime'"
-                          :rules="radioValueArr"
-                        >
-                          <el-date-picker
-                            size="small"
-                            v-model="sendRuleForm.batchSendList[index].endTime"
-                            type="datetime"
-                            value-format="yyyy-MM-dd HH:mm:ss"
-                            placeholder="请选择结束时间"
-                          ></el-date-picker>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="1" class="delBtn">
-                        <i
-                          class="el-icon-delete"
-                          v-if="sendRuleForm.batchSendList.length != 0"
-                          @click="handleDeleteType(index)"
-                        ></i>
-                        <el-button v-else
-                          ><i class="el-icon-delete" @click.stop></i
-                        ></el-button>
-                      </el-col>
-                    </div>
-                    <el-col :span="2" style="margin-top:10px">
-                      <el-button
-                        size="small"
-                        type="primary"
-                        class="el-icon-plus"
-                        v-if="index == sendRuleForm.batchSendList.length - 1"
-                        @click="handleAddType(index)"
-                        >添加</el-button
-                      >
-                      <div v-else style="width:68px"></div>
+                              <el-col :span="8">
+                                  <el-form-item
+                                ref="cashCouponRuleListClear"
+                                style="margin-bottom:0px;"
+                                :prop="'batchSendList.'+index+'.startTime'"
+                              >
+                                <el-date-picker
+                                  size="small"
+                                  v-model="sendRuleForm.batchSendList[index].endTime"
+                                  type="datetime"
+                                  value-format="yyyy-MM-dd HH:mm:ss"
+                                  placeholder="请选择结束时间"
+                                  ></el-date-picker>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="1"  class="delBtn">
+                              <i class="el-icon-delete"
+                                v-if="sendRuleForm.batchSendList.length!=0"
+                                @click="handleDeleteType(index)"
+                              ></i>
+                              <el-button v-else><i class="el-icon-delete" @click.stop ></i></el-button>
+                            </el-col>
+                          </div>
+                          <el-col :span="2" style="margin-top:10px">
+                              <el-button size="small"
+                                type="primary"
+                                class="el-icon-plus"
+                                v-if="index == sendRuleForm.batchSendList.length -1"
+                                @click="handleAddType(index)"
+                              >添加</el-button>
+                              <div v-else style="width:68px"></div>
+                          </el-col>
                     </el-col>
-                  </el-col>
                   <!-- </el-form> -->
                 </el-row>
               </el-col>

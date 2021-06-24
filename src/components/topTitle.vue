@@ -6,7 +6,7 @@
         :key="index"
         v-show="index === $route.matched.length - 1 && item.name"
       >
-        <span style="font-size:18px;font-weight:700;color:#555">{{ item.name }}</span>
+        <span style="font-size:18px;font-weight:700;color:#555">{{ item.meta.title }}</span>
         <!-- <span v-if="item.tips" style="font-size:14px;color:#555">({{item.tips}})</span> -->
       </el-breadcrumb-item>
     </el-breadcrumb>

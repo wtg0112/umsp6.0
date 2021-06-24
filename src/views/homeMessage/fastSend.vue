@@ -10,7 +10,7 @@
             label-width="100px"
           >
             <el-row :gutter="20">
-              <el-col :span="14">
+              <el-col :span="14" style="height:560px;overflow-y:scroll">
                 <el-row :gutter="20">
                   <el-col :span="16">
                     <el-form-item
@@ -18,7 +18,7 @@
                       label="任务名称"
                       :rules="{
                         required: true,
-                        message: '请输入任务名称',
+                        message: '请输入任务名称!',
                         trigger: 'blur'
                       }"
                     >
@@ -26,6 +26,7 @@
                         size="small"
                         v-model="formData.taskName"
                         placeholder="请输入任务名称"
+                        maxlength="10"
                       ></el-input>
                     </el-form-item>
                   </el-col>
@@ -94,7 +95,7 @@
                       <el-select
                         v-model="formData.search"
                         clearable
-                        placeholder="请选择..."
+                        placeholder="请选择搜索类型"
                         @change="showDialog"
                         size="small"
                         filterable
@@ -190,14 +191,14 @@
                       label="发送内容"
                       :rules="{
                         required: true,
-                        message: '请输入发送内容',
+                        message: '请输入发送内容!',
                         trigger: 'blur'
                       }"
                     >
                       <el-input
                         type="textarea"
                         :rows="4"
-                        placeholder="发送内容"
+                        placeholder="请输入发送内容"
                         v-model="formData.content"
                         @input="contentInput"
                         size="small"
@@ -267,7 +268,7 @@
             >
               <div style="margin:14px 20%;">
                 <el-button type="primary" size="small">预览</el-button>
-                <el-button type="primary" plain size="small">发送</el-button>
+                <el-button type="primary" plain size="small">创建</el-button>
                 <span style="display: inline-block; margin-left: 20px;"
                   >允许的发送时间: {{ startTime }}---{{ endTime }}</span
                 >

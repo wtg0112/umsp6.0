@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="organStatistic">
     <el-card class="box-card">
       <el-form
         ref="formData"
@@ -10,7 +10,12 @@
         <el-row :gutter="20">
           <el-col :span="6">
             <el-form-item prop="type" label="显示类型">
-              <el-select v-model="formData.type" size="small" filterable>
+              <el-select
+                v-model="formData.type"
+                size="small"
+                filterable
+                placeholder="请选择显示类型"
+              >
                 <el-option
                   v-for="item in timeType"
                   :key="item.value"
@@ -22,7 +27,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item prop="time" label="选择日期范围" label-width="150px">
+            <el-form-item prop="time" label="统计时间">
               <el-date-picker
                 v-model="formData.time"
                 type="daterange"
@@ -31,7 +36,6 @@
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
-                :picker-options="pickerOptions"
                 size="small"
               >
               </el-date-picker>
@@ -41,7 +45,13 @@
         <el-row :gutter="20">
           <el-col :span="6">
             <el-form-item prop="organ" label="机构">
-              <el-select v-model="formData.organ" multiple size="small" filterable>
+              <el-select
+                v-model="formData.organ"
+                multiple
+                size="small"
+                filterable
+                placeholder="请选择机构"
+              >
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -54,7 +64,12 @@
           </el-col>
           <el-col :span="6">
             <el-form-item prop="messageType" label="信息类型">
-              <el-select v-model="formData.messageType" size="small" filterable>
+              <el-select
+                v-model="formData.messageType"
+                size="small"
+                filterable
+                placeholder="请选择信息类型"
+              >
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -69,20 +84,20 @@
             <el-form-item prop="cost" label="价格(元)">
               <el-input
                 v-model="formData.cost"
-                placeholder="价格(元)"
+                placeholder="请输入价格(元)"
                 size="small"
               ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-button type="primary" size="small">查询</el-button>
-        <el-button type="primary" size="small">导出表格（全部）</el-button>
+        <el-button type="primary" plain size="small">导出表格</el-button>
         <span> （注：报表统计的统计时间截止到昨天24点)</span>
       </el-form>
     </el-card>
-    <el-tabs type="border-card" @tab-click="tabClick">
-      <el-tab-pane label="数据表">
-        <el-card class="box-card">
+    <el-card class="box-card">
+      <el-tabs @tab-click="tabClick">
+        <el-tab-pane label="数据表">
           <el-table
             ref="filterTable"
             :data="
@@ -134,70 +149,39 @@
             @size-change="handleSizeChange"
           >
           </el-pagination>
-        </el-card>
-      </el-tab-pane>
-      <el-tab-pane label="发送总量数据图">
-        <el-card class="box-card">
-          <div
-            id="chart1"
-            style="height: 500px; width: 1000px;"
-            ref="chart1"
-          ></div>
-        </el-card>
-      </el-tab-pane>
-      <el-tab-pane label="成功率数据图">
-        <el-card class="box-card">
-          <div
-            id="chart2"
-            style="height: 500px; width: 1000px;"
-            ref="chart2"
-          ></div>
-        </el-card>
-      </el-tab-pane>
-    </el-tabs>
+        </el-tab-pane>
+        <el-tab-pane label="发送总量数据图">
+          <el-card class="box-card">
+            <div
+              :style="{ width: '100%', height: '400px' }"
+              ref="chart1"
+            ></div>
+          </el-card>
+        </el-tab-pane>
+        <el-tab-pane label="成功率数据图">
+          <el-card class="box-card">
+            <div
+              :style="{ width: '100%', height: '400px' }"
+              ref="chart2"
+            ></div>
+          </el-card>
+        </el-tab-pane>
+      </el-tabs>
+    </el-card>
   </div>
 </template>
 <script>
+import { getNowTime } from '@/utils/validate'
 export default {
-  name:'organStatistic',
+  name: 'organStatistic',
   data() {
     return {
       formData: {
         qudao: '',
         user: '',
         sCode: '',
-        eCode: ''
-      },
-      pickerOptions: {
-        shortcuts: [
-          {
-            text: '最近一周',
-            onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-              picker.$emit('pick', [start, end])
-            }
-          },
-          {
-            text: '最近一个月',
-            onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-              picker.$emit('pick', [start, end])
-            }
-          },
-          {
-            text: '最近三个月',
-            onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-              picker.$emit('pick', [start, end])
-            }
-          }
-        ]
+        eCode: '',
+        time: []
       },
       timeType: [
         {
@@ -412,7 +396,7 @@ export default {
         }
       },
       sendInit1: 0,
-      sendInit2: 0,
+      sendInit2: 0
     }
   },
   methods: {
@@ -572,6 +556,7 @@ export default {
       var DataSend = this.dataChart1.sendData
       //初始化
       sendPng = this.$echarts.init(this.$refs.chart1)
+      sendPng.resize();
       sendPng.setOption(getChart1, true)
       //设置值
       var options = sendPng.getOption()
@@ -621,7 +606,9 @@ export default {
             axisLabel: {
               formatter: function(a) {
                 a = +a
-                return isFinite(a) ? $this.$echarts.format.addCommas(+a) + '' : ''
+                return isFinite(a)
+                  ? $this.$echarts.format.addCommas(+a) + ''
+                  : ''
               }
             }
           }
@@ -649,27 +636,38 @@ export default {
         series: []
       }
       var successPng
-			var DataSend = this.dataChart2.successData
+      var DataSend = this.dataChart2.successData
       //初始化
       successPng = this.$echarts.init(this.$refs.chart2)
-			successPng.setOption(getChart2, true)
-			//设置值
-			var options = successPng.getOption()
-			options.legend[0].data = DataSend.legend
-			options.xAxis[0].data = DataSend.category
-			options.series = DataSend.series
-			successPng.setOption(options)
+      successPng.resize();
+      successPng.setOption(getChart2, true)
+      //设置值
+      var options = successPng.getOption()
+      options.legend[0].data = DataSend.legend
+      options.xAxis[0].data = DataSend.category
+      options.series = DataSend.series
+      successPng.setOption(options)
     },
     tabClick(tab, event) {
-      if(tab.index == 1) {
-        this.chart1()
-      } else if(tab.index == 2) {
-        this.chart2()
+      if (tab.index == 1) {
+        this.$nextTick(() => {
+          this.chart1()
+        })
+      } else if (tab.index == 2) {
+        this.$nextTick(() => {
+          this.chart2()
+        })
       }
     }
   },
-  mounted() {
-
+  created() {
+    this.formData.time[0] = getNowTime(0)
+    this.formData.time[1] = getNowTime(0)
   }
 }
 </script>
+<style lang="scss" scoped>
+.organStatistic /deep/ .el-tabs__nav-scroll {
+  padding-left: 20px;
+}
+</style>

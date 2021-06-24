@@ -10,7 +10,7 @@
             class="Note-ruleForm"
             :inline-message="true"
             label-width="100px"
-            label-suffix=":"
+            label-suffix="："
           >
             <el-row :gutter="20">
               <el-col :span="14" style="height:560px;overflow-y:scroll">
@@ -24,31 +24,43 @@
                       <el-input
                         size="small"
                         v-model="sendRuleForm.taskName"
-                        placeholder="不超过10字符，用作备注标识"
+                        placeholder="请输入任务名称"
+                        maxlength="10"
                       ></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
 
-                  <el-row :gutter="20">
-                      <el-col :span="16">
-                      <el-form-item prop="selectChannel" label="选择渠道">
-                        <el-select  filterable size="small" v-model="sendRuleForm.selectChannel"  placeholder="请选择渠道">
-                            <el-option
-                              v-for="item in channelArr"
-                              :key="item.value"
-                              :label="item.name"
-                              :value="item.value">
-                            </el-option>
-                          </el-select>
-                      </el-form-item>
-                      </el-col>
-                  </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="16">
+                    <el-form-item prop="selectChannel" label="选择渠道">
+                      <el-select
+                        filterable
+                        size="small"
+                        v-model="sendRuleForm.selectChannel"
+                        placeholder="请选择渠道"
+                      >
+                        <el-option
+                          v-for="item in channelArr"
+                          :key="item.value"
+                          :label="item.name"
+                          :value="item.value"
+                        >
+                        </el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
 
-                  <el-row :gutter="20">
-                    <el-col :span="16">
-                      <el-form-item prop="infoList" label="信息分类">
-                       <el-select  filterable size="small" v-model="sendRuleForm.infoList"  placeholder="请选择信息分类">
+                <el-row :gutter="20">
+                  <el-col :span="16">
+                    <el-form-item prop="infoList" label="信息分类">
+                      <el-select
+                        filterable
+                        size="small"
+                        v-model="sendRuleForm.infoList"
+                        placeholder="请选择信息分类"
+                      >
                         <el-option
                           v-for="item in infoArr"
                           :key="item.value"
@@ -82,20 +94,30 @@
                   </el-col>
                 </el-row>
 
-                  <el-row :gutter="20">
-                    <el-col :span="16">
-                      <el-form-item prop="auditor" label="审核员" style="width:100%;">
-                          <el-select  filterable size="small" v-model="sendRuleForm.auditor"  placeholder="请选择审核员">
-                            <el-option
-                              v-for="item in auditArr"
-                              :key="item.value"
-                              :label="item.name"
-                              :value="item.value">
-                            </el-option>
-                          </el-select>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
+                <el-row :gutter="20">
+                  <el-col :span="16">
+                    <el-form-item
+                      prop="auditor"
+                      label="审核员"
+                      style="width:100%;"
+                    >
+                      <el-select
+                        filterable
+                        size="small"
+                        v-model="sendRuleForm.auditor"
+                        placeholder="请选择审核员"
+                      >
+                        <el-option
+                          v-for="item in auditArr"
+                          :key="item.value"
+                          :label="item.name"
+                          :value="item.value"
+                        >
+                        </el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
 
                 <el-row :gutter="20">
                   <el-col :span="16" class="form-item">
@@ -169,7 +191,7 @@
 
                 <el-row :gutter="20">
                   <el-col :span="16" class="textShowClass">
-                    <el-form-item prop="sendNote" label="发送内容:">
+                    <el-form-item prop="sendNote" label="发送内容">
                       <el-input
                         :style="{
                           background:
@@ -178,7 +200,7 @@
                         type="textarea"
                         style="width:100%;height:200px;position:relative;"
                         v-model.trim="sendRuleForm.sendNote"
-                        placeholder="请编辑您的短信"
+                        placeholder="请输入发送内容"
                       ></el-input>
                       <!-- <span style="position:absolute;bottom:17px;right:7px;z-index:999;background:#fff;">{{phoneNum}}/200</span> -->
                     </el-form-item>
@@ -289,39 +311,44 @@
                         </el-form-item>
                       </el-col>
 
-                              <el-col :span="8">
-                                  <el-form-item
-                                ref="cashCouponRuleListClear"
-                                style="margin-bottom:0px;"
-                                :prop="'batchSendList.'+index+'.startTime'"
-                              >
-                                <el-date-picker
-                                  size="small"
-                                  v-model="sendRuleForm.batchSendList[index].endTime"
-                                  type="datetime"
-                                  value-format="yyyy-MM-dd HH:mm:ss"
-                                  placeholder="请选择结束时间"
-                                  ></el-date-picker>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="1"  class="delBtn">
-                              <i class="el-icon-delete"
-                                v-if="sendRuleForm.batchSendList.length!=0"
-                                @click="handleDeleteType(index)"
-                              ></i>
-                              <el-button v-else><i class="el-icon-delete" @click.stop ></i></el-button>
-                            </el-col>
-                          </div>
-                          <el-col :span="2" style="margin-top:10px">
-                              <el-button size="small"
-                                type="primary"
-                                class="el-icon-plus"
-                                v-if="index == sendRuleForm.batchSendList.length -1"
-                                @click="handleAddType(index)"
-                              >添加</el-button>
-                              <div v-else style="width:68px"></div>
-                          </el-col>
+                      <el-col :span="8">
+                        <el-form-item
+                          ref="cashCouponRuleListClear"
+                          style="margin-bottom:0px;"
+                          :prop="'batchSendList.' + index + '.startTime'"
+                        >
+                          <el-date-picker
+                            size="small"
+                            v-model="sendRuleForm.batchSendList[index].endTime"
+                            type="datetime"
+                            value-format="yyyy-MM-dd HH:mm:ss"
+                            placeholder="请选择结束时间"
+                          ></el-date-picker>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="1" class="delBtn">
+                        <i
+                          class="el-icon-delete"
+                          v-if="sendRuleForm.batchSendList.length != 0"
+                          @click="handleDeleteType(index)"
+                        ></i>
+                        <el-button v-else
+                          ><i class="el-icon-delete" @click.stop></i
+                        ></el-button>
+                      </el-col>
+                    </div>
+                    <el-col :span="2" style="margin-top:10px">
+                      <el-button
+                        size="small"
+                        type="primary"
+                        class="el-icon-plus"
+                        v-if="index == sendRuleForm.batchSendList.length - 1"
+                        @click="handleAddType(index)"
+                        >添加</el-button
+                      >
+                      <div v-else style="width:68px"></div>
                     </el-col>
+                  </el-col>
                   <!-- </el-form> -->
                 </el-row>
               </el-col>
@@ -354,6 +381,9 @@
               <div style="margin:14px 20%;">
                 <el-button type="primary" size="small">预览</el-button>
                 <el-button type="primary" plain size="small">创建</el-button>
+                <span style="display: inline-block; margin-left: 20px;"
+                  >允许的发送时间: {{ startTime }}---{{ endTime }}</span
+                >
               </div>
             </el-col>
           </el-row>
@@ -368,6 +398,8 @@ export default {
   name: 'fileSend',
   data() {
     return {
+      startTime: '00:00', // 配置的允许发送开始时间
+      endTime: '23:59', // 配置的允许发送结束时间
       numTxt: 0,
       loading: false,
       selectShow: false,
@@ -458,7 +490,7 @@ export default {
       ruleFormRule: {
         //   {validator:limitPhone,trigger:['blur']
         taskName: [
-          { required: true, message: '请编辑您的任务名称!', trigger: 'blur' }
+          { required: true, message: '请输入任务名称!', trigger: 'blur' }
         ],
         selectChannel: [
           {
@@ -517,7 +549,7 @@ export default {
           }
         ],
         sendNote: [
-          { required: true, message: '请编辑您的短信内容!', trigger: 'blur' }
+          { required: true, message: '请输入短信内容!', trigger: 'blur' }
         ]
       }
     }

@@ -81,7 +81,7 @@ export default {
   height: calc( 100% - 50px );
   position: fixed;
   left: 0;
-  z-index: 9999;
+  z-index: 2000;
   bottom: 0;
   border-right: solid 1px #e6e6e6;
   .el-menu-vertical-demo:not(.el-menu--collapse) {

@@ -25,7 +25,7 @@
       </el-card>
        <el-row>
            <el-col :span="2">
-               <el-button type="primary" @click="addRunList">新增</el-button>
+               <el-button type="primary" @click="addRunList" size="small">新增</el-button>
            </el-col>
        </el-row>
          <el-dialog
@@ -58,7 +58,7 @@
                     </el-row>
                  </div>
              </el-row>
-           
+
             <span slot="footer" class="dialog-footer" style="text-align:center">
                  <el-button type="primary" @click="addRunDialog = false" size="small">保存</el-button>
                 <el-button @click="addRunDialog = false" size="small">关闭</el-button>

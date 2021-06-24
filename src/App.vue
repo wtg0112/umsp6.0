@@ -70,4 +70,7 @@ body {
 .el-tag{
   margin-right: 10px;
 }
+.el-table th {
+  background: #f0f0f0 !important;
+}
 </style>

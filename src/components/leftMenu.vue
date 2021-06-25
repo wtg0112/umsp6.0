@@ -12,7 +12,7 @@
       :collapse="iscollapse"
       :unique-opened="true"
       :collapse-transition="false"
-       mode="vertical"
+      mode="vertical"
     >
       <el-submenu
         v-for="(item, index) in list"
@@ -21,11 +21,11 @@
       >
         <template slot="title">
           <i :class="item.icon" style="margin-right: 10px; color: #303133;"></i>
-          <span slot="title">{{ item.tit }}</span>
+          <span slot="title">{{ item.meta.title }}</span>
         </template>
         <router-link
           :to="{ name: menu.name }"
-          v-for="(menu, menuList) in item.menuList"
+          v-for="(menu, menuList) in item.children"
           :key="menuList"
         >
           <el-menu-item :index="menu.name">
@@ -39,36 +39,39 @@
 <script>
 export default {
   props: {
-      list: {
-        type: Array,
-        default: () => { return [] }
-      },
-      openPath: {
-        type: Array,
-        default: () => { return [] }
-      },
-      currentPath:{
-        type: String,
-        default:''
-      },
-      isActive:{
-        type:Boolean,
-        default:false
+    list: {
+      type: Array,
+      default: () => {
+        return []
       }
     },
-    computed: {
+    openPath: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    currentPath: {
+      type: String,
+      default: ''
+    },
+    isActive: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
     iscollapse() {
       return !this.isActive
     }
   },
   data() {
     return {
-      activeRoute: null,
+      activeRoute: null
     }
   },
-  methods: {
-  },
-  watch:{
+  methods: {},
+  watch: {
     $route(to, from) {
       this.activeRoute = to.name
     }
@@ -78,12 +81,32 @@ export default {
 <style lang="scss" scoped>
 .menu {
   // width: 200px;
-  height: calc( 100% - 50px );
+  height: calc(100% - 50px);
   position: fixed;
   left: 0;
   z-index: 2000;
   bottom: 0;
   border-right: solid 1px #e6e6e6;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  /*定义滚动条轨道 内阴影+圆角*/
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  /*定义滑块 内阴影+圆角*/
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #555;
+  }
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     height: 100%;
@@ -92,7 +115,7 @@ export default {
   & /deep/ .el-menu {
     border-right: 0;
   }
-  .btn{
+  .btn {
     width: 48px;
     height: 48px;
     line-height: 48px;
@@ -105,11 +128,11 @@ export default {
     top: 0;
     transform: translateX(-50%);
     font-size: 24px;
-    transition: all .3s;
+    transition: all 0.3s;
     cursor: pointer;
     z-index: -1;
   }
-  &:hover .btn{
+  &:hover .btn {
     top: -24px;
   }
 }

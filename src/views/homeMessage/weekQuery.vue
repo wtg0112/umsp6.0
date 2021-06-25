@@ -312,10 +312,6 @@ export default {
     },
     handleSizeChange(psize) {
       this.pagesize = psize
-    },
-    // 进入某个选项
-    handleEnter(index, row) {
-      console.log(row.id)
     }
   },
   created() {

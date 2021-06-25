@@ -83,10 +83,11 @@ export default {
   // width: 200px;
   height: calc(100% - 50px);
   position: fixed;
-  left: 0;
+  left: 0px;
   z-index: 2000;
   bottom: 0;
-  border-right: solid 1px #e6e6e6;
+  // border-right: solid 1px #e6e6e6;
+  box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.1);
   overflow-y: scroll;
   overflow-x: hidden;
   /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
@@ -110,7 +111,6 @@ export default {
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     height: 100%;
-    box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.1);
   }
   & /deep/ .el-menu {
     border-right: 0;

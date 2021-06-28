@@ -22,7 +22,7 @@ export default {
         let option = {
             title: {
                 text: title,
-                left: 'center',
+                left: 'left',
                 bottom: 'bottom',
                 textStyle: {
                     fontWeight: 'normal',
@@ -33,7 +33,7 @@ export default {
                 trigger: 'item'
             },
             grid: {
-                left: '6%',
+                left: '1%',
                 right: '6%',
                 bottom: '8%',
                 containLabel: true,
@@ -191,7 +191,7 @@ export default {
         let option = {
             title: {
                 text: title,
-                left: 'center',
+                left: 'left',
                 bottom: 'bottom',
                 textStyle: {
                     fontWeight: 'normal',
@@ -210,7 +210,7 @@ export default {
                 },
             },
             tooltip: {
-                trigger: 'axis',
+                trigger: 'item',
                 axisPointer: {
                     // 坐标轴指示器，坐标轴触发有效
                     type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
@@ -221,20 +221,14 @@ export default {
                     return tar.name + '<br/>' + tar.seriesName + ' : ' + value
                 },
             },
-            grid: {
-                top: 30,
-                right: 70,
-                bottom: 50,
-                left: 60,
-            },
             legend: {
                 top: 7,
-                left: 47,
+                left: 0,
                 data:[legend],
             },
             grid: {
                 top: '15%',
-                left: '5%',
+                left: '1%',
                 right: '6%',
                 bottom: '5%',
                 containLabel: true,

@@ -199,14 +199,15 @@ export default {
 
 <style lang="scss" scoped>
 .tags-view-container {
-  height: 44px;
+  height: 61px;
   width: 100%;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   // background: #fff;
-  // border-bottom: 1px solid #d8dce5;
+  border-bottom: 1px solid #f0f0f0;
   // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
   .tags-view-wrapper {
     .tags-view-item {
+      background:#f0f0f0;
       display: inline-block;
       position: relative;
       cursor: pointer;
@@ -214,11 +215,11 @@ export default {
       line-height: 36px;
       // border: 1px solid #d8dce5;
       color: #495060;
-      background: #fff;
+      // background: #fff;
       padding: 0px 8px;
       font-size: 14px;
       margin-left: 3px;
-      margin-top: 4px;
+      margin-top: 13px;
       &:first-of-type {
         margin-left: 15px;
       }
@@ -268,26 +269,26 @@ export default {
 
 <style lang="scss">
 //reset element css of el-icon-close
-.tags-view-wrapper {
-  .tags-view-item {
-    .el-icon-close {
-      width: 16px;
-      height: 16px;
-      vertical-align: 2px;
-      border-radius: 50%;
-      text-align: center;
-      transition: all .3s cubic-bezier(.645, .045, .355, 1);
-      transform-origin: 100% 50%;
-      &:before {
-        transform: scale(.6);
-        display: inline-block;
-        vertical-align: -3px;
-      }
-      &:hover {
-        background-color: #b4bccc;
-        color: #fff;
-      }
-    }
-  }
-}
+// .tags-view-wrapper {
+//   .tags-view-item {
+//     .el-icon-close {
+//       width: 16px;
+//       height: 16px;
+//       vertical-align: 2px;
+//       border-radius: 50%;
+//       text-align: center;
+//       transition: all .3s cubic-bezier(.645, .045, .355, 1);
+//       transform-origin: 100% 50%;
+//       &:before {
+//         transform: scale(.6);
+//         display: inline-block;
+//         vertical-align: -3px;
+//       }
+//       &:hover {
+//         background-color: #b4bccc;
+//         color: #fff;
+//       }
+//     }
+//   }
+// }
 </style>

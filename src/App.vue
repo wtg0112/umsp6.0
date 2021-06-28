@@ -73,4 +73,18 @@ body {
 .el-table th {
   background: #f0f0f0 !important;
 }
+
+// 公共样式
+.el-card.is-always-shadow, .el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover{
+  box-shadow: none !important;
+  border-bottom:1px solid #f0f0f0 !important;
+}
+.el-card{
+  border:none !important;
+}
+.el-form-item{
+  margin-bottom:0px !important;
+}
+
+
 </style>

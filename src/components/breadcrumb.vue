@@ -41,9 +41,10 @@ export default {
   padding-left: 20px;
   background-color: #fff;
   font-size: 16px;
-  box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
-  margin-bottom: 10px;
+  // box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.1);
+  // border-radius: 6px;
+  border-bottom:1px solid #f0f0f0;
+  // margin-bottom: 10px;
 }
 .avue-menu {
   position: absolute;

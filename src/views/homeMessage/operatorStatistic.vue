@@ -90,7 +90,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-button type="primary" size="small">查询</el-button>
+        <el-button type="primary" size="small" style="margin-left:24px;">查询</el-button>
         <el-button type="primary" plain size="small">导出表格</el-button>
         <span> （注：报表统计的统计时间截止到昨天24点)</span>
       </el-form>

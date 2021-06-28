@@ -28,7 +28,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="2">
-              <el-button type="primary" style="margin-left: 30px;" size="small"
+              <el-button type="primary" style="margin-left: 30px;margin-top:4px;" size="small"
                 >查询</el-button
               >
             </el-col>
@@ -777,6 +777,7 @@ export default {
   // top: 0;
   // left: 40px;
   margin-bottom: 10px;
+  margin-left:14px;
   button {
     margin-right: 20px !important;
     border-radius: 4px !important;

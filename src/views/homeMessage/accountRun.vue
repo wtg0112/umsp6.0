@@ -7,10 +7,10 @@
           tableData.slice((currpage - 1) * pagesize, currpage * pagesize)
           "
         >
-          <el-table-column prop="runTime" label="重跑时间"  align='center'></el-table-column>
-          <el-table-column prop="runStatus" label="重跑状态" align='center'></el-table-column>
-          <el-table-column prop="doTime" label="执行时间" align='center'></el-table-column>
-          <el-table-column prop="desc" label="备注" align='center'></el-table-column>
+          <el-table-column prop="runTime" label="重跑时间" ></el-table-column>
+          <el-table-column prop="runStatus" label="重跑状态" ></el-table-column>
+          <el-table-column prop="doTime" label="执行时间"></el-table-column>
+          <el-table-column prop="desc" label="备注"></el-table-column>
         </el-table>
         <el-pagination
           background
@@ -24,7 +24,7 @@
         </el-pagination>
       </el-card>
        <el-row>
-           <el-col :span="2">
+           <el-col :span="2" style="margin-left:10px;">
                <el-button type="primary" @click="addRunList" size="small">新增</el-button>
            </el-col>
        </el-row>

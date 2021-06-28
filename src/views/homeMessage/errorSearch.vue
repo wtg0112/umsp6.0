@@ -52,7 +52,7 @@
             </el-col>
           </el-row>
           <el-row :gutter="20" style="margin-top:20px">
-            <el-col :span="3" style="margin-left:20px;">
+            <el-col :span="3" style="margin-left:18px;">
               <el-button type="primary" size="small">查询</el-button>
             </el-col>
           </el-row>

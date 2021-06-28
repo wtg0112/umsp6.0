@@ -81,6 +81,7 @@ body {
 }
 .el-card{
   border:none !important;
+  border-radius: 0px !important;
 }
 .el-form-item{
   margin-bottom:0px !important;

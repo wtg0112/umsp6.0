@@ -19,7 +19,7 @@ const routes = [
         path: '/home',
         name: '首页',
         component: () => import('@/views/home.vue'),
-        meta: { title: '首页' }
+        meta: { title: '首页',affix: true } //affix: true首页标签不能关闭固定展示
       },
       ...homeMessage,
       ...wechatMessage,
@@ -34,6 +34,11 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+////路由导航冗余报错（路由重复,解决点击首页标签关闭报错）
+const originalPush = VueRouter.prototype.push
+	VueRouter.prototype.push = function push(location) {
+	   return originalPush.call(this, location).catch(err => err)
+	}
 router.beforeEach((to, from, next) => {
   // console.log(to)
   next()

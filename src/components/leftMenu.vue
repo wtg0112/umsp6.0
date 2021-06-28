@@ -86,15 +86,15 @@ export default {
   left: 0px;
   z-index: 2000;
   bottom: 0;
-  // border-right: solid 1px #e6e6e6;
-  box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.1);
+  border-right: solid 1px #e6e6e6;
+  // box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.1);
   overflow-y: scroll;
   overflow-x: hidden;
   /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
   &::-webkit-scrollbar {
     width: 6px;
     height: 6px;
-    background-color: rgba(0, 0, 0, 0);
+    background-color:#f0f0f0;
   }
   /*定义滚动条轨道 内阴影+圆角*/
   &::-webkit-scrollbar-track {
@@ -106,7 +106,7 @@ export default {
   &::-webkit-scrollbar-thumb {
     border-radius: 5px;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #555;
+    background-color: #f0f0f0;
   }
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;

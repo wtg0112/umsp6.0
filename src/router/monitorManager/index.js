@@ -4,7 +4,7 @@ const monitorManager = [
     name: 'monitorManager',
     component: () => import('@/views/monitorManager'),
     meta: {title: '监控管理' },
-    icon: 'iconfont icon-jiankong',
+    icon: 'iconfont icon-jiankong1',
     children: [
       {
         path: 'operateLog',

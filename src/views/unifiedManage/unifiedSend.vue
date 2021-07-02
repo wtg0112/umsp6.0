@@ -9,7 +9,7 @@
             label-width="100px"
             label-suffix="："
           >
-      <el-card class="mainSet" v-loading="loading" style="width:1170px;overflow-X:scroll;">
+      <el-card class="mainSet" v-loading="loading" style="width:1170px;">
           <div style="width:90%;margin:30px auto 0 auto;"> 
               <el-steps :active="stepActive" finish-status="success">
                 <el-step title="步骤 1"></el-step>
@@ -322,10 +322,9 @@
                             </el-form-item>
                           </el-col>
                         </el-row>
-                 <el-footer style="margin-top:40px;">
-                     <el-button @click="rightmove"  type="primary" plain size="small" >下一步</el-button>
-                 </el-footer>
-               
+                        <el-footer style="margin-top:40px;">
+                            <el-button @click="rightmove"  type="primary" plain size="small" >下一步</el-button>
+                        </el-footer>
                   </el-main>
               </el-container>
 
@@ -812,12 +811,11 @@
                                     </div>
                           </div>
                         </el-tab-pane>
-                      
                       </el-tabs>
-                        <div style="float:left;margin-top:20px;"> 
+                      <div style="float:left;margin-top:20px;"> 
                         <el-button @click="leftmove"  type="primary" plain size="small">上一步</el-button>
                         <el-button @click="rightmove"  type="primary" plain size="small">下一步</el-button>
-                        </div>
+                      </div>
                     </el-main>
                 </el-container>
 
@@ -1165,10 +1163,6 @@ export default {
 
     },
     handleClick(tab,index){
-
-    },
-    stepOne(){
-      this.$router.push({path:'/modulePreview'})
 
     },
      leftmove() {

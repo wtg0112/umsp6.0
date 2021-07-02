@@ -296,7 +296,7 @@ export default {
   },
   data() {
     return {
-      activeName: 'third',
+      activeName: 'first',
       // tag1
       formData: {
         phone: '',
@@ -429,7 +429,7 @@ export default {
       },
       // tag2
       // tag3
-      adding: true, // 添加分组按钮
+      adding: false, // 添加分组按钮
       groupFormData: {},
       groupData: [
         {

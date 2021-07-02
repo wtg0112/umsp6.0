@@ -171,7 +171,13 @@
             <el-button type="primary" size="small">查询</el-button>
             <el-button type="primary" plain size="small">重置</el-button>
             <span class="customer">当前条件匹配{{ customers }}位客户</span>
-            <el-button type="text" size="small" icon="el-icon-tickets">详情</el-button>
+            <el-button
+              type="text"
+              size="small"
+              icon="el-icon-tickets"
+              @click="drawerShow = true"
+              >详情</el-button
+            >
           </div>
         </el-col>
       </el-row>
@@ -182,10 +188,33 @@
       >
         <div style="margin:14px 20%;">
           <el-button type="primary" size="small">保存</el-button>
-          <el-button type="primary" plain size="small" @click="goBack">返回</el-button>
+          <el-button type="primary" plain size="small" @click="goBack"
+            >返回</el-button
+          >
         </div>
       </el-col>
     </el-row>
+    <el-drawer
+      title="筛选详情"
+      :visible.sync="drawerShow"
+      direction="rtl"
+      size="40%"
+    >
+      <span class="customer">当前条件匹配{{ customers }}位客户</span>
+      <el-table :data="gridData">
+        <el-table-column
+          property="date"
+          label="日期"
+          width="150"
+        ></el-table-column>
+        <el-table-column
+          property="name"
+          label="姓名"
+          width="200"
+        ></el-table-column>
+        <el-table-column property="address" label="地址"></el-table-column>
+      </el-table>
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -225,7 +254,30 @@ export default {
       checkboxGroup2: [],
       conditionList1: [], // 自定义标签筛选堆
       conditionList2: [], // 系统标签筛选堆
-      conditionList: [] // 整体标签筛选堆
+      conditionList: [], // 整体标签筛选堆
+      drawerShow: false,
+      gridData: [
+        {
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }
+      ]
     }
   },
   created() {
@@ -247,10 +299,10 @@ export default {
         arr.push(obj)
       })
       // 先判断是添加项还是删除项
-      if (arr.length > this.conditionList1.length) {
+      if (arr.length >= this.conditionList1.length) {
         // 将添加的项直接插入到整体中
         this.conditionList.push(arr[arr.length - 1])
-      } else {
+      } else if(arr.length < this.conditionList1.length) {
         // 获取到取消的选项
         let del = this.conditionList1.filter(
           v => !arr.some(item => item.tagName === v.tagName)
@@ -272,10 +324,10 @@ export default {
         arr.push(obj)
       })
       // 先判断是添加项还是删除项
-      if (arr.length > this.conditionList2.length) {
+      if (arr.length >= this.conditionList2.length) {
         // 将添加的项直接插入到整体中
         this.conditionList.push(arr[arr.length - 1])
-      } else {
+      } else if(arr.length < this.conditionList2.length) {
         // 获取到取消的选项
         let del = this.conditionList2.filter(
           v => !arr.some(item => item.tagName === v.tagName)
@@ -291,8 +343,6 @@ export default {
     // 删除筛选项
     delCondition(index) {
       let obj = this.conditionList[index]
-      console.log(this.checkboxGroup1)
-      console.log(obj)
       // 删除左侧多选框的选中效果
       if (obj.tagType == '1') {
         // 0 => 系统标签，1 => 自定义标签
@@ -304,7 +354,6 @@ export default {
         this.checkboxGroup2 = this.checkboxGroup2.filter(
           item => item != obj.tagName
         )
-        console.log(this.checkboxGroup2)
       }
       // 删除对应索引下的筛选项
       this.conditionList.splice(index, 1)
@@ -346,6 +395,30 @@ export default {
     }
     &:last-child .el-checkbox-button__inner {
       border-radius: 4px;
+    }
+  }
+  & /deep/ .el-drawer {
+    padding: 20px;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    .customer{
+      display: block;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .el-drawer__header {
+      margin-bottom: 10px;
+      padding: 0;
+      span {
+        outline: none;
+        border: none;
+        font-size: 16px;
+      }
+      .el-drawer__close-btn{
+        outline: none;
+        border: none;
+      }
     }
   }
 }
@@ -390,7 +463,7 @@ export default {
     padding: 0 20px;
     box-sizing: border-box;
     background-color: #fff;
-    .customer{
+    .customer {
       display: inline-block;
       margin: 0 20px;
     }

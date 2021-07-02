@@ -7,14 +7,11 @@ function errorCreate (msg) {
   throw error
 }
 
-// var api = 'http://www.hi-daas.com' // 张
-// var api = 'http://192.168.20.71:83' // 樊
-// var api = 'http://wk.hi-daas.com' // 王坤
-var api = 'http://huang.hi-daas.com' // 黄文辉
+var api = '192.168.1.122:30000' // 内网
 
 // 创建一个 axios 实例
 const service = axios.create({
-  baseURL: process.env.NODE_ENV == 'development' ? api : 'http://newapi.hi-daas.com'
+  baseURL: process.env.NODE_ENV == 'development' ? api : 'http://49.7.58.171:8383'
   // timeout: 5000  //请求超时时间
 })
 

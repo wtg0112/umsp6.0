@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'index',
+  name: 'monitorManager',
   computed: {
     cachedViews() {
       return this.$store.state.tagsView.cachedViews

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'mailMessage',
+  name: 'unifiedManage',
   computed: {
     cachedViews() {
       return this.$store.state.tagsView.cachedViews

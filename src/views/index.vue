@@ -83,7 +83,6 @@ export default {
   },
   created() {
     this.list = router.options.routes[0].children.splice(1, router.options.routes[0].children.length - 1)
-    console.log(this.list)
   }
 }
 </script>

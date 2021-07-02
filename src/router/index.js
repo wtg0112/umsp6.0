@@ -6,7 +6,6 @@ import appPush from './appPush' // APP推送
 import monitorManager from './monitorManager' // 监控管理
 import mailMessage from './mailMessage' // 邮件消息
 import fiveGenerationMessage from './fiveGenerationMessage' // 5G消息
-import sendManager from './sendManager'
 import unifiedManage from './unifiedManage' // 统一管理
 
 Vue.use(VueRouter)
@@ -24,7 +23,6 @@ const routes = [
         meta: { title: '首页',affix: true } //affix: true首页标签不能关闭固定展示
       },
       ...homeMessage,
-      ...sendManager,
       ...wechatMessage,
       ...appPush,
       ...monitorManager,

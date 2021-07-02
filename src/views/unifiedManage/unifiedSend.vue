@@ -10,7 +10,15 @@
             label-suffix="："
           >
       <el-card class="mainSet" v-loading="loading" style="width:1170px;overflow-X:scroll;">
-         <ul class="module-list" :style="{'width':'3510px','margin-left': xxx *1170 + 'px'}">
+          <div style="width:90%;margin:30px auto"> 
+              <el-steps :active="stepActive" finish-status="success">
+                <el-step title="步骤 1"></el-step>
+                <el-step title="步骤 2"></el-step>
+                <el-step title="步骤 3"></el-step>
+            </el-steps>
+          </div>
+         
+         <ul class="module-list" :style="{'width':'3510px','margin-left': moveIndex *1170 + 'px'}">
               <el-container style="width:1170px;float:left;">
                 <el-main style="margin-bottom: 20px">
                         <el-row :gutter="20">
@@ -403,7 +411,7 @@
 
                                 <el-row :gutter="20">
                                   <el-col :span="16">
-                                    <el-form-item prop="sendRuleForm.inputChain"  v-if="sendRuleForm.outChain=='2'">
+                                    <el-form-item prop="inputChain"  v-if="sendRuleForm.outChain=='2'">
                                       <el-input  v-model="sendRuleForm.inputChain"  placeholder="输入链接，必须以'http://'或'https://'开头"></el-input>
                                     </el-form-item>
                                   </el-col>
@@ -458,11 +466,11 @@
 
                                 <el-row :gutter="20" style="margin-top:20px">
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="尾号">
+                                          <el-form-item prop="sendWxName" label="尾号">
                                               <el-input
                                                       type="textarea"
                                                       style="width:80%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendWxName"
                                                       placeholder="请输入尾号"
                                               ></el-input>
                                               <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
@@ -474,11 +482,11 @@
                                 </el-row>
                                   <el-row :gutter="20">
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="交易时间">
+                                          <el-form-item prop="sendWxTime" label="交易时间">
                                               <el-input
                                                       type="textarea"
                                                       style="width:80%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendWxTime"
                                                       placeholder="请输入交易时间"
                                               ></el-input>
                                                  <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
@@ -490,11 +498,11 @@
                                 </el-row>
                                   <el-row :gutter="20">
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="交易类型">
+                                          <el-form-item prop="sendWxType" label="交易类型">
                                               <el-input
                                                       type="textarea"
                                                       style="width:80%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendWxType"
                                                       placeholder="请输入交易类型"
                                               ></el-input>
                                                 <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
@@ -506,11 +514,11 @@
                                 </el-row>
                                   <el-row :gutter="20">
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="交易金额">
+                                          <el-form-item prop="sendWxMoney" label="交易金额">
                                               <el-input
                                                       type="textarea"
                                                       style="width:80%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendWxMoney"
                                                       placeholder="请输入交易金额"
                                               ></el-input>
                                                  <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
@@ -522,12 +530,12 @@
                                 </el-row>
                                   <el-row :gutter="20">
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="账户余额">
+                                          <el-form-item prop="activeData" label="{DATA}">
                                               <el-input
                                                       type="textarea"
                                                       style="width:80%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
-                                                      placeholder="请输入账户余额"
+                                                      v-model.trim="sendRuleForm.activeData"
+                                                      placeholder="请输入"
                                               ></el-input>
                                                  <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
                                                 <el-color-picker   v-model="color5"></el-color-picker>
@@ -539,8 +547,8 @@
                               </div>
                                <el-row :gutter="20">
                                   <el-col :span="20">
-                                    <el-form-item prop="outChain" label="插入链接">
-                                      <el-radio-group v-model="sendRuleForm.outChain">
+                                    <el-form-item prop="outWxChain" label="插入链接">
+                                      <el-radio-group v-model="sendRuleForm.outWxChain">
                                         <el-radio :label="1">无</el-radio>
                                         <el-radio :label="2">跳转链接（支持外链）</el-radio>
                                         <el-radio :label="3">跳转小程序</el-radio>
@@ -550,18 +558,18 @@
                                 </el-row>
                                   <el-row :gutter="20">
                                   <el-col :span="16">
-                                    <el-form-item prop="sendRuleForm.inputChain"  v-if="sendRuleForm.outChain=='2'">
-                                      <el-input  v-model="sendRuleForm.inputChain"  placeholder="输入链接，必须以'http://'或'https://'开头"></el-input>
+                                    <el-form-item prop="inputWxChain"  v-if="sendRuleForm.outWxChain=='2'">
+                                      <el-input  v-model="sendRuleForm.inputWxChain"  placeholder="输入链接，必须以'http://'或'https://'开头"></el-input>
                                     </el-form-item>
                                   </el-col>
                                 </el-row>
                                   <el-row :gutter="20">
                                   <el-col :span="16">
-                                    <el-form-item prop="sendRuleForm.inputChain"  v-if="sendRuleForm.outChain=='3'">
-                                      <el-input  v-model="sendRuleForm.inputAppChain"  placeholder="请输入已关联的小程序appid"></el-input>
+                                    <el-form-item prop="inputWxAppChain"  v-if="sendRuleForm.outWxChain=='3'">
+                                      <el-input  v-model="sendRuleForm.inputWxAppChain"  placeholder="请输入已关联的小程序appid"></el-input>
                                     </el-form-item>
-                                     <el-form-item prop="sendRuleForm.inputChain"  v-if="sendRuleForm.outChain=='3'" style="margin-top:8px;">
-                                       <el-input  v-model="sendRuleForm.inputAppPath"  placeholder="请输入小程序页面路径，例：pages/index"></el-input>
+                                     <el-form-item prop="inputWxAppPath"  v-if="sendRuleForm.outWxChain=='3'" style="margin-top:8px;">
+                                       <el-input  v-model="sendRuleForm.inputWxAppPath"  placeholder="请输入小程序页面路径，例：pages/index"></el-input>
                                     </el-form-item>
                                   </el-col>
                                 </el-row>
@@ -572,12 +580,30 @@
                                           <div class="scrollBar">
                                             <div class="contentPhone">
                                               <div style="width: 100%; height: 350px">
-                                                <div class="previewPhone">
-                                                  {{
-                                                    sendRuleForm.sendNote != ''
-                                                      ? sendRuleForm.useLabel + sendRuleForm.sendNote
-                                                      : '请输入内容'
-                                                  }}
+                                                <div class="previewWx">
+                                                     <p>交易提醒</p>
+                                                     <p style="margin-top:20px;">尊敬的客户：</p>
+                                                     <p style="margin-top:20px;">您尾号 {{
+                                                        sendRuleForm.sendWxName
+                                                         ? sendRuleForm.sendWxName  : '${name}'
+                                                       }}借记卡最新交易如下：
+                                                     </p>
+                                                     <p>交易时间：{{
+                                                        sendRuleForm.sendWxTime
+                                                         ? sendRuleForm.sendWxTime  : '${time}'
+                                                       }}
+                                                     </p>
+                                                       <p>交易类型：{{
+                                                        sendRuleForm.sendWxType
+                                                         ? sendRuleForm.sendWxType  : '${type}'
+                                                       }}
+                                                     </p>
+                                                     <p>交易金额：{{
+                                                        sendRuleForm.sendWxMoney
+                                                         ? sendRuleForm.sendWxMoney  : '${money}'
+                                                       }}
+                                                     </p>
+                                                      <p style="margin:10px 0;">点击"查看详情"立即查阅您的账户的财务记录。</p>
                                                 </div>
                                               </div>
                                             </div>
@@ -592,11 +618,11 @@
                                 <el-row :gutter="20" style="margin-top:20px">
                                 
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="尾号">
+                                          <el-form-item prop="sendAppName" label="尾号">
                                               <el-input
                                                       type="textarea"
                                                       style="width:100%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendAppName"
                                                       placeholder="请输入尾号"
                                               ></el-input>
                                           </el-form-item>
@@ -604,11 +630,11 @@
                                 </el-row>
                                   <el-row :gutter="20">
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="交易时间">
+                                          <el-form-item prop="sendAppTime" label="交易时间">
                                               <el-input
                                                       type="textarea"
                                                       style="width:100%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendAppTime"
                                                       placeholder="请输入交易时间"
                                               ></el-input>
                                           </el-form-item>
@@ -616,11 +642,11 @@
                                 </el-row>
                                   <el-row :gutter="20">
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="交易类型">
+                                          <el-form-item prop="sendAppType" label="交易类型">
                                               <el-input
                                                       type="textarea"
                                                       style="width:100%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendAppType"
                                                       placeholder="请输入交易类型"
                                               ></el-input>
                                           </el-form-item>
@@ -628,11 +654,11 @@
                                 </el-row>
                                   <el-row :gutter="20">
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="交易金额">
+                                          <el-form-item prop="sendAppMoney" label="交易金额">
                                               <el-input
                                                       type="textarea"
                                                       style="width:100%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendAppMoney"
                                                       placeholder="请输入交易金额"
                                               ></el-input>
                                           </el-form-item>
@@ -640,11 +666,11 @@
                                 </el-row>
                                   <el-row :gutter="20">
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="账户余额">
+                                          <el-form-item prop="sendAppAccount" label="账户余额">
                                               <el-input
                                                       type="textarea"
                                                       style="width:100%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendAppAccount"
                                                       placeholder="请输入账户余额"
                                               ></el-input>
                                           </el-form-item>
@@ -658,12 +684,27 @@
                                           <div class="scrollBar">
                                             <div class="contentPhone">
                                               <div style="width: 100%; height: 350px">
-                                                <div class="previewPhone">
-                                                  {{
-                                                    sendRuleForm.sendNote != ''
-                                                      ? sendRuleForm.useLabel + sendRuleForm.sendNote
-                                                      : '请输入内容'
-                                                  }}
+                                                  <div class="previewPhone">
+                                                   <span>【国都互联】您尾号为
+                                                     {{
+                                                       sendRuleForm.sendAppName
+                                                      ? sendRuleForm.sendAppName  : '${name}'
+                                                    }}
+                                                    的京卡于
+                                                     {{
+                                                       sendRuleForm.sendAppTime
+                                                      ? sendRuleForm.sendAppTime  : '${time}'
+                                                    }}
+                                                    通过手机银行转账支出
+                                                     {{
+                                                       sendRuleForm.sendAppMoney
+                                                      ? sendRuleForm.sendAppMoney  : '${money}'
+                                                    }}元。
+                                                     活期余额
+                                                      {{
+                                                       sendRuleForm.sendAppAccount
+                                                      ? sendRuleForm.sendAppAccount  : '${money}'
+                                                    }}元。</span>
                                                 </div>
                                               </div>
                                             </div>
@@ -678,11 +719,11 @@
                                 <el-row :gutter="20" style="margin-top:20px">
                                 
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="尾号">
+                                          <el-form-item prop="sendMailName" label="尾号">
                                               <el-input
                                                       type="textarea"
                                                       style="width:100%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendMailName"
                                                       placeholder="请输入尾号"
                                               ></el-input>
                                           </el-form-item>
@@ -690,11 +731,11 @@
                                 </el-row>
                                   <el-row :gutter="20">
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="交易时间">
+                                          <el-form-item prop="sendMailTime" label="交易时间">
                                               <el-input
                                                       type="textarea"
                                                       style="width:100%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendMailTime"
                                                       placeholder="请输入交易时间"
                                               ></el-input>
                                           </el-form-item>
@@ -702,11 +743,11 @@
                                 </el-row>
                                   <el-row :gutter="20">
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="交易类型">
+                                          <el-form-item prop="sendMailType" label="交易类型">
                                               <el-input
                                                       type="textarea"
                                                       style="width:100%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendMailType"
                                                       placeholder="请输入交易类型"
                                               ></el-input>
                                           </el-form-item>
@@ -714,11 +755,11 @@
                                 </el-row>
                                   <el-row :gutter="20">
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="交易金额">
+                                          <el-form-item prop="sendMailMoney" label="交易金额">
                                               <el-input
                                                       type="textarea"
                                                       style="width:100%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendMailMoney"
                                                       placeholder="请输入交易金额"
                                               ></el-input>
                                           </el-form-item>
@@ -726,11 +767,11 @@
                                 </el-row>
                                   <el-row :gutter="20">
                                       <el-col :span="22">
-                                          <el-form-item prop="business" label="账户余额">
+                                          <el-form-item prop="sendMailAccount" label="账户余额">
                                               <el-input
                                                       type="textarea"
                                                       style="width:100%;position:relative;"
-                                                      v-model.trim="sendRuleForm.manualInput"
+                                                      v-model.trim="sendRuleForm.sendMailAccount"
                                                       placeholder="请输入账户余额"
                                               ></el-input>
                                           </el-form-item>
@@ -744,12 +785,27 @@
                                           <div class="scrollBar">
                                             <div class="contentPhone">
                                               <div style="width: 100%; height: 350px">
-                                                <div class="previewPhone">
-                                                  {{
-                                                    sendRuleForm.sendNote != ''
-                                                      ? sendRuleForm.useLabel + sendRuleForm.sendNote
-                                                      : '请输入内容'
-                                                  }}
+                                                  <div class="previewPhone">
+                                                   <span>【国都互联】您尾号为
+                                                     {{
+                                                       sendRuleForm.sendMailName
+                                                      ? sendRuleForm.sendMailName  : '${name}'
+                                                    }}
+                                                    的京卡于
+                                                     {{
+                                                       sendRuleForm.sendMailTime
+                                                      ? sendRuleForm.sendMailTime  : '${time}'
+                                                    }}
+                                                    通过手机银行转账支出
+                                                     {{
+                                                       sendRuleForm.sendMailMoney
+                                                      ? sendRuleForm.sendMailMoney  : '${money}'
+                                                    }}元。
+                                                     活期余额
+                                                      {{
+                                                       sendRuleForm.sendMailAccount
+                                                      ? sendRuleForm.sendMailAccount  : '${money}'
+                                                    }}元。</span>
                                                 </div>
                                               </div>
                                             </div>
@@ -815,7 +871,7 @@
                         </el-form-item>
                       </el-col>
                    </el-row>  
-                   <el-row>
+                   <el-row style="margin-top:30px;">
                      <el-button @click="leftmove"  type="primary" plain size="small">上一步</el-button>
                      <el-button type="primary">确认发送</el-button>
                    </el-row>
@@ -833,6 +889,7 @@ export default {
   name: 'send',
   data() {
     return {
+      stepActive:0,
       tabActiveChange:'first',
       startTime: '00:00', // 配置的允许发送开始时间
       endTime: '23:59', // 配置的允许发送结束时间
@@ -995,6 +1052,28 @@ export default {
         outChain:1,
         inputChain:'',
 
+        sendWxName:'',
+        sendWxTime:'',
+        sendWxType:'',
+        sendWxMoney:'',
+        activeData:'',
+        outWxChain:1,
+        inputWxChain:'',
+        inputWxAppChain:'',
+        inputWxAppPath:'',
+        activeData:'',
+
+       sendAppName:'',
+       sendAppTime:'',
+       sendAppType:'',
+       sendAppMoney:'',
+       sendAppAccount:'',
+
+       sendMailName:'',
+       sendMailTime:'',
+       sendMailType:'',
+       sendMailMoney:'',
+       sendMailAccount:'',
 
     
 
@@ -1007,7 +1086,7 @@ export default {
           }
         ]
       },
-      xxx:'0',
+      moveIndex:'0',
       mobilPhone: '',
       ruleFormRule: {
         //   {validator:limitPhone,trigger:['blur']
@@ -1082,6 +1161,10 @@ export default {
 
   mounted() {},
   methods: {
+    nextStep(){
+       if (this.stepActive++ > 2) this.stepActive = 0;
+
+    },
     handleClick(tab,index){
 
     },
@@ -1090,14 +1173,17 @@ export default {
 
     },
      leftmove() {
-                if (this.xxx < 0) {
-                    this.xxx += 1;
+                if (this.moveIndex < 0) {
+                    this.moveIndex += 1;
                 }
+                if (this.stepActive-- < 0) this.stepActive = 0;
       },
      rightmove() {
-                if (this.xxx > -(3 + this.xxx)) {
-                    this.xxx -= 1;
+                if (this.moveIndex > -(3 + this.moveIndex)) {
+                    this.moveIndex -= 1;
                 }
+               if (this.stepActive++ > 2) this.stepActive = 0;
+                
       },
     selectChange() {},
     //添加分时分量

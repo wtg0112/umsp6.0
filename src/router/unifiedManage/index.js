@@ -11,6 +11,12 @@ const unifiedManage = [
         name: 'userManage',
         component: () => import('@/views/unifiedManage/userManage'),
         meta: { title: '客户管理' }
+      },
+      {
+        path: 'unifiedSend',
+        name: 'unifiedSend',
+        component: () => import('@/views/unifiedManage/unifiedSend'),
+        meta: { title: '统一发送' }
       }
     ]
   }

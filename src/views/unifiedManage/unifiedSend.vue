@@ -10,7 +10,7 @@
             label-suffix="："
           >
       <el-card class="mainSet" v-loading="loading" style="width:1170px;overflow-X:scroll;">
-          <div style="width:90%;margin:30px auto"> 
+          <div style="width:90%;margin:30px auto 0 auto;"> 
               <el-steps :active="stepActive" finish-status="success">
                 <el-step title="步骤 1"></el-step>
                 <el-step title="步骤 2"></el-step>
@@ -583,25 +583,25 @@
                                                 <div class="previewWx">
                                                      <p>交易提醒</p>
                                                      <p style="margin-top:20px;">尊敬的客户：</p>
-                                                     <p style="margin-top:20px;">您尾号 {{
+                                                     <p style="margin-top:20px;">您尾号 <span :style="{'color':color1}">{{
                                                         sendRuleForm.sendWxName
                                                          ? sendRuleForm.sendWxName  : '${name}'
-                                                       }}借记卡最新交易如下：
+                                                       }}</span>借记卡最新交易如下：
                                                      </p>
-                                                     <p>交易时间：{{
+                                                     <p>交易时间：<span :style="{'color':color2}">{{
                                                         sendRuleForm.sendWxTime
                                                          ? sendRuleForm.sendWxTime  : '${time}'
-                                                       }}
+                                                       }}</span>
                                                      </p>
-                                                       <p>交易类型：{{
+                                                       <p>交易类型：<span :style="{'color':color3}">{{
                                                         sendRuleForm.sendWxType
                                                          ? sendRuleForm.sendWxType  : '${type}'
-                                                       }}
+                                                       }}</span>
                                                      </p>
-                                                     <p>交易金额：{{
+                                                     <p>交易金额：<span :style="{'color':color4}">{{
                                                         sendRuleForm.sendWxMoney
                                                          ? sendRuleForm.sendWxMoney  : '${money}'
-                                                       }}
+                                                       }}</span>
                                                      </p>
                                                       <p style="margin:10px 0;">点击"查看详情"立即查阅您的账户的财务记录。</p>
                                                 </div>
@@ -717,7 +717,6 @@
                               <span style="display:block;float:left;">业务变量：</span>
                               <div style="display:inline-block;width:50%;height:360px;border:2px solid #eee">
                                 <el-row :gutter="20" style="margin-top:20px">
-                                
                                       <el-col :span="22">
                                           <el-form-item prop="sendMailName" label="尾号">
                                               <el-input
@@ -781,7 +780,7 @@
                           </div>
 
                           <div class="rightBox" style="width:28%;margin-top:20px;float:right;margin-right:40px;">
-                                      <div class="preview" style="height:524px;margin-top:-40px;">
+                                      <div class="preview" style="height:600px;margin-top:-40px;">
                                           <div class="scrollBar">
                                             <div class="contentPhone">
                                               <div style="width: 100%; height: 350px">

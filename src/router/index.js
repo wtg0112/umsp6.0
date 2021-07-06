@@ -4,6 +4,7 @@ import homeMessage from './homeMessage' // 国内短信
 import wechatMessage from './wechatMessage' // 微信消息
 import appPush from './appPush' // APP推送
 import monitorManager from './monitorManager' // 监控管理
+import mixMessage from './mixMessage'
 import mailMessage from './mailMessage' // 邮件消息
 import fiveGenerationMessage from './fiveGenerationMessage' // 5G消息
 import unifiedManage from './unifiedManage' // 统一管理
@@ -28,6 +29,7 @@ const routes = [
       ...monitorManager,
       ...mailMessage,
       ...fiveGenerationMessage,
+      ...mixMessage,
       ...unifiedManage
     ]
   }

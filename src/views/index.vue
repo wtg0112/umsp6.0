@@ -17,9 +17,9 @@
           <!-- 左侧菜单栏折叠 -->
           <!-- <collapse id="hamburger-container"  class="hamburger-container" /> -->
           <!-- 面包屑 -->
-          <div class="breadcrumb">
+          <!-- <div class="breadcrumb">
             <breadMenu />
-          </div>
+          </div> -->
           <!-- 标签导航 -->
           <tags-view v-if="needTagsView" />
           <!-- 标题 -->

@@ -8,6 +8,7 @@ import mixMessage from './mixMessage'
 import mailMessage from './mailMessage' // 邮件消息
 import fiveGenerationMessage from './fiveGenerationMessage' // 5G消息
 import messageMarket from './messageMarket' // 消息营销
+import reportManage from './reportManage' // 通讯管理
 
 Vue.use(VueRouter)
 const routes = [
@@ -29,6 +30,7 @@ const routes = [
       ...monitorManager,
       ...mailMessage,
       ...fiveGenerationMessage,
+      ...reportManage,
       ...mixMessage,
       ...messageMarket
     ]

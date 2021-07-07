@@ -76,8 +76,9 @@
 
                         <el-row>
                       <el-tabs v-model="tabActiveChange" @tab-click="handleClick">
-                        <el-tab-pane label="国内短信模板" name="first">  
-                          <div class="leftBox" style="width:68%;margin-top:20px;float:left">
+                        <el-tab-pane label="国内短信模板" name="first">
+                          <div v-if="sendRuleForm.moduleType=='0'">
+                              <div class="leftBox" style="width:68%;margin-top:20px;float:left">
                              <el-row :gutter="20">
                                <el-col>
                                     <span style="display:block;float:left;">业务变量：</span>
@@ -125,198 +126,200 @@
                                       </el-col>
                                 </el-row>
                               </div>
-                                <!-- <el-row :gutter="20">
-                                  <el-col :span="16">
-                                    <el-form-item prop="outChain" label="插入链接">
-                                      <el-radio-group v-model="sendRuleForm.outChain">
-                                        <el-radio :label="1">无</el-radio>
-                                        <el-radio :label="2">跳转链接（支持外链）</el-radio>
-                                      </el-radio-group>
-                                    </el-form-item>
-                                  </el-col>
-                                </el-row>
 
-                                <el-row :gutter="20">
-                                  <el-col :span="16">
-                                    <el-form-item prop="inputChain"  v-if="sendRuleForm.outChain=='2'">
-                                      <el-input  v-model="sendRuleForm.inputChain"  placeholder="输入链接，必须以'http://'或'https://'开头"></el-input>
-                                    </el-form-item>
-                                  </el-col>
-                                </el-row>
-                          </div> -->
-
-                          <div class="rightBox" style="width:28%;margin-top:20px;float:right;margin-right:40px;">
-                                      <div class="preview" style="height: 600px;margin-top:-40px;">
-                                          <div class="scrollBar">
-                                            <div class="contentPhone">
-                                              <div style="width: 100%; height: 350px">
-                                                <div class="previewPhone">
-                                                   <span>【国都互联】您尾号为
-                                                     {{
-                                                       sendRuleForm.sendNoteName
-                                                      ? sendRuleForm.sendNoteName  : '${name}'
-                                                    }}
-                                                    的京卡于
-                                                     {{
-                                                       sendRuleForm.sendNoteTime
-                                                      ? sendRuleForm.sendNoteTime  : '${time}'
-                                                    }}
-                                                    通过手机银行转账支出
-                                                     {{
-                                                       sendRuleForm.sendNoteMoney
-                                                      ? sendRuleForm.sendNoteMoney  : '${money}'
-                                                    }}元。
-                                                     活期余额
-                                                      {{
-                                                       sendRuleForm.sendActiveMoney
-                                                      ? sendRuleForm.sendActiveMoney  : '${money}'
-                                                    }}元。</span>
+                              <div class="rightBox" style="width:28%;margin-top:20px;float:right;margin-right:40px;">
+                                          <div class="preview" style="height: 600px;margin-top:-40px;">
+                                              <div class="scrollBar">
+                                                <div class="contentPhone">
+                                                  <div style="width: 100%; height: 350px">
+                                                    <div class="previewPhone">
+                                                      <span>【国都互联】您尾号为
+                                                        {{
+                                                          sendRuleForm.sendNoteName
+                                                          ? sendRuleForm.sendNoteName  : '${name}'
+                                                        }}
+                                                        的京卡于
+                                                        {{
+                                                          sendRuleForm.sendNoteTime
+                                                          ? sendRuleForm.sendNoteTime  : '${time}'
+                                                        }}
+                                                        通过手机银行转账支出
+                                                        {{
+                                                          sendRuleForm.sendNoteMoney
+                                                          ? sendRuleForm.sendNoteMoney  : '${money}'
+                                                        }}元。
+                                                        活期余额
+                                                          {{
+                                                          sendRuleForm.sendActiveMoney
+                                                          ? sendRuleForm.sendActiveMoney  : '${money}'
+                                                        }}元。</span>
+                                                    </div>
+                                                  </div>
                                                 </div>
                                               </div>
-                                            </div>
-                                          </div>
-                                    </div>
+                                        </div>
+                              </div>
+                          </div>
+                          <div v-else>
+                                <div class="leftBox" style="width:68%;margin-top:10px;float:left">
+                                  <el-row :gutter="20">
+                                         <el-col :span="22" class="moduleClass">
+                                           <el-form-item prop="sendWxType" label="模板内容">
+                                              <el-input
+                                                      type="textarea"
+                                                      style="width:80%;position:relative;"
+                                                      v-model.trim="sendRuleForm.sendModuleContent"
+                                                      placeholder="您尾号为xxxx的京卡于xxxx通过xxxxxxx的xxxx元。活期余额xxxx元。欢迎参加xxx活动，活动链接：xxxxx"
+                                              ></el-input>
+                                          </el-form-item>
+                                          </el-col>
+                                    </el-row>
+                                </div>
+                                <div class="rightBox" style="width:28%;margin-top:20px;float:right;margin-right:40px;">
+                                          <div class="preview" style="height: 600px;margin-top:-40px;">
+                                              <div class="scrollBar">
+                                                <div class="contentPhone">
+                                                  <div style="width: 100%; height: 350px">
+                                                    <div class="previewBox">
+                                                      <span>{{sendRuleForm.sendModuleContent}}</span>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                        </div>
+                              </div>
                           </div>
                         </el-tab-pane>
                         <el-tab-pane label="微信模板预览" name="second">
-                          <div class="leftBox" style="width:60%;margin-top:20px;float:left">
-                                <el-row :gutter="20">
-                                      <el-col :span="18">
-                                        <el-form-item prop="infoList" label="选择模板">
-                                          <el-select
-                                            filterable
-                                            size="small"
-                                            v-model="sendRuleForm.module"
-                                            placeholder="请选择模板"
-                                          >
-                                            <el-option
-                                              v-for="item in sendModuleArr"
-                                              :key="item.value"
-                                              :label="item.name"
-                                              :value="item.value"
-                                            >
-                                            </el-option>
-                                          </el-select>
+                            <div v-if="sendRuleForm.moduleType=='0'">
+                              <div class="leftBox" style="width:60%;margin-top:20px;float:left">
+                                    <el-row :gutter="20">
+                                          <el-col :span="18">
+                                            <el-form-item prop="infoList" label="选择模板">
+                                              <el-select
+                                                filterable
+                                                size="small"
+                                                v-model="sendRuleForm.module"
+                                                placeholder="请选择模板"
+                                              >
+                                                <el-option
+                                                  v-for="item in sendModuleArr"
+                                                  :key="item.value"
+                                                  :label="item.name"
+                                                  :value="item.value"
+                                                >
+                                                </el-option>
+                                              </el-select>
+                                            </el-form-item>
+                                          </el-col>
+                                    </el-row>
+
+                                    <el-row :gutter="20">
+                                      <el-col>
+                                            <span style="display:block;float:left;margin:0 16px;font-size:14px;">业务变量：</span>
+                                            <div style="width:58%;height:110px;border:1px solid #eee;float:left" >
+                                                <div v-for="(item,index) in labelWxArr" :key="index" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index)">{{item.name}}</div>
+                                                <div v-for="(item,index) in labelWxRadio" :key="index" :class="isActive==index?'labelActive labelLi':' labelLi'" @click="clickRadioIndex(index)">{{item.name}}</div>
+                                            </div>
+                                      </el-col>
+                                      </el-row>
+
+                                      <span style="display:block;float:left;margin:0 16px;font-size:14px;">模板内容：</span>
+                                      <div style="display:inline-block;width:58%;height:420px;border:1px solid #eee">
+                    
+                                      <el-row :gutter="20" style="margin-top:20px">
+                                          <el-col :span="22">
+                                              <el-form-item prop="sendWxName" label="尾号">
+                                                  <el-input
+                                                          type="textarea"
+                                                          style="width:80%;position:relative;"
+                                                          v-model.trim="sendRuleForm.sendWxName"
+                                                          placeholder="请输入尾号"
+                                                  ></el-input>
+                                                  <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                    <el-color-picker   v-model="color1"></el-color-picker>
+                                                    <p class="demonstration">颜色</p>
+                                                  </div>
+                                              </el-form-item>
+                                          </el-col>
+                                    </el-row>
+                                      <el-row :gutter="20">
+                                          <el-col :span="22">
+                                              <el-form-item prop="sendWxTime" label="交易时间">
+                                                  <el-input
+                                                          type="textarea"
+                                                          style="width:80%;position:relative;"
+                                                          v-model.trim="sendRuleForm.sendWxTime"
+                                                          placeholder="请输入交易时间"
+                                                  ></el-input>
+                                                    <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                    <el-color-picker   v-model="color2"></el-color-picker>
+                                                    <p class="demonstration">颜色</p>
+                                                  </div>
+                                              </el-form-item>
+                                          </el-col>
+                                    </el-row>
+                                      <el-row :gutter="20">
+                                          <el-col :span="22">
+                                              <el-form-item prop="sendWxType" label="交易类型">
+                                                  <el-input
+                                                          type="textarea"
+                                                          style="width:80%;position:relative;"
+                                                          v-model.trim="sendRuleForm.sendWxType"
+                                                          placeholder="请输入交易类型"
+                                                  ></el-input>
+                                                    <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                    <el-color-picker   v-model="color3"></el-color-picker>
+                                                    <p class="demonstration">颜色</p>
+                                                  </div>
+                                              </el-form-item>
+                                          </el-col>
+                                    </el-row>
+                                      <el-row :gutter="20">
+                                          <el-col :span="22">
+                                              <el-form-item prop="sendWxMoney" label="交易金额">
+                                                  <el-input
+                                                          type="textarea"
+                                                          style="width:80%;position:relative;"
+                                                          v-model.trim="sendRuleForm.sendWxMoney"
+                                                          placeholder="请输入交易金额"
+                                                  ></el-input>
+                                                    <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                    <el-color-picker   v-model="color4"></el-color-picker>
+                                                    <p class="demonstration">颜色</p>
+                                                  </div>
+                                              </el-form-item>
+                                          </el-col>
+                                    </el-row>
+                                      <el-row :gutter="20">
+                                          <el-col :span="22">
+                                              <el-form-item prop="desc" label="备注">
+                                                  <el-input
+                                                          type="textarea"
+                                                          style="width:80%;position:relative;"
+                                                          v-model.trim="sendRuleForm.desc"                                                      placeholder="请输入"
+                                                  ></el-input>
+                                                    <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                    <el-color-picker   v-model="color5"></el-color-picker>
+                                                    <p class="demonstration">颜色</p>
+                                                  </div>
+                                              </el-form-item>
+                                          </el-col>
+                                    </el-row>
+                                  </div>
+                                  <el-row :gutter="20">
+                                      <el-col :span="20">
+                                        <el-form-item prop="outWxChain" label="插入链接">
+                                          <el-radio-group v-model="sendRuleForm.outWxChain" @change="changeChain(sendRuleForm.outWxChain)">
+                                            <el-radio :label="1">无</el-radio>
+                                            <el-radio :label="2">跳转链接（支持外链）</el-radio>
+                                            <el-radio :label="3">跳转小程序</el-radio>
+                                          </el-radio-group>
                                         </el-form-item>
                                       </el-col>
-                                </el-row>
-
-                                <el-row :gutter="20">
-                                  <el-col>
-                                        <span style="display:block;float:left;margin:0 16px;font-size:14px;">业务变量：</span>
-                                        <div style="width:58%;height:110px;border:1px solid #eee;float:left" >
-                                            <div v-for="(item,index) in labelWxArr" :key="index" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index)">{{item.name}}</div>
-                                            <div v-for="(item,index) in labelWxRadio" :key="index" :class="isActive==index?'labelActive labelLi':' labelLi'" @click="clickRadioIndex(index)">{{item.name}}</div>
-                                        </div>
-                                  </el-col>
-                                  </el-row>
-
-                                  <span style="display:block;float:left;margin:0 16px;font-size:14px;">模板内容：</span>
-                                  <div style="display:inline-block;width:58%;height:420px;border:1px solid #eee">
-                                  
-                                <el-row :gutter="20" style="margin-top:20px">
-                                      <el-col :span="22">
-                                        <div style="border:1px solid rgba(255, 229, 143, 1);margin-left:28px;padding:8px 10px;font-size:12px;background:rgba(255, 251, 230, 1);border-radius:3px;">
-                                          <i class="iconfont icon-yujing" style="color:#FAAD14;font-size:12px;"></i>
-                                          <span style="margin-left:10px;">微信接口限制，模板消息内容请控制在200字以内!</span>
-                                          </div>
-                                      </el-col>
-                                </el-row>
-
-                                <el-row :gutter="20" style="margin-top:20px">
-                                      <el-col :span="22">
-                                          <el-form-item prop="sendWxName" label="尾号">
-                                              <el-input
-                                                      type="textarea"
-                                                      style="width:80%;position:relative;"
-                                                      v-model.trim="sendRuleForm.sendWxName"
-                                                      placeholder="请输入尾号"
-                                              ></el-input>
-                                              <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
-                                                <el-color-picker   v-model="color1"></el-color-picker>
-                                                <p class="demonstration">颜色</p>
-                                               </div>
-                                          </el-form-item>
-                                      </el-col>
-                                </el-row>
-                                  <el-row :gutter="20">
-                                      <el-col :span="22">
-                                          <el-form-item prop="sendWxTime" label="交易时间">
-                                              <el-input
-                                                      type="textarea"
-                                                      style="width:80%;position:relative;"
-                                                      v-model.trim="sendRuleForm.sendWxTime"
-                                                      placeholder="请输入交易时间"
-                                              ></el-input>
-                                                 <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
-                                                <el-color-picker   v-model="color2"></el-color-picker>
-                                                <p class="demonstration">颜色</p>
-                                               </div>
-                                          </el-form-item>
-                                      </el-col>
-                                </el-row>
-                                  <el-row :gutter="20">
-                                      <el-col :span="22">
-                                          <el-form-item prop="sendWxType" label="交易类型">
-                                              <el-input
-                                                      type="textarea"
-                                                      style="width:80%;position:relative;"
-                                                      v-model.trim="sendRuleForm.sendWxType"
-                                                      placeholder="请输入交易类型"
-                                              ></el-input>
-                                                <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
-                                                <el-color-picker   v-model="color3"></el-color-picker>
-                                                <p class="demonstration">颜色</p>
-                                               </div>
-                                          </el-form-item>
-                                      </el-col>
-                                </el-row>
-                                  <el-row :gutter="20">
-                                      <el-col :span="22">
-                                          <el-form-item prop="sendWxMoney" label="交易金额">
-                                              <el-input
-                                                      type="textarea"
-                                                      style="width:80%;position:relative;"
-                                                      v-model.trim="sendRuleForm.sendWxMoney"
-                                                      placeholder="请输入交易金额"
-                                              ></el-input>
-                                                 <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
-                                                <el-color-picker   v-model="color4"></el-color-picker>
-                                                <p class="demonstration">颜色</p>
-                                               </div>
-                                          </el-form-item>
-                                      </el-col>
-                                </el-row>
-                                  <el-row :gutter="20">
-                                      <el-col :span="22">
-                                          <el-form-item prop="desc" label="备注">
-                                              <el-input
-                                                      type="textarea"
-                                                      style="width:80%;position:relative;"
-                                                      v-model.trim="sendRuleForm.desc"                                                      placeholder="请输入"
-                                              ></el-input>
-                                                 <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
-                                                <el-color-picker   v-model="color5"></el-color-picker>
-                                                <p class="demonstration">颜色</p>
-                                               </div>
-                                          </el-form-item>
-                                      </el-col>
-                                </el-row>
+                                    </el-row>
                               </div>
-                               <el-row :gutter="20">
-                                  <el-col :span="20">
-                                    <el-form-item prop="outWxChain" label="插入链接">
-                                      <el-radio-group v-model="sendRuleForm.outWxChain" @change="changeChain(sendRuleForm.outWxChain)">
-                                        <el-radio :label="1">无</el-radio>
-                                        <el-radio :label="2">跳转链接（支持外链）</el-radio>
-                                        <el-radio :label="3">跳转小程序</el-radio>
-                                      </el-radio-group>
-                                    </el-form-item>
-                                  </el-col>
-                                </el-row>
-                          </div>
-
-                          <div class="rightBox" style="width:28%;margin-top:20px;float:right;margin-right:40px;">
+                               <div class="rightBox" style="width:28%;margin-top:20px;float:right;margin-right:40px;">
                                       <div class="preview" style="height: 600px;margin-top:-40px;">
                                           <div class="scrollBar">
                                             <div class="contentPhone">
@@ -358,9 +361,197 @@
                                             </div>
                                           </div>
                                     </div>
-                          </div>
+                              </div>
+                            </div>
+                            <div v-else>
+                               <div class="leftBox" style="width:60%;margin-top:20px;float:left">
+                                    <el-row :gutter="20">
+                                          <el-col :span="18">
+                                            <el-form-item prop="infoList" label="选择模板">
+                                              <el-select
+                                                filterable
+                                                size="small"
+                                                v-model="sendRuleForm.module"
+                                                placeholder="请选择模板"
+                                              >
+                                                <el-option
+                                                  v-for="item in sendModuleArr"
+                                                  :key="item.value"
+                                                  :label="item.name"
+                                                  :value="item.value"
+                                                >
+                                                </el-option>
+                                              </el-select>
+                                            </el-form-item>
+                                          </el-col>
+                                    </el-row>
+
+                                      <span style="display:block;float:left;margin:0 16px;font-size:14px;">模板内容：</span>
+                                      <div style="display:inline-block;width:58%;height:420px;border:1px solid #eee">
+                    
+                                      <el-row :gutter="20" style="margin-top:20px">
+                                          <el-col :span="22">
+                                              <el-form-item prop="sendWxName" label="尾号">
+                                                  <el-input
+                                                          type="textarea"
+                                                          style="width:80%;position:relative;"
+                                                          v-model.trim="sendRuleForm.sendWxName"
+                                                          placeholder="请输入尾号"
+                                                  ></el-input>
+                                                  <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                    <el-color-picker   v-model="color1"></el-color-picker>
+                                                    <p class="demonstration">颜色</p>
+                                                  </div>
+                                              </el-form-item>
+                                          </el-col>
+                                    </el-row>
+                                      <el-row :gutter="20">
+                                          <el-col :span="22">
+                                              <el-form-item prop="sendWxTime" label="交易时间">
+                                                  <el-input
+                                                          type="textarea"
+                                                          style="width:80%;position:relative;"
+                                                          v-model.trim="sendRuleForm.sendWxTime"
+                                                          placeholder="请输入交易时间"
+                                                  ></el-input>
+                                                    <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                    <el-color-picker   v-model="color2"></el-color-picker>
+                                                    <p class="demonstration">颜色</p>
+                                                  </div>
+                                              </el-form-item>
+                                          </el-col>
+                                    </el-row>
+                                      <el-row :gutter="20">
+                                          <el-col :span="22">
+                                              <el-form-item prop="sendWxType" label="交易类型">
+                                                  <el-input
+                                                          type="textarea"
+                                                          style="width:80%;position:relative;"
+                                                          v-model.trim="sendRuleForm.sendWxType"
+                                                          placeholder="请输入交易类型"
+                                                  ></el-input>
+                                                    <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                    <el-color-picker   v-model="color3"></el-color-picker>
+                                                    <p class="demonstration">颜色</p>
+                                                  </div>
+                                              </el-form-item>
+                                          </el-col>
+                                    </el-row>
+                                      <el-row :gutter="20">
+                                          <el-col :span="22">
+                                              <el-form-item prop="sendWxMoney" label="交易金额">
+                                                  <el-input
+                                                          type="textarea"
+                                                          style="width:80%;position:relative;"
+                                                          v-model.trim="sendRuleForm.sendWxMoney"
+                                                          placeholder="请输入交易金额"
+                                                  ></el-input>
+                                                    <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                    <el-color-picker   v-model="color4"></el-color-picker>
+                                                    <p class="demonstration">颜色</p>
+                                                  </div>
+                                              </el-form-item>
+                                          </el-col>
+                                    </el-row>
+                                      <el-row :gutter="20">
+                                          <el-col :span="22">
+                                              <el-form-item prop="desc" label="备注">
+                                                  <el-input
+                                                          type="textarea"
+                                                          style="width:80%;position:relative;"
+                                                          v-model.trim="sendRuleForm.desc"
+                                                          placeholder="请输入"
+                                                  ></el-input>
+                                                    <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                    <el-color-picker   v-model="color5"></el-color-picker>
+                                                    <p class="demonstration">颜色</p>
+                                                  </div>
+                                              </el-form-item>
+                                          </el-col>
+                                    </el-row>
+                                  </div>
+                                  <el-row :gutter="20">
+                                      <el-col :span="20">
+                                        <el-form-item prop="outWxChain" label="插入链接">
+                                          <el-radio-group v-model="sendRuleForm.outWxChain" @change="changeChain(sendRuleForm.outWxChain)">
+                                            <el-radio :label="1">无</el-radio>
+                                            <el-radio :label="2">跳转链接（支持外链）</el-radio>
+                                            <el-radio :label="3">跳转小程序</el-radio>
+                                          </el-radio-group>
+                                        </el-form-item>
+                                      </el-col>
+                                    </el-row>
+
+                                     <el-row :gutter="20">
+                                        <el-col :span="16">
+                                          <el-form-item prop="inputWxChain"  v-if="sendRuleForm.outWxChain=='2'">
+                                            <el-input  v-model="sendRuleForm.inputWxChain"  placeholder="输入链接，必须以'http://'或'https://'开头"></el-input>
+                                          </el-form-item>
+                                        </el-col>
+                                      </el-row>
+                                        <el-row :gutter="20">
+                                        <el-col :span="16">
+                                          <el-form-item prop="inputWxAppChain"  v-if="sendRuleForm.outWxChain=='3'">
+                                            <el-input  v-model="sendRuleForm.inputWxAppChain"  placeholder="请输入已关联的小程序appid"></el-input>
+                                          </el-form-item>
+                                          <el-form-item prop="inputWxAppPath"  v-if="sendRuleForm.outWxChain=='3'" style="margin-top:8px;">
+                                            <el-input  v-model="sendRuleForm.inputWxAppPath"  placeholder="请输入小程序页面路径，例：pages/index"></el-input>
+                                          </el-form-item>
+                                        </el-col>
+                                  </el-row>
+                              </div>
+                               <div class="rightBox" style="width:28%;margin-top:20px;float:right;margin-right:40px;">
+                                      <div class="preview" style="height: 600px;margin-top:-40px;">
+                                          <div class="scrollBar">
+                                            <div class="contentPhone">
+                                              <div style="width: 100%; height: 350px">
+                                                <div class="previewWx">
+                                                     <p>交易提醒</p>
+                                                     <p style="margin-top:20px;">尊敬的客户：</p>
+                                                     <p style="margin-top:20px;">您尾号 <span :style="{'color':color1}">{{
+                                                        sendRuleForm.sendWxName
+                                                         ? sendRuleForm.sendWxName  : '${name}'
+                                                       }}</span>借记卡最新交易如下：
+                                                     </p>
+                                                     <p>交易时间：<span :style="{'color':color2}">{{
+                                                        sendRuleForm.sendWxTime
+                                                         ? sendRuleForm.sendWxTime  : '${time}'
+                                                       }}</span>
+                                                     </p>
+                                                       <p>交易类型：<span :style="{'color':color3}">{{
+                                                        sendRuleForm.sendWxType
+                                                         ? sendRuleForm.sendWxType  : '${type}'
+                                                       }}</span>
+                                                     </p>
+                                                     <p>交易金额：<span :style="{'color':color4}">{{
+                                                        sendRuleForm.sendWxMoney
+                                                         ? sendRuleForm.sendWxMoney  : '${money}'
+                                                       }}</span>
+                                                     </p>
+                                                      <p style="margin:10px 0;">{{sendRuleForm.desc}}</p>
+                                                      <p v-if="isActive==0" style="border-top:1px solid #eee;line-height:20px;padding-top:8px;">
+                                                        <span style="float:left;">详情</span>
+                                                        <span style="float:right;">></span>
+                                                      </p>
+                                                       <p v-else-if="isActive==1" style="border-top:1px solid #eee;line-height:20px;padding-top:8px;">
+                                                        <span style="float:left;"><i class="iconfont icon-nongyeyinhang" style="color:#1b8e91"></i>农业银行</span>
+                                                        <span style="float:right;"><i class="iconfont icon-xiaochengxu1" style="color:#9ea6c7"> </i>小程序></span>
+                                                      </p>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                    </div>
+                              </div>
+
+
+
+
+
+                            </div>
                         </el-tab-pane>
                         <el-tab-pane label="APP模板预览" name="third">
+                          <div v-if="sendRuleForm.moduleType=='0'">
                              <div class="leftBox" style="width:68%;margin-top:20px;float:left">
                                  <el-row :gutter="20">
                                     <el-col :span="16">
@@ -471,8 +662,70 @@
                                           </div>
                                     </div>
                           </div>
+                          </div>
+                          <div v-else>
+                              <div class="leftBox" style="width:68%;margin-top:10px;float:left">
+                                <el-row :gutter="20">
+                                    <el-col :span="16">
+                                      <el-form-item prop="moduleAppType" label="模板类型">
+                                        <el-checkbox-group v-model="sendRuleForm.moduleAppType">
+                                            <el-checkbox label="通知栏消息"></el-checkbox>
+                                            <el-checkbox label="透传消息"></el-checkbox>
+                                          </el-checkbox-group>
+                                      </el-form-item>
+                                    </el-col>
+                               </el-row>
+                                <el-row :gutter="20">
+                                    <el-col :span="16">
+                                        <el-form-item
+                                          style="margin-bottom:0px;"
+                                          prop="moduleName"
+                                          label="模板标题"
+                                        >
+                                          <el-input
+                                            size="small"
+                                            v-model="sendRuleForm.moduleName"
+                                            placeholder="请输入模板标题"
+                                            type="text"
+                                            maxlength="18"
+                                            style="width: 100%"
+                                          ></el-input>
+                                        </el-form-item>
+                                        </el-col>
+                              </el-row>
+
+                                  <el-row :gutter="20">
+                                         <el-col :span="22" class="moduleClass">
+                                           <el-form-item prop="sendWxType" label="模板内容">
+                                              <el-input
+                                                      type="textarea"
+                                                      style="width:80%;position:relative;"
+                                                      v-model.trim="sendRuleForm.sendModuleContent"
+                                                      placeholder="您尾号为xxxx的京卡于xxxx通过xxxxxxx的xxxx元。活期余额xxxx元。欢迎参加xxx活动，活动链接：xxxxx"
+                                              ></el-input>
+                                          </el-form-item>
+                                          </el-col>
+                                    </el-row>
+                                </div>
+                                <div class="rightBox" style="width:28%;margin-top:20px;float:right;margin-right:40px;">
+                                          <div class="preview" style="height: 600px;margin-top:-40px;">
+                                              <div class="scrollBar">
+                                                <div class="contentPhone">
+                                                  <div style="width: 100%; height: 350px">
+                                                    <div class="previewBox">
+                                                      <span>{{sendRuleForm.sendModuleContent}}</span>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                        </div>
+                              </div>
+                          </div>
                         </el-tab-pane>
                       </el-tabs>
+                      <el-footer style="text-align:center;margin-top:40px;">
+                        <el-button type="primary" size="small" disabled>创建</el-button>
+                      </el-footer>
                     </el-row>
                 </el-main>
              </el-container>
@@ -642,7 +895,7 @@ export default {
         moduleAppType:['通知栏消息','透传消息'],
          infoList: '',
          moduleName:'',
-         moduleType:'',
+         moduleType:0,
          sendTime:1,
          selectTime:'',
          sendUser:1,
@@ -845,6 +1098,10 @@ export default {
 </script>
 <style scoped lang="less">
 @import '../../assets/less/index.less';
+.moduleClass /deep/.el-textarea__inner{
+    height:130px;
+    overflow-y:auto;
+ }
 
 .tabsChange  /deep/.el-tabs__header{
   margin-left:100px;

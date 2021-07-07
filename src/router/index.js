@@ -7,6 +7,7 @@ import monitorManager from './monitorManager' // 监控管理
 import mailMessage from './mailMessage' // 邮件消息
 import fiveGenerationMessage from './fiveGenerationMessage' // 5G消息
 import unifiedManage from './unifiedManage' // 统一管理
+import reportManage from './reportManage' // 通讯管理
 
 Vue.use(VueRouter)
 const routes = [
@@ -28,7 +29,8 @@ const routes = [
       ...monitorManager,
       ...mailMessage,
       ...fiveGenerationMessage,
-      ...unifiedManage
+      ...unifiedManage,
+      ...reportManage
     ]
   }
 ]

@@ -10,14 +10,14 @@
             label-suffix="："
           >
       <el-card class="mainSet" v-loading="loading" style="width:1170px;">
-          <div style="width:90%;margin:30px auto 0 auto;"> 
+          <div style="width:90%;margin:30px auto 0 auto;">
               <el-steps :active="stepActive" finish-status="success">
                 <el-step title="步骤 1"></el-step>
                 <el-step title="步骤 2"></el-step>
                 <el-step title="步骤 3"></el-step>
             </el-steps>
           </div>
-         
+
          <ul class="module-list" :style="{'width':'3510px','margin-left': moveIndex *1170 + 'px'}">
               <el-container style="width:1170px;float:left;">
                 <el-main style="margin-bottom: 20px">
@@ -62,7 +62,7 @@
                             </el-form-item>
                           </el-col>
                         </el-row>
-                        
+
                         <el-row :gutter="20">
                           <el-col :span="16">
                             <el-form-item prop="sendTime" label="发送时间">
@@ -205,7 +205,7 @@
                             </el-form-item>
                           </el-col>
                         </el-row>
-                        
+
                         <el-row :gutter="20">
                           <el-col :span="16"  class="form-item" v-if="sendRuleForm.sendUser == '1'">
                             <el-tabs v-model="sendRuleForm.openId" type="card" @tab-click="handleClick"  class="tabsChange">
@@ -301,7 +301,7 @@
                             </div>
                           </el-col>
                         </el-row>
-                        
+
                         <el-row :gutter="20">
                           <el-col :span="16">
                             <el-form-item prop="sendModule" label="发送模板">
@@ -331,12 +331,12 @@
               <el-container style="width:1170px;float:left;">
                   <el-main style="margin-bottom: 20px">
                       <el-tabs v-model="tabActiveChange" @tab-click="handleClick">
-                        <el-tab-pane label="短信模板预览" name="first">  
+                        <el-tab-pane label="短信模板预览" name="first">
                           <div class="leftBox" style="width:60%;margin-top:20px;float:left">
                               <span style="display:block;float:left;">业务变量：</span>
                               <div style="display:inline-block;width:50%;height:360px;border:2px solid #eee">
                                 <el-row :gutter="20" style="margin-top:20px">
-                                
+
                                       <el-col :span="22">
                                           <el-form-item prop="sendNoteName" label="尾号">
                                               <el-input
@@ -615,7 +615,7 @@
                               <span style="display:block;float:left;">业务变量：</span>
                               <div style="display:inline-block;width:50%;height:360px;border:2px solid #eee">
                                 <el-row :gutter="20" style="margin-top:20px">
-                                
+
                                       <el-col :span="22">
                                           <el-form-item prop="sendAppName" label="尾号">
                                               <el-input
@@ -812,7 +812,7 @@
                           </div>
                         </el-tab-pane>
                       </el-tabs>
-                      <div style="float:left;margin-top:20px;"> 
+                      <div style="float:left;margin-top:20px;">
                         <el-button @click="leftmove"  type="primary" plain size="small">上一步</el-button>
                         <el-button @click="rightmove"  type="primary" plain size="small">下一步</el-button>
                       </div>
@@ -857,7 +857,7 @@
                           >
                             *只能发送编码为GBK和带boom头的utf-8的文件,文件最大50mb,上传含中文的内容时,请先下载上传模板,测试上传内容是否乱码,不同内容的短信，内容中禁止含有'|','#',分隔符
                           </p>
-                        
+
                           <img
                             style="width:60%;margin-top:10px;"
                             v-show="promptShow"
@@ -867,7 +867,7 @@
                         <p style="font-size:12px;color:#F56C6C;margin-top:-14px" v-show="selectShow">请选择文件！</p>
                         </el-form-item>
                       </el-col>
-                   </el-row>  
+                   </el-row>
                    <el-row style="margin-top:30px;">
                      <el-button @click="leftmove"  type="primary" plain size="small">上一步</el-button>
                      <el-button type="primary">确认发送</el-button>
@@ -877,7 +877,7 @@
             </ul>
     </el-card>
           </el-form>
-        
+
   </div>
 </template>
 <script>
@@ -1000,7 +1000,7 @@ export default {
           value: 3
         }
       ],
- 
+
 
       color1:'#000',
       color2:'#000',
@@ -1052,7 +1052,7 @@ export default {
        sendMailMoney:'',
        sendMailAccount:'',
 
-    
+
 
 
         batchSendList: [
@@ -1156,7 +1156,7 @@ export default {
                     this.moveIndex -= 1;
                 }
                if (this.stepActive++ > 2) this.stepActive = 0;
-                
+
       },
     selectChange() {},
     //添加分时分量

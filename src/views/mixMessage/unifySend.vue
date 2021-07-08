@@ -10,13 +10,13 @@
             label-suffix="："
           >
       <el-card class="mainSet" v-loading="loading" style="width:1170px;">
-          <div style="width:90%;margin:30px auto 0 auto;"> 
+          <!-- <div style="width:90%;margin:30px auto 0 auto;"> 
               <el-steps :active="stepActive" finish-status="success">
                 <el-step title="步骤 1"></el-step>
                 <el-step title="步骤 2"></el-step>
                 <el-step title="步骤 3"></el-step>
             </el-steps>
-          </div>
+          </div> -->
          
          <ul class="module-list" :style="{'width':'3510px','margin-left': moveIndex *1170 + 'px'}">
               <el-container style="width:1170px;float:left;">
@@ -69,7 +69,6 @@
                               <el-radio-group v-model="sendRuleForm.sendTime">
                                 <el-radio :label="1">即时发送</el-radio>
                                 <el-radio :label="2">定时发送</el-radio>
-                                <el-radio :label="3">分时分量发送</el-radio>
                               </el-radio-group>
                             </el-form-item>
                           </el-col>
@@ -87,111 +86,6 @@
                               ></el-date-picker>
                             </el-form-item>
                           </el-col>
-                          <el-col :span="16" v-else-if="sendRuleForm.sendTime == '3'" style="margin-left:100px">
-                            <el-col
-                              :span="7"
-                              style="text-align:left;color:#666666;margin-left:10%;"
-                              >发送开始</el-col
-                            >
-                            <el-col :span="7" style="text-align:left;color:#666666"
-                              >手机号数量（条）</el-col
-                            >
-                            <el-col :span="7" style="text-align:left;color:#666666"
-                              >发送结束</el-col
-                            >
-                          </el-col>
-                        </el-row>
-
-                        <el-row :gutter="20"
-                          v-if="sendRuleForm.sendTime == '3'"
-                          style="background-color: #FBF9FB; padding-top:10px;width:58%;margin-left:100px;"
-                        >
-                          <!-- <el-form :model="ruleForm" ref='batchSendList'> -->
-                          <el-col
-                            :span="23"
-                            v-for="(item, index) in sendRuleForm.batchSendList"
-                            :key="index"
-                            class="sendTimeList"
-
-                          >
-                            <div class="operateSendTime">
-                              <el-col :span="1"
-                                ><span>{{ index + 1 }}</span></el-col
-                              >
-                              <el-col :span="8">
-                                <el-form-item
-                                  ref="cashCouponRuleListClear"
-                                  style="margin-bottom:0px;margin-left:0px;"
-                                  :prop="'batchSendList.' + index + '.startTime'"
-                                >
-                                  <el-date-picker
-                                    size="small"
-                                    v-model="
-                                      sendRuleForm.batchSendList[index].startTime
-                                    "
-                                    type="datetime"
-                                    value-format="yyyy-MM-dd HH:mm:ss"
-                                    placeholder="请选择发送时间"
-                                  ></el-date-picker>
-                                </el-form-item>
-                              </el-col>
-
-                              <el-col :span="6">
-                                <el-form-item
-                                  style="margin-bottom:0px;"
-                                  :prop="'batchSendList.' + index + '.phoneNum'"
-                                >
-                                  <!-- @blur="onBlur(item.minLimit,index)" -->
-                                  <el-input
-                                    size="small"
-                                    v-model="sendRuleForm.batchSendList[index].phoneNum"
-                                    placeholder="请输入手机号数量"
-                                    type="text"
-                                    maxlength="18"
-                                    style="width: 100%"
-                                  ></el-input>
-                                </el-form-item>
-                              </el-col>
-
-                              <el-col :span="8">
-                                <el-form-item
-                                  ref="cashCouponRuleListClear"
-                                  style="margin-bottom:0px;"
-                                  :prop="'batchSendList.' + index + '.startTime'"
-                                >
-                                  <el-date-picker
-                                    size="small"
-                                    v-model="sendRuleForm.batchSendList[index].endTime"
-                                    type="datetime"
-                                    value-format="yyyy-MM-dd HH:mm:ss"
-                                    placeholder="请选择结束时间"
-                                  ></el-date-picker>
-                                </el-form-item>
-                              </el-col>
-                              <el-col :span="1" class="delBtn">
-                                <i
-                                  class="el-icon-delete"
-                                  v-if="sendRuleForm.batchSendList.length != 0"
-                                  @click="handleDeleteType(index)"
-                                ></i>
-                                <el-button v-else
-                                  ><i class="el-icon-delete" @click.stop></i
-                                ></el-button>
-                              </el-col>
-                            </div>
-                            <el-col :span="2" style="margin-top:10px">
-                              <el-button
-                                size="small"
-                                type="primary"
-                                class="el-icon-plus"
-                                v-if="index == sendRuleForm.batchSendList.length - 1"
-                                @click="handleAddType(index)"
-                                >添加</el-button
-                              >
-                              <div v-else style="width:68px"></div>
-                            </el-col>
-                          </el-col>
-                          <!-- </el-form> -->
                         </el-row>
 
                         <el-row :gutter="20">

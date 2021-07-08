@@ -1,5 +1,5 @@
 <template>
-  <div class="userManage">
+  <div class="customerManage">
     <el-tabs v-model="activeName" v-if="!adding">
       <el-tab-pane label="客户列表" name="first">
         <el-card class="box-card">
@@ -290,7 +290,7 @@
 <script>
 import addGroup from './addGroup'
 export default {
-  name: 'userManage',
+  name: 'customerManage',
   components: {
     addGroup
   },
@@ -509,7 +509,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.userManage /deep/ .el-tabs__nav-wrap {
+.customerManage /deep/ .el-tabs__nav-wrap {
   padding-left: 30px;
   box-sizing: border-box;
 }

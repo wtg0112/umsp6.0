@@ -7,9 +7,9 @@ const messageMarket = [
     icon: 'iconfont icon-tongyiguanli',
     children: [
       {
-        path: 'userManage',
-        name: 'userManage',
-        component: () => import('@/views/messageMarket/userManage'),
+        path: 'customerManage',
+        name: 'customerManage',
+        component: () => import('@/views/messageMarket/customerManage'),
         meta: { title: '客户管理' }
       },
       {
@@ -18,7 +18,7 @@ const messageMarket = [
         component: () => import('@/views/messageMarket/sendstrategy'),
         meta: { title: '发送策略' }
       },
-      
+
     ]
   }
 ]

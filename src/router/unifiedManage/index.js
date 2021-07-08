@@ -7,9 +7,9 @@ const unifiedManage = [
     icon: 'iconfont icon-tongyiguanli',
     children: [
       {
-        path: 'userManage',
-        name: 'userManage',
-        component: () => import('@/views/unifiedManage/userManage'),
+        path: 'customerManage',
+        name: 'customerManage',
+        component: () => import('@/views/unifiedManage/customerManage'),
         meta: { title: '客户管理' }
       },
       {

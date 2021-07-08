@@ -9,6 +9,7 @@ import mailMessage from './mailMessage' // 邮件消息
 import fiveGenerationMessage from './fiveGenerationMessage' // 5G消息
 import unifiedManage from './unifiedManage' // 统一管理
 import reportManage from './reportManage' // 通讯管理
+import systemManage from './systemManage' // 系统管理
 
 Vue.use(VueRouter)
 const routes = [
@@ -31,6 +32,7 @@ const routes = [
       ...mailMessage,
       ...fiveGenerationMessage,
       ...unifiedManage,
+      ...systemManage,
       ...reportManage,
       ...mixMessage,
     ]

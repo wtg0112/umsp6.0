@@ -31,6 +31,14 @@ body {
 .el-row {
   margin: 10px 0;
 }
+.el-button--small,
+.el-button--small.is-round {
+  padding: 11px 15px !important;
+}
+.el-input--small .el-input__inner {
+  height: 36px !important;
+  line-height: 36px !important;
+}
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
   width: 100% !important;
@@ -64,10 +72,10 @@ body {
 .el-select {
   width: 100%;
 }
-.el-form-item{
+.el-form-item {
   margin-bottom: 8px !important;
 }
-.el-tag{
+.el-tag {
   margin-right: 10px;
 }
 .el-table th {
@@ -75,17 +83,24 @@ body {
 }
 
 // 公共样式
-.el-card.is-always-shadow, .el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover{
+.el-card.is-always-shadow,
+.el-card.is-hover-shadow:focus,
+.el-card.is-hover-shadow:hover {
   box-shadow: none !important;
-  border-bottom:1px solid #f0f0f0 !important;
+  border-bottom: 1px solid #f0f0f0 !important;
 }
-.el-card{
-  border:none !important;
+.el-card {
+  border: none !important;
   border-radius: 0px !important;
 }
-.el-form-item{
-  margin-bottom:0px !important;
+.el-form-item {
+  margin-bottom: 0px !important;
 }
-
+.el-dialog__title{
+  font-weight: bold;
+}
+.el-card__header span{
+    font-weight: bold;
+}
 
 </style>

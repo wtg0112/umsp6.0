@@ -1,6 +1,5 @@
 <template>
   <div class="addGroup">
-      <el-card class="box-card">
         <el-form
           ref="formData"
           :model="formData"
@@ -8,8 +7,8 @@
           label-width="100px"
         >
           <el-row :gutter="20">
-                <el-col :span="6">
-                 <el-form-item prop="name" label="信息分类">
+              <el-col :span="10">
+                 <el-form-item prop="infoClassify" label="信息分类">
                    <el-select
                         filterable
                         size="small"
@@ -23,11 +22,11 @@
                             :value="item.value"
                         >
                         </el-option>
-                        </el-select>
+                  </el-select>
                 </el-form-item>
             </el-col>
-            <el-col :span="6">
-              <el-form-item prop="templateName" label="组策略名称">
+            <el-col :span="10">
+              <el-form-item prop="strategyName" label="组策略名称">
                 <el-input
                   v-model="formData.strategyName"
                   placeholder="请输入组策略名称"
@@ -42,15 +41,12 @@
               >
             </el-col>
           </el-row>
-        </el-form>
-      </el-card>
-    <el-card class="box-card">
-    
-      <el-row :gutter="20" style="margin-top: 0;">
-          <p>基本信息</p>
+  
+        <el-card>
+          <p style="margin-left:30px;border-left:7px solid #409EFF;padding-left:6px;font-size:15px;">基本信息</p>
           <el-row :gutter="20">
-            <el-col :span="16">
-              <el-form-item prop="templateName" label="子策略名称">
+            <el-col :span="11">
+              <el-form-item prop="childStrategyName" label="子策略名称">
                 <el-input
                   v-model="formData.childStrategyName"
                   placeholder="请输入子策略名称"
@@ -58,73 +54,18 @@
                 ></el-input>
                </el-form-item>
             </el-col>
-        </el-row>
-         <el-row :gutter="20">
-            <el-col :span="10">
-                <el-form-item prop="name" label="发送方式">
-                   <el-select
-                        size="small"
-                        v-model="formData.sendType"
-                        placeholder="请选择发送方式"
-                        >
-                        <el-option
-                            v-for="item in sendTypeList"
-                            :key="item.value"
-                            :label="item.name"
-                            :value="item.value"
-                        >
-                        </el-option>
-                        </el-select>
-                </el-form-item>
-            </el-col>
-            <el-col :span="8"></el-col>
           </el-row>
-      </el-row>
-
-      <el-row :gutter="20" style="margin-top: 0;">
-          <p>触发条件（无触发条件代表默认执行）</p>
           <el-row :gutter="20">
-            <el-col :span="7">
-                  <el-select
-                        size="small"
-                        v-model="formData.sendType"
-                        placeholder="请选择类型"
-                        >
-                        <el-option
-                            v-for="item in sendTypeList"
-                            :key="item.value"
-                            :label="item.name"
-                            :value="item.value"
-                        >
-                        </el-option>
-                  </el-select>
-            </el-col>
-            <el-col :span="7">
-                  <el-select
-                        size="small"
-                        v-model="formData.sendType"
-                        placeholder="请选择条件名称"
-                        >
-                        <el-option
-                            v-for="item in sendTypeList"
-                            :key="item.value"
-                            :label="item.name"
-                            :value="item.value"
-                        >
-                        </el-option>
-                  </el-select>
-            </el-col>
-        </el-row>
-         <el-row :gutter="20">
-            <el-col :span="10">
-                <el-form-item prop="name" label="发送方式">
+            <el-col :span="11">
+                <el-form-item prop="sendWay" label="发送方式">
                    <el-select
                         size="small"
-                        v-model="formData.sendType"
+                        v-model="formData.sendWay"
                         placeholder="请选择发送方式"
+                        @change="sendWayChange(formData.sendWay)"
                         >
                         <el-option
-                            v-for="item in sendTypeList"
+                            v-for="item in sendWayList"
                             :key="item.value"
                             :label="item.name"
                             :value="item.value"
@@ -133,82 +74,132 @@
                         </el-select>
                 </el-form-item>
             </el-col>
-            <el-col :span="8">
-                <!-- <el-form :inline="true"> --> -->
-                   <draggable v-model="filters" dragable="true" :move="getdata" @update="datadragEnd">
+            <el-col :span="8" v-if="formData.sendWay=='0'">
+              <draggable v-model="filters" dragable="true" :move="getdata" @update="datadragEnd">
                       <transition-group>
-                            <el-col :span="8"  v-for="filter in filters" :key="filter.filterKey" style="margin-top: 5px">
-                                  <span style="float:left;padding:4px 6px;margin-left:6px;background:#ecf5fe;">{{filter.name}}</span>
-                               
-                            </el-col>
+                            <div  v-for="(filter,index) in filters" :key="filter.relate" style="margin-top: 5px">
+                                  <span  class="dragLabel" style="padding:7px 14px">{{filter.name}}</span>
+                                  <span  class="dragLabel"  style="padding:0px;border:none;" v-if="index==filters.length-1"></span>
+                                  <span  class="dragLabel" style="padding:7px 14px" v-else>{{relateList}}</span>
+                            </div>
                       </transition-group>
-                    </draggable>
-                   <!-- <fitlerdialog v-bind:visable="dialogObjectVisible" v-bind:avtivefilter="avtivefilter"   v-on:on-filter-data-change="onFilterDataChange" v-on:filterdialogcancle="handleDialogObjectcancle" v-on:filterdialogclose="handleDialogObjectClose"></fitlerdialog> --> -->
-                     <!-- </el-form>                    -->
-
-
-
-
-
-
-
-                <!-- <div v-for="(item,index) in msgClassify" :key="index">
-                    <span style="">{{item.name}}</span>
-                </div> -->
+              </draggable>
+              <el-button size="small" style="margin-left:10px;">
+                <i class="el-icon-circle-plus"></i>
+               添加信息类型</el-button>
+            </el-col>
+             <el-col :span="8" v-else-if="formData.sendWay=='1'">
+                <draggable v-model="filters" dragable="true" :move="getdata" @update="datadragEnd">
+                      <transition-group>
+                            <div  v-for="(filter,index) in filters" :key="filter.relate" style="margin-top: 5px">
+                                  <span  class="dragLabel" style="padding:7px 14px">{{filter.name}}</span>
+                                  <span  class="dragLabel"  style="padding:0px;border:none;" v-if="index==filters.length-1"></span>
+                                  <span  class="dragLabel" style="padding:7px 14px" v-else>{{relateList}}</span>
+                            </div>
+                      </transition-group>
+              </draggable>
+              <el-button size="small" style="margin-left:10px;">
+                <i class="el-icon-circle-plus"></i>
+               添加信息类型</el-button>
             </el-col>
           </el-row>
+
+         <el-row :gutter="20" style="margin-top: 0;">
+          <p style="margin-left:34px;border-left:7px solid #409EFF;padding-left:6px;font-size:15px;">触发条件（无触发条件代表默认执行）</p>
+                <div class="operateSendTime"    v-for="(item, index) in formData.touchCondition" :key="index">
+                          <el-row class="sendTimeList" >
+                                  <el-col :span="5">
+                                    <el-form-item
+                                      ref="cashCouponRuleListClear"
+                                      style="margin-bottom:0px;margin-left:0px;"
+                                      :prop="'touchCondition.' + index + '.sendType'"
+                                    > 
+                                          <el-select
+                                              size="small"
+                                              v-model="formData.touchCondition[index].sendType"
+                                              placeholder="请选择类型"
+                                              @change="selectCondition(formData.touchCondition[index].sendType)"
+                                              >
+                                              <el-option
+                                                  v-for="item in sendTypeList"
+                                                  :key="item.value"
+                                                  :label="item.name"
+                                                  :value="item.value"
+                                              >
+                                              </el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                  </el-col>
+
+                                  <el-col :span="5" style="margin-left:20px;">
+                                    <el-form-item
+                                      style="margin-bottom:0px;"
+                                      :prop="'touchCondition.' + index + '.ifName'"
+                                    >
+                                      <el-select
+                                          size="small"
+                                          v-model="formData.touchCondition[index].ifName"
+                                          placeholder="请选择条件名称"
+                                          >
+                                          <el-option
+                                              v-for="item in ifNameList"
+                                              :key="item.value"
+                                              :label="item.name"
+                                              :value="item.value"
+                                          >
+                                          </el-option>
+                                      </el-select>
+                                    </el-form-item>
+                                  </el-col>
+                          </el-row>
+
+                        
+                    </div>
+                      <el-row style="text-align:center;margin-top:40px;border-top:1px solid #eee;">
+                            <el-footer style="margin-top:20px;" >
+                               <el-button @click="handleAddType"><i  class="el-icon-circle-plus" style="color:#409EFE;margin-right:4px;"></i>新增子策略</el-button>
+                               <el-button @click="handleDeleteType(getIndex)"><i  class="el-icon-delete-solid" style="color:#FF0066;margin-right:4px;"></i>删除当前子策略</el-button> 
+                            </el-footer>
+                            </el-row>
+          
       </el-row>
+       <el-row  style="border-top:1px solid #eee">
+       
+
+        </el-row>
     </el-card>
+    </el-form>
+
     <el-row :gutter="20">
-      <el-col
-        style="position:fixed;bottom:0px;background:#fff;border-top:1px solid rgb(210,210,210);"
-      >
-        <div style="margin:14px 20%;">
-          <el-button type="primary" size="small">保存</el-button>
+     
+        <el-footer style="margin:10px 20px;text-align:left;">
+          <el-button type="primary" size="small">创建</el-button>
           <el-button type="primary" plain size="small" @click="goBack"
-            >返回</el-button
+            >取消</el-button
           >
-        </div>
-      </el-col>
+        </el-footer>
     </el-row>
-    <el-drawer
-      title="筛选详情"
-      :visible.sync="drawerShow"
-      direction="rtl"
-      size="40%"
-    >
-      <span class="customer">当前条件匹配{{ customers }}位客户</span>
-      <el-table :data="gridData">
-        <el-table-column
-          property="date"
-          label="日期"
-          width="150"
-        ></el-table-column>
-        <el-table-column
-          property="name"
-          label="姓名"
-          width="200"
-        ></el-table-column>
-        <el-table-column property="address" label="地址"></el-table-column>
-      </el-table>
-    </el-drawer>
   </div>
 </template>
 <script>
+import draggable from 'vuedraggable';
 export default {
   props: ['tagsList'],
+  components:{draggable},
   data() {
     return {
+      getIndex:0,
      avtivefilter:false,
      dialogObjectVisible:false,
+     relateList:'',
      filters:[
           {
             name:'短信',
-            relate:''
+            relate:'0'
         },
          {
             name:'微信公众号',
-            relate:''
+            relate:'1'
         }
      ],
      auditStatusList:[
@@ -226,17 +217,62 @@ export default {
          },
 
     ],
-    sendTypeList:[
+    sendWayList:[
          {
              name:'并发（同时发送）',
              value:'0'
          },
          {
-             name:'串发（从左到右一次发送）',
+             name:'串发（从左到右依次发送）',
              value:'1'
          },
 
 
+    ],
+      sendTypeList:[
+         {
+             name:'逻辑',
+             value:'0'
+         },
+         {
+             name:'标签',
+             value:'1'
+         },
+         {
+             name:'业务变量',
+             value:'2'
+         }
+    ],
+    ifNameList:[],
+    ifNameOne:[
+        {
+             name:'点击',
+             value:'0'
+         },
+         {
+             name:'状态报告',
+             value:'1'
+         },
+    ],
+    ifNameTwo:[
+        {
+             name:'客户持卡类型',
+             value:'0'
+         },
+         {
+             name:'营销活动参与度',
+             value:'1'
+         },
+    ],
+    ifNameThree:[
+        {
+             name:'消费金额',
+             value:'0'
+         },
+         {
+             name:'账户余额',
+             value:'1'
+         },
     ],
     msgClassify:[
         {
@@ -254,8 +290,14 @@ export default {
         strategyName: '',
         childStrategyName:'',
         sendType:'0',
-
-
+        ifName:'0',
+        sendWay:'0',
+        touchCondition:[
+          {
+            sendType:'',
+            ifName:''
+          }
+        ]
       },
       customers: 13,
       options: [
@@ -316,8 +358,46 @@ export default {
     }
   },
   created() {
+    this.sendWayChange('0')
+    this.selectCondition('0')
   },
   methods: {
+    // 增加子策略
+      handleAddType() {
+      this.formData.touchCondition.push({
+        sendType: '',
+        ifName: '',
+      })
+    },
+    //删子策略
+    handleDeleteType(index) {
+        this.formData.touchCondition.forEach((item,i)=>{
+           index=i
+        })
+      if (this.formData.touchCondition.length > 1) {
+         this.formData.touchCondition.splice(index, 1)
+       }
+    },
+    selectCondition(val){
+      if(val=='0'){
+        this.ifNameList=this.ifNameOne
+      }else if(val=='1'){
+         this.ifNameList=this.ifNameTwo
+
+      }else{
+          this.ifNameList=this.ifNameThree
+      }
+
+    },
+    sendWayChange(val){
+      if(val=='0'){
+        this.relateList='&'
+      }else if(val=='1'){
+        this.relateList='>'
+      }
+
+
+    },
     getdata(evt) {
     console.log(evt.draggedContext.filterKey)
     //这里evt.draggedContext后续的内容根据具体的定义变量而定
@@ -334,29 +414,36 @@ export default {
 },
     // 返回按钮click
     goBack() {
-      this.$emit('goCheck', false)
+      this.$emit('closeAdd', false)
     }
   }
 }
 </script>
 <style lang="scss" scoped>
+.sendTimeList{
+  margin-left:35px;
+  & /deep/.el-form-item__content{
+    margin-left:0px !important;
+  }
+}
+.dragLabel{
+  float:left;
+  color:#44a0ff;
+  font-size:12px;
+  margin-left:6px;
+  background:#ecf5ff;
+  border:1px solid #44a0ff;
+  border-radius:3px;
+  cursor: pointer;
+}
+.relateClass
+{
+ & /deep/.el-form-item__content{
+    margin-left:20px;
+  }
+
+} 
 .addGroup {
-  & /deep/ .el-card__header {
-    border: none;
-    padding-bottom: 0;
-  }
-  & /deep/ .el-collapse {
-    border: none;
-    & /deep/ .el-collapse-item__header {
-      border: none;
-    }
-    & /deep/ .el-collapse-item__wrap {
-      border: none;
-      .el-collapse-item__content {
-        padding-bottom: 0;
-      }
-    }
-  }
   & /deep/ .el-checkbox-button {
     width: 100%;
     display: inline-block;
@@ -466,23 +553,6 @@ export default {
       box-shadow: inset 0 0 0px rgba(240, 240, 240, 0.5);
       background-color: #dcdfe6;
     }
-  }
-}
-.condition-card {
-  border: 1px solid #c6cbdd !important;
-  border-radius: 2px;
-  margin-bottom: 12px;
-  position: relative;
-  width: 100%;
-  & /deep/ .el-card__body {
-    padding: 5px 0;
-  }
-  .del {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 20px;
-    cursor: pointer;
   }
 }
 </style>

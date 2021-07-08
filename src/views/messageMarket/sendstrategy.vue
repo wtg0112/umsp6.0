@@ -142,7 +142,7 @@
         >
         </el-pagination>
   </div>
- <add-strategy v-show="changeShow" v-else></add-strategy>
+ <add-strategy v-else  @closeAdd="closeAdd"></add-strategy>
 </template>
 <script>
 import addStrategy from './addStrategy'
@@ -375,6 +375,10 @@ export default {
   },
   created() {},
   methods: {
+    closeAdd(val){
+      this.changeShow=val
+
+    },
     // 切换页 方法 ----- 客户列表
     handleCurrentChange(cpage) {
       this.currpage = cpage
@@ -420,9 +424,6 @@ export default {
       // 新建发送策略按钮
       this.changeShow = true
     },
-    goCheck(val) {
-      this.strategyShow = val
-    }
   }
 }
 </script>

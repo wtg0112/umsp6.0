@@ -882,11 +882,10 @@ export default {
         let chainvariable=this.labelListArr[6].active?'${'+this.labelListArr[6].name+'}': ''
         this.hasModuleContent ='您尾号为'+phoneLast+'京卡于'+tradTime+'通过手机银行'
          +tradType+tradMoney+'元。' +'活期余额'+residue+'元.'+paster+'活动，活动链接：'+chainvariable;
-         this.hasAppContent='您尾号为'+phoneLast+'京卡于'+tradTime+'通过手机银行'
+        this.hasAppContent='您尾号为'+phoneLast+'京卡于'+tradTime+'通过手机银行'
          +tradType+tradMoney+'元。' +'活期余额'+residue+'元.'+paster+'活动，活动链接：'+chainvariable;
-
     },
-    //获取输入框光标
+    //鼠标光标插入
       insertInputTxt(id, insertTxt){
           var elInput =document.getElementById(id);
           var startPos = elInput.selectionStart;
@@ -894,6 +893,21 @@ export default {
           if(startPos ===undefined|| endPos ===undefined)return 
           var txt = elInput.value;
           var result = txt.substring(0, startPos) + insertTxt + txt.substring(endPos)    
+          elInput.value = result;    
+          elInput.focus();  
+          this.$nextTick(() => {
+                elInput.selectionStart = startPos + insertTxt.length;    
+                elInput.selectionEnd = startPos + insertTxt.length;
+         })
+    },
+    // 鼠标光标删除
+     romoveInputTxt(id, insertTxt){
+          var elInput =document.getElementById(id);
+          var startPos = elInput.selectionStart;
+          var endPos = elInput.selectionEnd;
+          if(startPos ===undefined|| endPos ===undefined)return 
+          var txt = elInput.value;
+          var result = txt.substring(0, startPos).replace(insertTxt,'') + txt.substring(endPos)    
           elInput.value = result;    
           elInput.focus();  
           this.$nextTick(() => {
@@ -922,6 +936,13 @@ export default {
      clickIndex(item,index){
      if(item.active){
          Vue.set(item,'active',false)
+         this.romoveInputTxt('insertInput','${'+item.name+'}')
+         this.romoveInputTxt('insertAppInput','${'+item.name+'}')
+          this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
+         this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''
+         this.sendRuleForm.sendWxType=this.labelWxArr[2].active?'${'+this.labelWxArr[2].name+'}':''
+         this.sendRuleForm.sendWxMoney=this.labelWxArr[3].active?'${'+this.labelWxArr[3].name+'}':''
+
       }else{
          Vue.set(item,'active',true)
          this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''

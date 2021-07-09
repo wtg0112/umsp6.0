@@ -13,7 +13,7 @@
       :style="isActive ? '' : 'padding-left: 64px;'"
     >
       <el-row style="margin: 10px 0;" :gutter="20">
-        <el-col :span="24">
+        <el-col :span="24" style="padding-left: 16px;">
           <!-- 左侧菜单栏折叠 -->
           <!-- <collapse id="hamburger-container"  class="hamburger-container" /> -->
           <!-- 面包屑 -->

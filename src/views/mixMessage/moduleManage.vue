@@ -2,7 +2,7 @@
   <div class="realLeft">
       <el-form
             :model="sendRuleForm"
-            :rules="ruleFormRule"
+            :rules="sendRuleForm"
             ref="sendRuleForm"
             class="Note-ruleForm"
             :inline-message="true"
@@ -23,8 +23,8 @@
                                   placeholder="请选择信息分类"
                                 >
                                   <el-option
-                                    v-for="item in infoArr"
-                                    :key="item.value"
+                                    v-for="(item,index) in infoArr"
+                                    :key="index+'info1'"
                                     :label="item.name"
                                     :value="item.value"
                                   >
@@ -63,8 +63,8 @@
                                 placeholder="请选择模板类型"
                               >
                                 <el-option
-                                  v-for="item in moduleTypeList"
-                                  :key="item.value"
+                                  v-for="(item,index) in moduleTypeList"
+                                  :key="index+'info2'"
                                   :label="item.name"
                                   :value="item.value"
                                 >
@@ -81,48 +81,18 @@
                               <div class="leftBox" style="width:68%;margin-top:20px;float:left">
                              <el-row :gutter="20">
                                <el-col>
-                                    <span style="display:block;float:left;">业务变量：</span>
+                                    <span style="display:block;float:left;margin-left:20px;margin-right:10px;">业务变量：</span>
                                     <div style="width:52%;height:110px;border:1px solid #eee;float:left" >
-                                        <div v-for="(item,index) in labelListArr" :key="index" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index)">{{item.name}}</div>
+                                        <div v-for="(item,index) in labelListArr" :key="index+'info3'" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index)">{{item.name}}</div>
                                     </div>
                                </el-col>
                               </el-row>
 
                               <el-row :gutter="20" style="margin-top:20px">
                                       <el-col :span="22">
-                                         <span style="display:block;float:left;">模板内容：</span>
-                                         <div class="activeText">
-                                             <p style="line-height:28px;">您尾号为
-                                                     <span>{{
-                                                       labelListArr[0].active
-                                                      ?'${'+labelListArr[0].name+'}' : ''
-                                                    }}</span>
-                                                    的京卡于
-                                                      <span>{{
-                                                       labelListArr[1].active
-                                                      ?'${'+labelListArr[1].name+'}' : ''
-                                                    }}</span>
-                                                    通过手机银行
-                                                     <span>{{labelListArr[2].active
-                                                      ?'${'+labelListArr[2].name+'}' : ''
-                                                    }}</span>
-                                                      <span>{{labelListArr[3].active
-                                                      ?'${'+labelListArr[3].name+'}' : ''
-                                                    }}</span>元。
-                                                     活期余额
-                                                       <span>{{labelListArr[4].active
-                                                      ?'${'+labelListArr[4].name+'}' : ''
-                                                    }}</span>元。
-                                                     <span>{{labelListArr[5].active
-                                                      ?'${'+labelListArr[5].name+'}' : ''
-                                                    }}</span>活动，活动链接:<span>{{labelListArr[6].active
-                                                      ?'${'+labelListArr[6].name+'}' : ''
-                                                    }}</span>
-
-                                                    </p>
-
-                                        </div>
-                                      
+                                           <el-form-item prop="moduleType" label="模板内容">
+                                                 <el-input  id="insertInput" v-model="hasModuleContent" type="textarea"></el-input>
+                                           </el-form-item>
                                       </el-col>
                                 </el-row>
                               </div>
@@ -195,7 +165,7 @@
                               <div class="leftBox" style="width:60%;margin-top:20px;float:left">
                                     <el-row :gutter="20">
                                           <el-col :span="18">
-                                            <el-form-item prop="infoList" label="选择模板">
+                                            <el-form-item prop="module" label="选择模板">
                                               <el-select
                                                 filterable
                                                 size="small"
@@ -203,8 +173,8 @@
                                                 placeholder="请选择模板"
                                               >
                                                 <el-option
-                                                  v-for="item in sendModuleArr"
-                                                  :key="item.value"
+                                                  v-for="(item,index) in sendModuleArr"
+                                                  :key="index+'info4'"
                                                   :label="item.name"
                                                   :value="item.value"
                                                 >
@@ -218,8 +188,8 @@
                                       <el-col>
                                             <span style="display:block;float:left;margin:0 16px;font-size:14px;">业务变量：</span>
                                             <div style="width:58%;height:110px;border:1px solid #eee;float:left" >
-                                                <div v-for="(item,index) in labelWxArr" :key="index" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index)">{{item.name}}</div>
-                                                <div v-for="(item,index) in labelWxRadio" :key="index" :class="isActive==index?'labelActive labelLi':' labelLi'" @click="clickRadioIndex(index)">{{item.name}}</div>
+                                                <div v-for="(item,index) in labelWxArr" :key="index+'info5'" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index)">{{item.name}}</div>
+                                                <div v-for="(item,index) in labelWxRadio" :key="index+'info6'" :class="isActive==index?'labelActive labelLi':' labelLi'" @click="clickRadioIndex(index)">{{item.name}}</div>
                                             </div>
                                       </el-col>
                                       </el-row>
@@ -367,7 +337,7 @@
                                <div class="leftBox" style="width:60%;margin-top:20px;float:left">
                                     <el-row :gutter="20">
                                           <el-col :span="18">
-                                            <el-form-item prop="infoList" label="选择模板">
+                                            <el-form-item prop="module" label="选择模板">
                                               <el-select
                                                 filterable
                                                 size="small"
@@ -375,8 +345,8 @@
                                                 placeholder="请选择模板"
                                               >
                                                 <el-option
-                                                  v-for="item in sendModuleArr"
-                                                  :key="item.value"
+                                                  v-for="(item,index) in sendModuleArr"
+                                                  :key="index+'only'"
                                                   :label="item.name"
                                                   :value="item.value"
                                                 >
@@ -587,45 +557,16 @@
                                <el-col>
                                     <span style="display:block;float:left;margin:0 15px;">业务变量：</span>
                                     <div style="width:52%;height:110px;border:1px solid #eee;float:left" >
-                                        <div v-for="(item,index) in labelListArr" :key="index" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index)">{{item.name}}</div>
+                                        <div v-for="(item,index) in labelListArr" :key="index+'-one'" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index)">{{item.name}}</div>
                                     </div>
                                </el-col>
                               </el-row>
 
                               <el-row :gutter="20" style="margin-top:20px">
                                       <el-col :span="22">
-                                         <span style="display:block;float:left;margin:0 16px">模板内容：</span>
-                                         <div class="activeText">
-                                             <p style="line-height:28px;">您尾号为
-                                                     <span>{{
-                                                       labelListArr[0].active
-                                                      ?'${'+labelListArr[0].name+'}' : ''
-                                                    }}</span>
-                                                    的京卡于
-                                                      <span>{{
-                                                       labelListArr[1].active
-                                                      ?'${'+labelListArr[1].name+'}' : ''
-                                                    }}</span>
-                                                    通过手机银行
-                                                     <span>{{labelListArr[2].active
-                                                      ?'${'+labelListArr[2].name+'}' : ''
-                                                    }}</span>
-                                                      <span>{{labelListArr[3].active
-                                                      ?'${'+labelListArr[3].name+'}' : ''
-                                                    }}</span>元。
-                                                     活期余额
-                                                       <span>{{labelListArr[4].active
-                                                      ?'${'+labelListArr[4].name+'}' : ''
-                                                    }}</span>元。
-                                                     <span>{{labelListArr[5].active
-                                                      ?'${'+labelListArr[5].name+'}' : ''
-                                                    }}</span>活动，活动链接:<span>{{labelListArr[6].active
-                                                      ?'${'+labelListArr[6].name+'}' : ''
-                                                    }}</span>
-
-                                                    </p>
-
-                                        </div>
+                                           <el-form-item prop="moduleType" label="模板内容">
+                                                 <el-input  id="insertAppInput" v-model="hasAppContent" type="textarea"></el-input>
+                                           </el-form-item>
                                       
                                       </el-col>
                                 </el-row>
@@ -742,14 +683,16 @@ export default {
   name: 'send',
   data() {
     return {
+      hasAppContent:'',
+      hasModuleContent:'' ,
       moduleTypeList:[
         {
           name:'有变量（不同内容）',
-          value:0
+          value:'0'
         },
         {
           name:'无变量（相同内容）',
-          value:1
+          value:'1'
         }
       ],
       isActive:0,
@@ -767,22 +710,12 @@ export default {
       sendModuleArr:[
          {
           name: '模板一',
-          value: 0
+          value: '0'
         },
         {
           name: '模板二',
-          value: 1
+          value: '1'
         }
-      ],
-      strategyList:[
-         {
-          name: '根据标签精准发送策略',
-          value: 0
-        },
-        {
-          name: '普通发送策略',
-          value: 1
-        },
       ],
       labelWxRadio:[
          {
@@ -819,8 +752,6 @@ export default {
           name: '智能贴片',
           value: 5
         },
-        
-
       ],
       labelListArr:[
         {
@@ -852,36 +783,22 @@ export default {
           value: 6
         }
       ],
-      channelArr: [
-        {
-          name: '国都演示',
-          value: 0
-        },
-        {
-          name: '核心系统',
-          value: 1
-        },
-        {
-          name: '甘肃农信社',
-          value: 2
-        }
-      ],
       infoArr: [
         {
           name: '实时消息',
-          value: 0
+          value: '0'
         },
         {
           name: '营销消息',
-          value: 1
+          value: '1'
         },
         {
           name: '动账消息',
-          value: 2
+          value: '2'
         },
         {
           name: '报警消息',
-          value: 3
+          value: '3'
         }
       ],
  
@@ -895,16 +812,13 @@ export default {
         moduleAppType:['通知栏消息','透传消息'],
          infoList: '',
          moduleName:'',
-         moduleType:0,
-         sendTime:1,
+         moduleType:'0',
          selectTime:'',
-         sendUser:1,
          manualInput:'',
          openId:'first',
          sendStrategy:'',
         importTxt: [{ name: '' }],
         sendModule:'',
-        sendUser:1,
         // 第二页
         sendNoteName:'',
         sendNoteTime:'',
@@ -950,86 +864,49 @@ export default {
       },
       moveIndex:'0',
       mobilPhone: '',
-      ruleFormRule: {
-        //   {validator:limitPhone,trigger:['blur']
-        sendUser:[
-          { required: true, message: '请选择发送用户!', trigger: 'blur' }
-        ],
-        taskName: [
-          { required: true, message: '请输入任务名称!', trigger: 'blur' }
-        ],
-        selectChannel: [
-          {
-            required: true,
-            message: '请选择渠道!',
-            trigger: ['blur', 'change']
-          }
-        ],
-        infoList: [
-          {
-            required: true,
-            message: '请选择信息分类!',
-            trigger: ['blur', 'change']
-          }
-        ],
-        useLabel: [
-          {
-            required: true,
-            message: '请选择使用签名!',
-            trigger: ['blur', 'change']
-          }
-        ],
-        auditor: [
-          {
-            required: true,
-            message: '请选择审核员!',
-            trigger: ['blur', 'change']
-          }
-        ],
-        importTxt: [
-          {
-            required: true,
-            message: '请选择文件!',
-            trigger: ['blur', 'change']
-          }
-        ],
-        fileType: [
-          {
-            required: true,
-            message: '请选择文件类型!',
-            trigger: ['blur', 'change']
-          }
-        ],
-        sendType: [
-          {
-            required: true,
-            message: '请选择发送方式!',
-            trigger: ['blur', 'change']
-          }
-        ],
-        sendTime: [
-          {
-            required: true,
-            message: '请选择发送时间!',
-            trigger: ['blur', 'change']
-          }
-        ],
-        sendNote: [
-          { required: true, message: '请输入短信内容!', trigger: 'blur' }
-        ]
-      }
     }
   },
 
-  mounted() {},
+  mounted() {
+    this.NoteDeafultText()
+  },
   methods: {
+    // 国内短信和App默认输入框拼接展示文字
+    NoteDeafultText(){
+        let phoneLast=this.labelListArr[0].active?'${'+this.labelListArr[0].name+'}': ''
+        let tradTime=this.labelListArr[1].active?'${'+this.labelListArr[1].name+'}': ''
+        let tradType=this.labelListArr[2].active?'${'+this.labelListArr[2].name+'}': ''
+        let tradMoney=this.labelListArr[3].active?'${'+this.labelListArr[3].name+'}': ''
+        let residue=this.labelListArr[4].active?'${'+this.labelListArr[4].name+'}': ''
+        let paster=this.labelListArr[5].active?'${'+this.labelListArr[5].name+'}': ''
+        let chainvariable=this.labelListArr[6].active?'${'+this.labelListArr[6].name+'}': ''
+        this.hasModuleContent ='您尾号为'+phoneLast+'京卡于'+tradTime+'通过手机银行'
+         +tradType+tradMoney+'元。' +'活期余额'+residue+'元.'+paster+'活动，活动链接：'+chainvariable;
+         this.hasAppContent='您尾号为'+phoneLast+'京卡于'+tradTime+'通过手机银行'
+         +tradType+tradMoney+'元。' +'活期余额'+residue+'元.'+paster+'活动，活动链接：'+chainvariable;
+
+    },
+    //获取输入框光标
+      insertInputTxt(id, insertTxt){
+          var elInput =document.getElementById(id);
+          var startPos = elInput.selectionStart;
+          var endPos = elInput.selectionEnd;
+          if(startPos ===undefined|| endPos ===undefined)return 
+          var txt = elInput.value;
+          var result = txt.substring(0, startPos) + insertTxt + txt.substring(endPos)    
+          elInput.value = result;    
+          elInput.focus();  
+          this.$nextTick(() => {
+                elInput.selectionStart = startPos + insertTxt.length;    
+                elInput.selectionEnd = startPos + insertTxt.length;
+         })
+    },
     changeChain(label){
      if(label==2){
        this.isActive=0
      }else if(label=3){
        this.isActive=1
      }
-
     },
     //单选的两个按钮
     clickRadioIndex(index){
@@ -1045,16 +922,17 @@ export default {
      clickIndex(item,index){
      if(item.active){
          Vue.set(item,'active',false)
-         console.log("21242===>",Vue)
       }else{
-
          Vue.set(item,'active',true)
          this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
          this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''
          this.sendRuleForm.sendWxType=this.labelWxArr[2].active?'${'+this.labelWxArr[2].name+'}':''
          this.sendRuleForm.sendWxMoney=this.labelWxArr[3].active?'${'+this.labelWxArr[3].name+'}':''
          this.sendRuleForm.desc='如需更多服务请拨打银行客户服务热线'
-
+         //鼠标光标位置插入选中的标签
+         this.insertInputTxt('insertInput','${'+item.name+'}')
+         this.insertInputTxt('insertAppInput','${'+item.name+'}')
+       
      }
 
     },
@@ -1102,6 +980,7 @@ export default {
     height:130px;
     overflow-y:auto;
  }
+ 
 
 .tabsChange  /deep/.el-tabs__header{
   margin-left:100px;
@@ -1237,19 +1116,14 @@ export default {
 }
 </style>
 <style lang="less">
-//批量发送时间
-.sendTimeList {
-  .operateSendTime {
-    width: 99%;
-    height: 40px;
-    line-height: 40px;
-    background-color: #fff;
-    padding: 5px 16px;
-    .el-form-item__content {
-      margin-left: 0 !important;
-    }
-  }
-}
+#insertInput{
+   width:67%;
+   height:160px;
+ }
+ #insertAppInput{
+   width:67%;
+   height:160px;
+ }
 
 .delBtn {
   cursor: pointer;

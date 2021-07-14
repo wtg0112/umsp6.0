@@ -94,11 +94,9 @@
                                                  <el-input  id="insertInput" v-model="hasModuleContent" type="textarea"></el-input>
                                            </el-form-item> -->
                                            <span style="display:block;float:left;">模板内容：</span>
-                                        <div class="activeText" contenteditable="true"  id="insertInput"   ref="smsContent">
-                                            <p style="line-height:28px;"  id="insertInput" contenteditable="true">您尾号为的京卡于通过手机银行元。 活期余额元。活动，活动链接:</p>
-                                     </div>
-
-
+                                           <div class="activeText" contenteditable="true"  id="insertInput"   ref="smsContent" @mousedown="insertInput">
+                                                  您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:
+                                            </div>
                                       </el-col>
                                 </el-row>
                               </div>
@@ -109,26 +107,7 @@
                                                 <div class="contentPhone">
                                                   <div style="width: 100%; height: 350px">
                                                     <div class="previewPhone">
-                                                      <span>【国都互联】您尾号为
-                                                        {{
-                                                          sendRuleForm.sendNoteName
-                                                          ? sendRuleForm.sendNoteName  : '${name}'
-                                                        }}
-                                                        的京卡于
-                                                        {{
-                                                          sendRuleForm.sendNoteTime
-                                                          ? sendRuleForm.sendNoteTime  : '${time}'
-                                                        }}
-                                                        通过手机银行转账支出
-                                                        {{
-                                                          sendRuleForm.sendNoteMoney
-                                                          ? sendRuleForm.sendNoteMoney  : '${money}'
-                                                        }}元。
-                                                        活期余额
-                                                          {{
-                                                          sendRuleForm.sendActiveMoney
-                                                          ? sendRuleForm.sendActiveMoney  : '${money}'
-                                                        }}元。</span>
+                                                      <span>{{notePhoneShow}}</span>
                                                     </div>
                                                   </div>
                                                 </div>
@@ -689,6 +668,7 @@ export default {
   name: 'send',
   data() {
     return {
+      notePhoneShow:'您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:',
       hasAppContent:'',
       hasModuleContent:'' ,
       moduleTypeList:[
@@ -870,42 +850,27 @@ export default {
       },
       moveIndex:'0',
       mobilPhone: '',
+      range: null,
     }
   },
 
   mounted() {
-    // this.NoteDeafultText()
   },
   methods: {
-
-        insertHtmlAtCaret(html) {
-          let sel, range;
-          if (window.getSelection) {
-            // IE9 and non-IE
-            sel = window.getSelection();
-            if (sel.getRangeAt && sel.rangeCount) {
-              range = sel.getRangeAt(0);
-              range.deleteContents();
-              let el = document.createElement("div");
-              el.appendChild(html)
-              var frag = document.createDocumentFragment(), node, lastNode;
-              while ((node = el.firstChild)) {
-                lastNode = frag.appendChild(node);
-              }
-              range.insertNode(frag);
-              if (lastNode) {
-                range = range.cloneRange();
-                range.setStartAfter(lastNode);
-                range.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(range);
-              }
-            }
-          } else if (document.selection && document.selection.type != "Control") {
-            // IE < 9
-            document.selection.createRange().pasteHTML(html);
-          }
-        },
+    insertInput() {
+      setTimeout(() => {
+        let sel = window.getSelection()
+        this.range = sel.getRangeAt(0)
+      }, 100)
+    },
+    insertHtmlAtCaret(item) {
+      let el = document.createElement("span")
+      el.className="appendSpanClass"
+      el.innerText = '${' + item.name + '}'
+      var frag = document.createDocumentFragment()
+      frag.appendChild(el)
+      this.range.insertNode(frag)
+    },
     // 国内短信和App默认输入框拼接展示文字
     NoteDeafultText(){
         let phoneLast=this.labelListArr[0].active?'${'+this.labelListArr[0].name+'}': ''
@@ -968,30 +933,42 @@ export default {
 
     },
     //实现多选
-     clickIndex(item,index){
-     if(item.active){
-         Vue.set(item,'active',false)
-         this.romoveInputTxt('insertInput','${'+item.name+'}')
-         this.romoveInputTxt('insertAppInput','${'+item.name+'}')
-          this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
-         this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''
-         this.sendRuleForm.sendWxType=this.labelWxArr[2].active?'${'+this.labelWxArr[2].name+'}':''
-         this.sendRuleForm.sendWxMoney=this.labelWxArr[3].active?'${'+this.labelWxArr[3].name+'}':''
+    clickIndex(item, index){
+      // if (!this.range){
+      //   let content = this.$refs.smsContent
+      //   let el = document.createElement("span")
+      //   el.innerText = '${' + item.name + '}'
+      //   el.style.background="#1890FF"
+      //   el.style.color="#fff"
+      //   el.style.padding="4px"
+      //   content.innerHTML = content.innerHTML+el.outerHTML
+      // }
+      if(item.active){
+        Vue.set(item,'active',false)
+        let content = this.$refs.smsContent
+        let el = document.createElement("span")
+        el.className="appendSpanClass"
+        el.innerText = '${' + item.name + '}'
+        content.innerHTML = content.innerHTML.replace(el.outerHTML, '')
 
-      }else{
-         Vue.set(item,'active',true)
+        //微信模板预览
          this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
          this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''
          this.sendRuleForm.sendWxType=this.labelWxArr[2].active?'${'+this.labelWxArr[2].name+'}':''
          this.sendRuleForm.sendWxMoney=this.labelWxArr[3].active?'${'+this.labelWxArr[3].name+'}':''
-         this.sendRuleForm.desc='如需更多服务请拨打银行客户服务热线'
-         //鼠标光标位置插入选中的标签
-        //  this.insertInputTxt('insertInput','${'+item.name+'}')
-        //  this.insertInputTxt('insertAppInput','${'+item.name+'}')
-        this.insertHtmlAtCaret(document.getElementById('insertInput'))
-       
-     }
 
+      } else{
+        Vue.set(item,'active',true)
+        this.insertHtmlAtCaret(item)
+        
+        // 微信模板预览
+        this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
+         this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''
+         this.sendRuleForm.sendWxType=this.labelWxArr[2].active?'${'+this.labelWxArr[2].name+'}':''
+         this.sendRuleForm.sendWxMoney=this.labelWxArr[3].active?'${'+this.labelWxArr[3].name+'}':''
+         this.sendRuleForm.desc='如需更多服务请拨打银行客户服务热线'
+
+      }
     },
     nextStep(){
        if (this.stepActive++ > 2) this.stepActive = 0;
@@ -1173,9 +1150,15 @@ export default {
 }
 </style>
 <style lang="less">
+.appendSpanClass{
+   background:#1890FF;
+   color:#fff;
+   padding:4px;
+}
 #insertInput{
    width:67%;
    height:160px;
+   line-height: 26px;
  }
  #insertAppInput{
    width:67%;

@@ -37,8 +37,7 @@
           
             <el-col :span="2">
               <el-button type="primary" style="margin-left: 30px;margin-top:4px;" size="small"
-                >查询</el-button
-              >
+                >查询</el-button>
             </el-col>
           </el-row>
   
@@ -74,33 +73,65 @@
                         </el-select>
                 </el-form-item>
             </el-col>
-            <el-col :span="8" v-if="formData.sendWay=='0'">
-              <draggable v-model="filters" dragable="true" :move="getdata" @update="datadragEnd">
+            <el-col :span="12" v-if="formData.sendWay=='0'">
+              <draggable v-model="shuntConnect" dragable="true" :move="getdata" @update="datadragEnd">
                       <transition-group>
-                            <div  v-for="(filter,index) in filters" :key="filter.relate" style="margin-top: 5px">
-                                  <span  class="dragLabel" style="padding:7px 14px">{{filter.name}}</span>
-                                  <span  class="dragLabel"  style="padding:0px;border:none;" v-if="index==filters.length-1"></span>
-                                  <span  class="dragLabel" style="padding:7px 14px" v-else>{{relateList}}</span>
+                            <div  v-for="(filter,index) in shuntFilters" :key="filter.relate" style="margin:5px 0;">
+                                  <span  class="dragLabel" style="padding:7px 14px;margin-bottom:10px;">{{filter.name}}<i class="el-icon-close" style="margin-left:4px;" @click="closeDrag(index)"></i></span>
+                                  <span  class="dragLabel"  style="padding:0px;border:none;margin-bottom:10px" v-if="index==shuntFilters.length-1"></span>
+                                  <span  class="dragLabel" style="padding:7px 14px;margin-bottom:10px" v-else>{{relateList}}</span>
                             </div>
                       </transition-group>
               </draggable>
-              <el-button size="small" style="margin-left:10px;">
+              <el-button size="small" style="margin-left:10px;"  @click="addInfoType" v-if="infoTypeShow==false"  v-show="typeBtnShow">
                 <i class="el-icon-circle-plus"></i>
                添加信息类型</el-button>
+               <el-select
+                style="width:100px;margin-left:10px"
+                       v-show="infoTypeShow"
+                        size="small"
+                        v-model="formData.infoType"
+                        placeholder="请选择信息类型"
+                        @change="infoTypeChange(formData.infoType)"
+                        >
+                        <el-option
+                            v-for="item in infoTypeList"
+                            :key="item.value"
+                            :label="item.name"
+                            :value="item.name"
+                        >
+                        </el-option>
+                </el-select>
+
             </el-col>
-             <el-col :span="8" v-else-if="formData.sendWay=='1'">
-                <draggable v-model="filters" dragable="true" :move="getdata" @update="datadragEnd">
+
+             <el-col :span="13" v-else-if="formData.sendWay=='1'">
+                <draggable v-model="seriesConnect" dragable="true" :move="getdata" @update="datadragEnd1">
                       <transition-group>
-                            <div  v-for="(filter,index) in filters" :key="filter.relate" style="margin-top: 5px">
-                                  <span  class="dragLabel" style="padding:7px 14px">{{filter.name}}</span>
-                                  <span  class="dragLabel"  style="padding:0px;border:none;" v-if="index==filters.length-1"></span>
-                                  <span  class="dragLabel" style="padding:7px 14px" v-else>{{relateList}}</span>
+                            <div  v-for="(filter,index) in seriesFilters" :key="filter.value">
+                                  <span  class="dragLabel1" style="padding:0px 14px;margin-bottom:10px">{{filter.name}}<i class="el-icon-close" style="margin-left:4px;" @click="closeDrag1(index)"></i></span>
                             </div>
                       </transition-group>
               </draggable>
-              <el-button size="small" style="margin-left:10px;">
+              <el-button size="small" style="margin-left:10px;" @click="addSeriesType" v-if="seriseTypeShow==false"  v-show="seriseBtnShow">
                 <i class="el-icon-circle-plus"></i>
                添加信息类型</el-button>
+              <el-select
+                style="width:100px;margin-left:10px;"
+                       v-show="seriseTypeShow"
+                        size="small"
+                        v-model="formData.seriesType"
+                        placeholder="请选择信息类型"
+                        @change="infoTypeChange1(formData.seriesType)"
+                        >
+                        <el-option
+                            v-for="item in infoTypeList"
+                            :key="item.value"
+                            :label="item.name"
+                            :value="item.name"
+                        >
+                        </el-option>
+                </el-select>
             </el-col>
           </el-row>
 
@@ -108,7 +139,7 @@
           <p style="margin-left:34px;border-left:7px solid #409EFF;padding-left:6px;font-size:15px;">触发条件（无触发条件代表默认执行）</p>
                 <div class="operateSendTime"    v-for="(item, index) in formData.touchCondition" :key="index">
                           <el-row class="sendTimeList" >
-                                  <el-col :span="5">
+                                  <el-col :span="4">
                                     <el-form-item
                                       ref="cashCouponRuleListClear"
                                       style="margin-bottom:0px;margin-left:0px;"
@@ -131,7 +162,7 @@
                                     </el-form-item>
                                   </el-col>
 
-                                  <el-col :span="5" style="margin-left:20px;">
+                                  <el-col :span="4" style="margin-left:10px;">
                                     <el-form-item
                                       style="margin-bottom:0px;"
                                       :prop="'touchCondition.' + index + '.ifName'"
@@ -151,6 +182,165 @@
                                       </el-select>
                                     </el-form-item>
                                   </el-col>
+                                 <div v-if="formData.touchCondition[index].sendType=='0'">
+                                      <div v-if="formData.touchCondition[index].ifName=='0'">
+                                                <el-col :span="4" style="margin-left:10px;">
+                                                    <el-input-number v-model="num" controls-position="right" @change="handleChange" :min="1" :max="60"></el-input-number>
+                                                </el-col>
+                                                <el-col :span="4" style="margin-left:0px;">
+                                                  <el-form-item
+                                                    style="margin-bottom:0px;"
+                                                    :prop="'touchCondition.' + index + '.clickTime'"
+                                                  >
+                                                    <el-select
+                                                        size="small"
+                                                        v-model="formData.touchCondition[index].clickTime"
+                                                        placeholder="请选择"
+                                                        >
+                                                        <el-option
+                                                            v-for="item in clickTimeList"
+                                                            :key="item.value"
+                                                            :label="item.name"
+                                                            :value="item.value"
+                                                        >
+                                                        </el-option>
+                                                    </el-select>
+                                                  </el-form-item>
+                                                </el-col>
+                                                <el-col :span="4" style="margin-left:10px;">
+                                                  <el-form-item
+                                                    style="margin-bottom:0px;"
+                                                    :prop="'touchCondition.' + index + '.clickStatus'"
+                                                  >
+                                                    <el-select
+                                                        size="small"
+                                                        v-model="formData.touchCondition[index].clickStatus"
+                                                        placeholder="请选择判断描述"
+                                                        >
+                                                        <el-option
+                                                            v-for="item in clickStatusList"
+                                                            :key="item.value"
+                                                            :label="item.name"
+                                                            :value="item.value"
+                                                        >
+                                                        </el-option>
+                                                    </el-select>
+                                                  </el-form-item>
+                                                </el-col>
+                                      </div>
+                                      <div v-if="formData.touchCondition[index].ifName=='1'">
+                                                <el-col :span="4" style="margin-left:10px;">
+                                                    <el-input-number v-model="num" controls-position="right" @change="handleChange" :min="1" :max="60"></el-input-number>
+                                                </el-col>
+                                                <el-col :span="4" style="margin-left:0px;">
+                                                  <el-form-item
+                                                    style="margin-bottom:0px;"
+                                                    :prop="'touchCondition.' + index + '.reportTime'"
+                                                  >
+                                                    <el-select
+                                                        size="small"
+                                                        v-model="formData.touchCondition[index].reportTime"
+                                                        placeholder="请选择"
+                                                        >
+                                                        <el-option
+                                                            v-for="item in reportTimeList"
+                                                            :key="item.value"
+                                                            :label="item.name"
+                                                            :value="item.value"
+                                                        >
+                                                        </el-option>
+                                                    </el-select>
+                                                  </el-form-item>
+                                                </el-col>
+                                                <el-col :span="4" style="margin-left:10px;">
+                                                  <el-form-item
+                                                    style="margin-bottom:0px;"
+                                                    :prop="'touchCondition.' + index + '.reportStatus'"
+                                                  >
+                                                    <el-select
+                                                        size="small"
+                                                        v-model="formData.touchCondition[index].reportStatus"
+                                                        placeholder="请选择判断描述"
+                                                        >
+                                                        <el-option
+                                                            v-for="item in reportStatusList"
+                                                            :key="item.value"
+                                                            :label="item.name"
+                                                            :value="item.value"
+                                                        >
+                                                        </el-option>
+                                                    </el-select>
+                                                  </el-form-item>
+                                                </el-col>
+                                      </div>
+                                 </div>
+
+                                <div v-else-if="formData.touchCondition[index].sendType=='1'">
+                                                <el-col :span="4" style="margin-left:10px;">
+                                                  <el-form-item
+                                                    style="margin-bottom:0px;"
+                                                    :prop="'touchCondition.' + index + '.labelRelate'"
+                                                  >
+                                                    <el-select
+                                                        size="small"
+                                                        v-model="formData.touchCondition[index].labelRelate"
+                                                        placeholder="请选择"
+                                                        >
+                                                        <el-option
+                                                            v-for="item in labelRelation"
+                                                            :key="item.value"
+                                                            :label="item.name"
+                                                            :value="item.value"
+                                                        >
+                                                        </el-option>
+                                                    </el-select>
+                                                  </el-form-item>
+                                                </el-col>
+                                                <el-col :span="4" style="margin-left:10px;">
+                                                  <el-form-item :prop="'touchCondition.' + index + '.labelInput'" >
+                                                      <el-input
+                                                        v-model="formData.touchCondition[index].labelInput"
+                                                        placeholder="请输入条件描述"
+                                                        size="small"
+                                                      ></el-input>
+                                                    </el-form-item>
+                                                </el-col>
+                                </div>
+
+                                <div v-if="formData.touchCondition[index].sendType=='2'">
+                                        <el-col :span="4" style="margin-left:10px;">
+                                                      <el-form-item
+                                                        style="margin-bottom:0px;"
+                                                        :prop="'touchCondition.' + index + '.rangRelate'"
+                                                      >
+                                                        <el-select
+                                                            size="small"
+                                                            v-model="formData.touchCondition[index].rangRelate"
+                                                            placeholder="请选择"
+                                                            >
+                                                            <el-option
+                                                                v-for="item in rangRelation"
+                                                                :key="item.value"
+                                                                :label="item.name"
+                                                                :value="item.value"
+                                                            >
+                                                            </el-option>
+                                                        </el-select>
+                                                      </el-form-item>
+                                                    </el-col>
+                                                    <el-col :span="4" style="margin-left:10px;">
+                                                      <el-form-item :prop="'touchCondition.' + index + '.changeDsc'" >
+                                                          <el-input
+                                                            v-model="formData.touchCondition[index].changeDsc"
+                                                            placeholder="请输入条件描述"
+                                                            size="small"
+                                                          ></el-input>
+                                                        </el-form-item>
+                                                    </el-col>
+                                </div>
+
+
+                                  
                           </el-row>
 
                         
@@ -188,11 +378,130 @@ export default {
   components:{draggable},
   data() {
     return {
+      typeBtnShow:true,
+      infoTypeShow:false,
+      seriseBtnShow:true,
+      seriseTypeShow:false,
+      infoTypeList:[
+         {
+           name:'彩信',
+           value:'0'
+        },
+        {
+            name:'App推送',
+            value:'1'
+        },
+        {
+           name:'邮箱订阅',
+            value:'2'
+        }
+      ],
+      rangRelation:[
+         {
+           name:'=',
+            value:'0'
+        },
+         {
+            name:'≠',
+            value:'1'
+         },
+          {
+           name:'>',
+            value:'2'
+        },
+         {
+            name:'≧',
+            value:'3'
+         },
+          {
+           name:'<',
+            value:'4'
+        },
+         {
+            name:'≦',
+            value:'5'
+         },
+         {
+            name:'区间',
+            value:'6'
+         },
+
+      ],
+      labelRelation:[
+        {
+           name:'等于',
+            value:'0'
+        },
+         {
+            name:'不等于',
+            value:'1'
+         },
+          {
+           name:'包含',
+            value:'2'
+        },
+         {
+            name:'不包含',
+            value:'3'
+         },
+          {
+           name:'有值',
+            value:'4'
+        },
+         {
+            name:'为空',
+            value:'5'
+         },
+      ],
+      reportStatusList:[
+          {
+            name:'已完成送达',
+            value:'0'
+        },
+         {
+            name:'未完成送达',
+            value:'1'
+         }
+      ],
+      clickStatusList:[
+          {
+            name:'完成点击',
+            value:'0'
+        },
+         {
+            name:'未完成点击',
+            value:'1'
+         }
+
+      ],
+      clickTimeList:[
+          {
+            name:'分钟内',
+            value:'0'
+        },
+         {
+            name:'小时内',
+            value:'1'
+         }
+      ],
+      reportTimeList:[
+         {
+            name:'分钟',
+            value:'0'
+        },
+         {
+            name:'小时',
+            value:'1'
+         }
+      ],
+      num: 1,
       getIndex:0,
-     avtivefilter:false,
-     dialogObjectVisible:false,
-     relateList:'',
-     filters:[
+      avtivefilter:false,
+      dialogObjectVisible:false,
+      relateList:'',
+      seriesConnect:'',
+      shuntConnect:'',
+      shuntFilters:[
           {
             name:'短信',
             relate:'0'
@@ -200,6 +509,16 @@ export default {
          {
             name:'微信公众号',
             relate:'1'
+        }
+     ],
+    seriesFilters:[
+          {
+            name:'短信',
+            value:'0'
+        },
+         {
+            name:'微信公众号',
+            value:'1'
         }
      ],
      auditStatusList:[
@@ -286,16 +605,28 @@ export default {
 
     ],
     formData: {
+        infoType:'',
         infoClassify: '',
         strategyName: '',
         childStrategyName:'',
         sendType:'0',
         ifName:'0',
         sendWay:'0',
+        seriesType:'',
         touchCondition:[
           {
             sendType:'',
-            ifName:''
+            ifName:'',
+            clickTime:'',
+            clickStatus:'',
+            reportStatus:'',
+            reportTime:'',
+            labelRelate:'',
+            labelInput:'',
+            rangPelate:'',
+            changeDsc:''
+
+
           }
         ]
       },
@@ -362,6 +693,57 @@ export default {
     this.selectCondition('0')
   },
   methods: {
+    addInfoType(){
+     this.infoTypeShow=true;
+     this.typeBtnShow=false
+    },
+    addSeriesType(){
+      this.seriseTypeShow=true;
+      this.seriseBtnShow=false
+    },
+
+    infoTypeChange(val){
+      this.formData.infoType=''
+      this.infoTypeShow=false;
+      this.typeBtnShow=true
+      let newArr=[]
+      this.shuntFilters.forEach(item=>{
+          newArr.push(item.name)
+      })
+      if(newArr.indexOf(val)==-1){
+        this.shuntFilters.push({name:val,relate:''})
+      }else{
+        this.$message.warning('已添加该信息类型！')
+      }
+    },
+    infoTypeChange1(val){
+      this.formData.seriesType=''
+      this.seriseTypeShow=false;
+      this.seriseBtnShow=true
+      let newArr=[]
+      this.seriesFilters.forEach(item=>{
+          newArr.push(item.name)
+      })
+      if(newArr.indexOf(val)==-1){
+        this.seriesFilters.push({name:val,value:''})
+      }else{
+        this.$message.warning('已添加该信息类型！')
+      }
+
+    },
+    closeDrag(index){
+       if (this.shuntFilters.length > 0) {
+         this.shuntFilters.splice(index, 1)
+       }
+    },
+    closeDrag1(index){
+       if (this.seriesFilters.length > 0) {
+         this.seriesFilters.splice(index, 1)
+       }
+    },
+     handleChange(value) {
+        console.log(value);
+      },
     // 增加子策略
       handleAddType() {
       this.formData.touchCondition.push({
@@ -392,8 +774,6 @@ export default {
     sendWayChange(val){
       if(val=='0'){
         this.relateList='&'
-      }else if(val=='1'){
-        this.relateList='>'
       }
 
 
@@ -406,12 +786,22 @@ export default {
     console.log('拖动前的索引 :' + evt.oldIndex)
     console.log('拖动后的索引 :' + evt.newIndex);
 
-    let filters = this.filters;
+    let filters = this.shuntFilters;
     for(let a=0;a<filters.length;a++){
         filters[a].index = a;
     }
     // vm.report.filter = filters;
-},
+   },
+  datadragEnd1(evt) {
+    console.log('拖动前的索引 :' + evt.oldIndex)
+    console.log('拖动后的索引 :' + evt.newIndex);
+
+    let filters = this.seriesFilters;
+    for(let a=0;a<filters.length;a++){
+        filters[a].index = a;
+    }
+    // vm.report.filter = filters;
+   },
     // 返回按钮click
     goBack() {
       this.$emit('closeAdd', false)
@@ -433,6 +823,17 @@ export default {
   margin-left:6px;
   background:#ecf5ff;
   border:1px solid #44a0ff;
+  border-radius:3px;
+  cursor: pointer;
+}
+.dragLabel1{
+  float:left;
+  height:40px;
+  line-height:40px;
+  color:#44a0ff;
+  font-size:12px;
+  margin-left:6px;
+  background:url('../../assets/img/chuan.svg') no-repeat 100%;
   border-radius:3px;
   cursor: pointer;
 }

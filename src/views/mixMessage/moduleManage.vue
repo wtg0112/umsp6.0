@@ -90,9 +90,15 @@
 
                               <el-row :gutter="20" style="margin-top:20px">
                                       <el-col :span="22">
-                                           <el-form-item prop="moduleType" label="模板内容">
+                                           <!-- <el-form-item prop="moduleType" label="模板内容">
                                                  <el-input  id="insertInput" v-model="hasModuleContent" type="textarea"></el-input>
-                                           </el-form-item>
+                                           </el-form-item> -->
+                                           <span style="display:block;float:left;">模板内容：</span>
+                                        <div class="activeText" contenteditable="true"  id="insertInput"   ref="smsContent">
+                                            <p style="line-height:28px;"  id="insertInput" contenteditable="true">您尾号为的京卡于通过手机银行元。 活期余额元。活动，活动链接:</p>
+                                     </div>
+
+
                                       </el-col>
                                 </el-row>
                               </div>
@@ -868,9 +874,38 @@ export default {
   },
 
   mounted() {
-    this.NoteDeafultText()
+    // this.NoteDeafultText()
   },
   methods: {
+
+        insertHtmlAtCaret(html) {
+          let sel, range;
+          if (window.getSelection) {
+            // IE9 and non-IE
+            sel = window.getSelection();
+            if (sel.getRangeAt && sel.rangeCount) {
+              range = sel.getRangeAt(0);
+              range.deleteContents();
+              let el = document.createElement("div");
+              el.appendChild(html)
+              var frag = document.createDocumentFragment(), node, lastNode;
+              while ((node = el.firstChild)) {
+                lastNode = frag.appendChild(node);
+              }
+              range.insertNode(frag);
+              if (lastNode) {
+                range = range.cloneRange();
+                range.setStartAfter(lastNode);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+              }
+            }
+          } else if (document.selection && document.selection.type != "Control") {
+            // IE < 9
+            document.selection.createRange().pasteHTML(html);
+          }
+        },
     // 国内短信和App默认输入框拼接展示文字
     NoteDeafultText(){
         let phoneLast=this.labelListArr[0].active?'${'+this.labelListArr[0].name+'}': ''
@@ -951,8 +986,9 @@ export default {
          this.sendRuleForm.sendWxMoney=this.labelWxArr[3].active?'${'+this.labelWxArr[3].name+'}':''
          this.sendRuleForm.desc='如需更多服务请拨打银行客户服务热线'
          //鼠标光标位置插入选中的标签
-         this.insertInputTxt('insertInput','${'+item.name+'}')
-         this.insertInputTxt('insertAppInput','${'+item.name+'}')
+        //  this.insertInputTxt('insertInput','${'+item.name+'}')
+        //  this.insertInputTxt('insertAppInput','${'+item.name+'}')
+        this.insertHtmlAtCaret(document.getElementById('insertInput'))
        
      }
 

@@ -8,20 +8,33 @@
         label-width="100px"
       >
         <el-row :gutter="20">
-          <el-col :span="6">
-            <el-form-item prop="wechatSubscript" label="所属公众号">
+          <el-col :span="5">
+            <el-form-item prop="sendType" label="发送类型">
+              <el-select v-model="formData.sendType" size="small" filterable>
+                <el-option
+                  v-for="item in sendTypeList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+             <el-form-item prop="ClientId" label="ClientId">
               <el-input
-                v-model="formData.wechatSubscript"
-                placeholder="请输入公众号"
+                v-model="formData.ClientId"
+                placeholder="请输入客户ID"
                 size="small"
               ></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item prop="qudao" label="渠道名称">
-              <el-select v-model="formData.qudao" size="small" filterable>
+          <el-col :span="5">
+            <el-form-item prop="user" label="渠道名称">
+              <el-select v-model="formData.user" size="small" filterable>
                 <el-option
-                  v-for="item in options"
+                  v-for="item in channelNameList"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -30,17 +43,26 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+           <el-col :span="5">
             <el-form-item prop="user" label="用户">
               <el-select v-model="formData.user" size="small" filterable>
                 <el-option
-                  v-for="item in options"
+                  v-for="item in userList"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
                 >
                 </el-option>
               </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item prop="pici" label="批次号">
+              <el-input
+                v-model="formData.pici"
+                placeholder="请输入批次号"
+                size="small"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -106,18 +128,22 @@
           <el-table-column prop="account" label="用户"></el-table-column>
           <el-table-column prop="channel" label="渠道名称"></el-table-column>
           <el-table-column prop="classify" label="信息分类"></el-table-column>
-          <el-table-column prop="wechatSubscript" label="所属公众号"></el-table-column>
-           <el-table-column prop="number" label="用户OpenId"></el-table-column>
+          <el-table-column prop="number" label="号码"></el-table-column>
           <el-table-column
-            prop="sendTime"
-            label="发送时间"
+            prop="startTime"
+            label="短信发送时间"
             sortable
             column-key="date"
           >
           </el-table-column>
-             <el-table-column prop="content" label="内容"></el-table-column>
-             <el-table-column prop="submitReport" label="提交报告"></el-table-column>
-             <el-table-column prop="statusReport" label="状态报告"></el-table-column>
+          <el-table-column
+            prop="sCodeTime"
+            label="状态报告时间"
+            sortable
+            column-key="date"
+          >
+          </el-table-column>
+          <el-table-column prop="content" label="内容"></el-table-column>
         </el-table>
         <el-pagination
           background
@@ -137,11 +163,10 @@
 import { getNowTime } from '@/utils/validate'
 
 export default {
-  name:'logQuery',
+  name:'pushSearch',
   data() {
     return {
       formData: {
-        wechatSubscript:'',
         qudao: '',
         user: '',
         sCode: '',
@@ -172,132 +197,22 @@ export default {
         {
           id: '001',
           sCodeTime: '2016-05-02',
-          sendTime: '2021-06-16',
+          startTime: '2021-06-16',
           account: 'wtg',
           channel: '电信',
           classify: '短信',
-          wechatSubscript:'电信统一平台官方公众号',
           number: '13320045267',
-          content: '本消息为测试消息',
-          submitReport:'本消息为测试消息1312',
-          statusReport:'本消息为测试消息35335'
+          content: '本消息为测试消息'
         },
         {
           id: '001',
           sCodeTime: '2016-05-02',
-          sendTime: '2021-06-16',
+          startTime: '2021-06-17',
           account: 'wtg',
           channel: '电信',
           classify: '短信',
-          wechatSubscript:'电信统一平台官方公众号',
           number: '13320045267',
-          content: '本消息为测试消息',
-          submitReport:'本消息为测试消息1312',
-          statusReport:'本消息为测试消息35335'
-        },
-        {
-          id: '001',
-          sCodeTime: '2016-05-02',
-          sendTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          wechatSubscript:'电信统一平台官方公众号',
-          number: '13320045267',
-          content: '本消息为测试消息',
-          submitReport:'本消息为测试消息1312',
-          statusReport:'本消息为测试消息35335'
-        },
-        {
-          id: '001',
-          sCodeTime: '2016-05-02',
-          sendTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          wechatSubscript:'电信统一平台官方公众号',
-          number: '13320045267',
-          content: '本消息为测试消息',
-          submitReport:'本消息为测试消息1312',
-          statusReport:'本消息为测试消息35335'
-        },
-        {
-          id: '001',
-          sCodeTime: '2016-05-02',
-          sendTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          wechatSubscript:'电信统一平台官方公众号',
-          number: '13320045267',
-          content: '本消息为测试消息',
-          submitReport:'本消息为测试消息1312',
-          statusReport:'本消息为测试消息35335'
-        },
-        {
-          id: '001',
-          sCodeTime: '2016-05-02',
-          sendTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          wechatSubscript:'电信统一平台官方公众号',
-          number: '13320045267',
-          content: '本消息为测试消息',
-          submitReport:'本消息为测试消息1312',
-          statusReport:'本消息为测试消息35335'
-        },
-        {
-          id: '001',
-          sCodeTime: '2016-05-02',
-          sendTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          wechatSubscript:'电信统一平台官方公众号',
-          number: '13320045267',
-          content: '本消息为测试消息',
-          submitReport:'本消息为测试消息1312',
-          statusReport:'本消息为测试消息35335'
-        },
-        {
-          id: '001',
-          sCodeTime: '2016-05-02',
-          sendTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          wechatSubscript:'电信统一平台官方公众号',
-          number: '13320045267',
-          content: '本消息为测试消息',
-          submitReport:'本消息为测试消息1312',
-          statusReport:'本消息为测试消息35335'
-        },
-        {
-         id: '001',
-          sCodeTime: '2016-05-02',
-          sendTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          wechatSubscript:'电信统一平台官方公众号',
-          number: '13320045267',
-          content: '本消息为测试消息',
-          submitReport:'本消息为测试消息1312',
-          statusReport:'本消息为测试消息35335'
-        },
-        {
-          id: '001',
-          sCodeTime: '2016-05-02',
-          sendTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          wechatSubscript:'电信统一平台官方公众号',
-          number: '13320045267',
-          content: '本消息为测试消息',
-          submitReport:'本消息为测试消息1312',
-          statusReport:'本消息为测试消息35335'
+          content: '本消息为测试消息'
         },
         {
           id: '001',
@@ -306,30 +221,98 @@ export default {
           account: 'wtg',
           channel: '电信',
           classify: '短信',
-          number: '13320045267', id: '001',
-          sCodeTime: '2016-05-02',
-          sendTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          wechatSubscript:'电信统一平台官方公众号',
           number: '13320045267',
-          content: '本消息为测试消息',
-          submitReport:'本消息为测试消息1312',
-          statusReport:'本消息为测试消息35335'
+          content: '本消息为测试消息'
         },
         {
-         id: '001',
+          id: '001',
           sCodeTime: '2016-05-02',
-          sendTime: '2021-06-16',
+          startTime: '2021-06-18',
           account: 'wtg',
           channel: '电信',
           classify: '短信',
-          wechatSubscript:'电信统一平台官方公众号',
           number: '13320045267',
-          content: '本消息为测试消息',
-          submitReport:'本消息为测试消息1312',
-          statusReport:'本消息为测试消息35335'
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
+        },
+        {
+          id: '001',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          account: 'wtg',
+          channel: '电信',
+          classify: '短信',
+          number: '13320045267',
+          content: '本消息为测试消息'
         }
       ]
     }

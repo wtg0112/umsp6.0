@@ -83,7 +83,7 @@
                                <el-col>
                                     <span style="display:block;float:left;margin-left:20px;margin-right:10px;">业务变量：</span>
                                     <div style="width:52%;height:110px;border:1px solid #eee;float:left" >
-                                        <div v-for="(item,index) in labelListArr" :key="index+'info3'" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index)">{{item.name}}</div>
+                                        <div v-for="(item,index) in labelListArr" :key="index+'info3'" :class="item.active?'labelActive labelLi':' labelLi'" @click.prevent="clickIndex(item,index)">{{item.name}}</div>
                                     </div>
                                </el-col>
                               </el-row>
@@ -94,7 +94,7 @@
                                                  <el-input  id="insertInput" v-model="hasModuleContent" type="textarea"></el-input>
                                            </el-form-item> -->
                                            <span style="display:block;float:left;">模板内容：</span>
-                                           <div class="activeText" contenteditable="true"  id="insertInput"   ref="smsContent" @mousedown="insertInput">
+                                           <div class="activeText" contenteditable="true"  id="insertInput" ref="smsContent" @mousedown="insertInput" autofocus @focus="insertInput">
                                                   您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:
                                             </div>
                                       </el-col>
@@ -664,6 +664,7 @@
 <script>
 // import qs from 'qs';
 import Vue from 'vue'
+import _ from 'lodash'
 export default {
   name: 'send',
   data() {
@@ -851,6 +852,8 @@ export default {
       moveIndex:'0',
       mobilPhone: '',
       range: null,
+      offsetWord: 0, // 字符位置
+      nodeIndex: 0 // 节点索引
     }
   },
 
@@ -859,17 +862,35 @@ export default {
   methods: {
     insertInput() {
       setTimeout(() => {
+        // 更新range
         let sel = window.getSelection()
         this.range = sel.getRangeAt(0)
+        this.offsetWord = this.range.startOffset
+        let nodes = this.$refs.smsContent.childNodes
+        for (let index = 0; index < nodes.length; index++) {
+          const node = nodes[index]
+          if (node.nodeType === 3 && node === this.range.startContainer || node.nodeType === 1 && node.childNodes[0] === this.range.startContainer) {
+            this.nodeIndex = index
+          }
+        }
       }, 100)
     },
-    insertHtmlAtCaret(item) {
+   insertHtmlAtCaret(item) {
+      let nodes = this.$refs.smsContent.childNodes
+      let node = nodes[this.nodeIndex]
+      if (node.nodeType !== 3) return // 非文字节点不能插入标签
       let el = document.createElement("span")
       el.className="appendSpanClass"
+      el.id = item.value
       el.innerText = '${' + item.name + '}'
       var frag = document.createDocumentFragment()
       frag.appendChild(el)
+      // 根据记录位置和节点 修正range
+      this.range.setStart(node, this.offsetWord)
+      this.range.setEnd(node, this.offsetWord)
       this.range.insertNode(frag)
+      this.nodeIndex += 2
+      this.offsetWord = 0
     },
     // 国内短信和App默认输入框拼接展示文字
     NoteDeafultText(){
@@ -945,12 +966,16 @@ export default {
       // }
       if(item.active){
         Vue.set(item,'active',false)
-        let content = this.$refs.smsContent
-        let el = document.createElement("span")
-        el.className="appendSpanClass"
-        el.innerText = '${' + item.name + '}'
-        content.innerHTML = content.innerHTML.replace(el.outerHTML, '')
-
+        let nodes = this.$refs.smsContent.childNodes
+        for (let index = 0; index < nodes.length; index++) {
+          const node = nodes[index]
+          if (node.nodeType === 1 && node.id == item.value) {
+            this.$refs.smsContent.removeChild(node)
+            if (index <= this.nodeIndex) {
+              this.nodeIndex --
+            }
+          }
+        }
         //微信模板预览
          this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
          this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''

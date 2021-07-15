@@ -76,7 +76,7 @@
             <el-col :span="12" v-if="formData.sendWay=='0'">
               <draggable v-model="shuntConnect" dragable="true" :move="getdata" @update="datadragEnd">
                       <transition-group>
-                            <div  v-for="(filter,index) in shuntFilters" :key="filter.relate" style="margin:5px 0;">
+                            <div  v-for="(filter,index) in shuntFilters" :key="filter.name+'only1'" style="margin:5px 0;">
                                   <span  class="dragLabel" style="padding:7px 14px;margin-bottom:10px;">{{filter.name}}<i class="el-icon-close" style="margin-left:4px;" @click="closeDrag(index)"></i></span>
                                   <span  class="dragLabel"  style="padding:0px;border:none;margin-bottom:10px" v-if="index==shuntFilters.length-1"></span>
                                   <span  class="dragLabel" style="padding:7px 14px;margin-bottom:10px" v-else>{{relateList}}</span>
@@ -87,7 +87,7 @@
                 <i class="el-icon-circle-plus"></i>
                添加信息类型</el-button>
                <el-select
-                style="width:100px;margin-left:10px"
+                style="width:150px;margin-left:10px"
                        v-show="infoTypeShow"
                         size="small"
                         v-model="formData.infoType"
@@ -96,7 +96,7 @@
                         >
                         <el-option
                             v-for="item in infoTypeList"
-                            :key="item.value"
+                            :key="item.name+'-info1'"
                             :label="item.name"
                             :value="item.name"
                         >
@@ -108,8 +108,8 @@
              <el-col :span="13" v-else-if="formData.sendWay=='1'">
                 <draggable v-model="seriesConnect" dragable="true" :move="getdata" @update="datadragEnd1">
                       <transition-group>
-                            <div  v-for="(filter,index) in seriesFilters" :key="filter.value">
-                                  <span  class="dragLabel1" style="padding:0px 14px;margin-bottom:10px">{{filter.name}}<i class="el-icon-close" style="margin-left:4px;" @click="closeDrag1(index)"></i></span>
+                            <div  v-for="(item,index) in seriesFilters" :key="item.name+'only'">
+                                  <span  class="dragLabel1" style="padding:0px 14px;margin-bottom:10px">{{item.name}}<i class="el-icon-close" style="margin-left:4px;" @click="closeDrag1(index)"></i></span>
                             </div>
                       </transition-group>
               </draggable>
@@ -117,7 +117,7 @@
                 <i class="el-icon-circle-plus"></i>
                添加信息类型</el-button>
               <el-select
-                style="width:100px;margin-left:10px;"
+                style="width:150px;margin-left:10px;"
                        v-show="seriseTypeShow"
                         size="small"
                         v-model="formData.seriesType"
@@ -126,7 +126,7 @@
                         >
                         <el-option
                             v-for="item in infoTypeList"
-                            :key="item.value"
+                            :key="item.name+'-info2'"
                             :label="item.name"
                             :value="item.name"
                         >
@@ -137,6 +137,15 @@
 
          <el-row :gutter="20" style="margin-top: 0;">
           <p style="margin-left:34px;border-left:7px solid #409EFF;padding-left:6px;font-size:15px;">触发条件（无触发条件代表默认执行）</p>
+                <div style="width:40px;">
+                      <div class="index_relation_2tj39 sc-filter-relation">
+                        <span class="index_split_3eT-R sc-filter-split"></span>
+                        <div class="index_relationController_1Z39E">
+                          <div class="index_option_1NCau index_option0_2_g3P   " value="and" title="and">且</div
+                          ><div class="index_option_1NCau index_option1_16UPU index_active_1ypig  " value="or" title="or">或</div>
+                          </div>
+                      </div>
+                </div>
                 <div class="operateSendTime"    v-for="(item, index) in formData.touchCondition" :key="index">
                           <el-row class="sendTimeList" >
                                   <el-col :span="4">
@@ -338,9 +347,6 @@
                                                         </el-form-item>
                                                     </el-col>
                                 </div>
-
-
-                                  
                           </el-row>
 
                         
@@ -499,28 +505,28 @@ export default {
       avtivefilter:false,
       dialogObjectVisible:false,
       relateList:'',
-      seriesConnect:'',
-      shuntConnect:'',
+      seriesConnect:[],
+      shuntConnect:[],
       shuntFilters:[
           {
             name:'短信',
-            relate:'0'
+            value:0
         },
          {
             name:'微信公众号',
-            relate:'1'
+            value:1
         }
      ],
-    seriesFilters:[
-          {
+     seriesFilters:[ 
+        {
             name:'短信',
-            value:'0'
+            value:0
         },
          {
             name:'微信公众号',
-            value:'1'
+            value:1
         }
-     ],
+        ],
      auditStatusList:[
          {
              name:'全部',
@@ -626,7 +632,6 @@ export default {
             rangPelate:'',
             changeDsc:''
 
-
           }
         ]
       },
@@ -711,7 +716,7 @@ export default {
           newArr.push(item.name)
       })
       if(newArr.indexOf(val)==-1){
-        this.shuntFilters.push({name:val,relate:''})
+        this.shuntFilters.push({name:val,value:''})
       }else{
         this.$message.warning('已添加该信息类型！')
       }
@@ -810,6 +815,82 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.index_relation_2tj39{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 10px 0;
+    .index_split_3eT-R{
+      display: inline-block;
+     width: 2px;
+     background: #e9f0f7;
+     height: 100%;
+     position: relative;
+     left: 10px;
+    }
+
+}
+
+.index_relationController_1Z39E{
+    position: relative;
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    border-radius: 2px;
+
+ .index_option_1NCau{
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #e9f0f7;
+    color: #8492a6;
+    font-size: 12px;
+
+ }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .sendTimeList{
   margin-left:35px;
   & /deep/.el-form-item__content{

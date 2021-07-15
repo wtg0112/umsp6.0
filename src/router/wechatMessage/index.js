@@ -7,9 +7,9 @@ const wechatMessage = [
     icon: 'iconfont icon-weixin',
     children: [
       {
-        path: 'templateManage',
-        name: 'templateManage',
-        component: () => import('@/views/wechatMessage/templateManage'),
+        path: 'wxTemplateManage',
+        name: 'wxTemplateManage',
+        component: () => import('@/views/wechatMessage/wxTemplateManage'),
         meta: { title: '模板管理' }
       },
       {

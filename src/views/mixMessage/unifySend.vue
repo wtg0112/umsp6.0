@@ -159,9 +159,9 @@
       <el-card class="mainSet" v-loading="loading" style="width:1170px;">
           <div style="width:90%;margin:30px auto 0 auto;"> 
               <el-steps :active="stepActive" finish-status="success">
-                <el-step title="步骤 1"></el-step>
-                <el-step title="步骤 2"></el-step>
-                <el-step title="步骤 3"></el-step>
+                <el-step ></el-step>
+                <el-step></el-step>
+                <el-step></el-step>
             </el-steps>
           </div>
          
@@ -251,7 +251,6 @@
                            <el-col :span="16"  v-if="sendRuleForm.sendUser == '1'">
                               <div class="labelList" style="height:100px;scroll-y:scroll;border:1px solid #eee;margin-left:100px;">
                                 <div v-for="(item,index) in multipleList" :key="index" class="labelLi" >{{item.customer}}</div>
-
                               </div>
                           </el-col>
                         </el-row>
@@ -269,7 +268,6 @@
                           <el-col :span="16"  v-if="sendRuleForm.sendUser == '3'">
                               <div class="labelList" style="height:100px;scroll-y:scroll;border:1px solid #eee;margin-left:100px;">
                                 <div class="labelLi" >{{groupArr.groupName}}</div>
-
                               </div>
                           </el-col>
                         </el-row>
@@ -317,26 +315,6 @@
                           </el-col>
                         </el-row>
                          -->
-                        <el-row :gutter="20">
-                          <el-col :span="16">
-                            <el-form-item prop="sendModule" label="发送模板">
-                              <el-select
-                                filterable
-                                size="small"
-                                v-model="sendRuleForm.moduleType"
-                                placeholder="请选择发送模板"
-                              >
-                                <el-option
-                                  v-for="item in sendModuleArr"
-                                  :key="item.value"
-                                  :label="item.name"
-                                  :value="item.value"
-                                >
-                                </el-option>
-                              </el-select>
-                            </el-form-item>
-                          </el-col>
-                        </el-row>
                         <el-footer style="margin-top:40px;">
                             <el-button @click="rightmove"  type="primary" plain size="small" >下一步</el-button>
                         </el-footer>
@@ -345,6 +323,26 @@
 
               <el-container style="width:1170px;float:left;">
                   <el-main style="margin-bottom: 20px">
+                      <el-row :gutter="20">
+                                <el-col :span="16">
+                                  <el-form-item prop="sendModule" label="发送模板" style="margin-left:-17px">
+                                    <el-select
+                                      filterable
+                                      size="small"
+                                      v-model="sendRuleForm.moduleType"
+                                      placeholder="请选择发送模板"
+                                    >
+                                      <el-option
+                                        v-for="item in sendModuleArr"
+                                        :key="item.value"
+                                        :label="item.name"
+                                        :value="item.value"
+                                      >
+                                      </el-option>
+                                    </el-select>
+                                  </el-form-item>
+                                </el-col>
+                        </el-row>
                         <el-tabs v-model="tabActiveChange" @tab-click="handleClick">
                         <el-tab-pane label="国内短信模板" name="first">
                           <div v-if="sendRuleForm.moduleType==0">
@@ -361,38 +359,7 @@
                               <el-row :gutter="20" style="margin-top:20px">
                                       <el-col :span="22">
                                          <span style="display:block;float:left;">模板内容：</span>
-                                         <div class="activeText">
-                                             <p style="line-height:28px;">您尾号为
-                                                     <span>{{
-                                                       labelListArr[0].active
-                                                      ?'${'+labelListArr[0].name+'}' : ''
-                                                    }}</span>
-                                                    的京卡于
-                                                      <span>{{
-                                                       labelListArr[1].active
-                                                      ?'${'+labelListArr[1].name+'}' : ''
-                                                    }}</span>
-                                                    通过手机银行
-                                                     <span>{{labelListArr[2].active
-                                                      ?'${'+labelListArr[2].name+'}' : ''
-                                                    }}</span>
-                                                      <span>{{labelListArr[3].active
-                                                      ?'${'+labelListArr[3].name+'}' : ''
-                                                    }}</span>元。
-                                                     活期余额
-                                                       <span>{{labelListArr[4].active
-                                                      ?'${'+labelListArr[4].name+'}' : ''
-                                                    }}</span>元。
-                                                     <span>{{labelListArr[5].active
-                                                      ?'${'+labelListArr[5].name+'}' : ''
-                                                    }}</span>活动，活动链接:<span>{{labelListArr[6].active
-                                                      ?'${'+labelListArr[6].name+'}' : ''
-                                                    }}</span>
-
-                                                    </p>
-
-                                        </div>
-                                      
+                                         <div class="activeText" contenteditable="true"  id="insertInput"   ref="smsContent" @mousedown="insertInput"  v-html="contentNote"  @input="contentNote=$event.target.innerHTML"></div>
                                       </el-col>
                                 </el-row>
                               </div>
@@ -403,26 +370,7 @@
                                                 <div class="contentPhone">
                                                   <div style="width: 100%; height: 350px">
                                                     <div class="previewPhone">
-                                                      <span>【国都互联】您尾号为
-                                                        {{
-                                                          sendRuleForm.sendNoteName
-                                                          ? sendRuleForm.sendNoteName  : '${name}'
-                                                        }}
-                                                        的京卡于
-                                                        {{
-                                                          sendRuleForm.sendNoteTime
-                                                          ? sendRuleForm.sendNoteTime  : '${time}'
-                                                        }}
-                                                        通过手机银行转账支出
-                                                        {{
-                                                          sendRuleForm.sendNoteMoney
-                                                          ? sendRuleForm.sendNoteMoney  : '${money}'
-                                                        }}元。
-                                                        活期余额
-                                                          {{
-                                                          sendRuleForm.sendActiveMoney
-                                                          ? sendRuleForm.sendActiveMoney  : '${money}'
-                                                        }}元。</span>
+                                                      <span v-html="contentNote"></span>
                                                     </div>
                                                   </div>
                                                 </div>
@@ -456,7 +404,7 @@
                                                   </div>
                                                 </div>
                                               </div>
-                                        </div>
+                                     </div>
                               </div>
                           </div>
                         </el-tab-pane>
@@ -813,11 +761,6 @@
                                           </div>
                                     </div>
                               </div>
-
-
-
-
-
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="APP模板预览" name="third">
@@ -864,38 +807,8 @@
 
                               <el-row :gutter="20" style="margin-top:20px">
                                       <el-col :span="22">
-                                         <span style="display:block;float:left;margin:0 16px">模板内容：</span>
-                                         <div class="activeText">
-                                             <p style="line-height:28px;">您尾号为
-                                                     <span>{{
-                                                       labelListArr[0].active
-                                                      ?'${'+labelListArr[0].name+'}' : ''
-                                                    }}</span>
-                                                    的京卡于
-                                                      <span>{{
-                                                       labelListArr[1].active
-                                                      ?'${'+labelListArr[1].name+'}' : ''
-                                                    }}</span>
-                                                    通过手机银行
-                                                     <span>{{labelListArr[2].active
-                                                      ?'${'+labelListArr[2].name+'}' : ''
-                                                    }}</span>
-                                                      <span>{{labelListArr[3].active
-                                                      ?'${'+labelListArr[3].name+'}' : ''
-                                                    }}</span>元。
-                                                     活期余额
-                                                       <span>{{labelListArr[4].active
-                                                      ?'${'+labelListArr[4].name+'}' : ''
-                                                    }}</span>元。
-                                                     <span>{{labelListArr[5].active
-                                                      ?'${'+labelListArr[5].name+'}' : ''
-                                                    }}</span>活动，活动链接:<span>{{labelListArr[6].active
-                                                      ?'${'+labelListArr[6].name+'}' : ''
-                                                    }}</span>
-
-                                                    </p>
-
-                                        </div>
+                                           <span style="display:block;float:left;margin-left:20px;margin-right:9px;">模板内容：</span>
+                                           <div class="activeText" contenteditable="true"  id="insertAppInput"   ref="smsContent" @mousedown="insertInput"  v-html="hasAppContent"  @input="hasAppContent=$event.target.innerHTML"></div>
                                       
                                       </el-col>
                                 </el-row>
@@ -906,26 +819,7 @@
                                             <div class="contentPhone">
                                               <div style="width: 100%; height: 350px">
                                                 <div class="previewPhone">
-                                                   <span>【国都互联】您尾号为
-                                                     {{
-                                                       sendRuleForm.sendNoteName
-                                                      ? sendRuleForm.sendNoteName  : '${name}'
-                                                    }}
-                                                    的京卡于
-                                                     {{
-                                                       sendRuleForm.sendNoteTime
-                                                      ? sendRuleForm.sendNoteTime  : '${time}'
-                                                    }}
-                                                    通过手机银行转账支出
-                                                     {{
-                                                       sendRuleForm.sendNoteMoney
-                                                      ? sendRuleForm.sendNoteMoney  : '${money}'
-                                                    }}元。
-                                                     活期余额
-                                                      {{
-                                                       sendRuleForm.sendActiveMoney
-                                                      ? sendRuleForm.sendActiveMoney  : '${money}'
-                                                    }}元。</span>
+                                                   <span v-html="hasAppContent"></span>
                                                 </div>
                                               </div>
                                             </div>
@@ -1068,7 +962,9 @@ export default {
   name: 'unifuSend',
   data() {
     return {
-           isActive:0,
+      contentNote:'您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:',
+      hasAppContent:'您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:',
+      isActive:0,
       strategyList:[
          {
           name: '根据标签精准发送策略',
@@ -1399,6 +1295,7 @@ export default {
        sendAppType:'',
        sendAppMoney:'',
        sendAppAccount:'',
+       moduleAppType:[],
 
        sendMailName:'',
        sendMailTime:'',
@@ -1492,7 +1389,21 @@ export default {
 
   mounted() {},
   methods: {
-        //单选的两个按钮
+     insertInput() {
+      setTimeout(() => {
+        let sel = window.getSelection()
+        this.range = sel.getRangeAt(0)
+      }, 100)
+    },
+    insertHtmlAtCaret(item) {
+      let el = document.createElement("span")
+      el.className="appendSpanClass"
+      el.innerText = '${' + item.name + '}'
+      var frag = document.createDocumentFragment()
+      frag.appendChild(el)
+      this.range.insertNode(frag)
+    },
+    //单选的两个按钮
     clickRadioIndex(index){
       this.isActive=index
       if(this.isActive==0){
@@ -1500,16 +1411,22 @@ export default {
       }else{
          this.sendRuleForm.outWxChain=3
       }
-
     },
     //实现多选
      clickIndex(item,index){
+         if (!this.range) return
      if(item.active){
          Vue.set(item,'active',false)
-         console.log("21242===>",Vue)
+         //删除可编辑div的标签
+        let content = this.$refs.smsContent
+        let el = document.createElement("span")
+        el.className="appendSpanClass"
+        el.innerText = '${' + item.name + '}'
+        content.innerHTML = content.innerHTML.replace(el.outerHTML, '')
       }else{
-
          Vue.set(item,'active',true)
+         this.insertHtmlAtCaret(item)
+
          this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
          this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''
          this.sendRuleForm.sendWxType=this.labelWxArr[2].active?'${'+this.labelWxArr[2].name+'}':''
@@ -1653,19 +1570,18 @@ export default {
 .tabsChange  /deep/.el-tabs__header{
   margin-left:100px;
 }
-
-.labelLi{
-  float: left;
-  margin-left:10px;
-  margin-top:10px;
-  padding:0px 6px;
-  background:#409eff;
-  color:#fff;
-  text-align: center;
-  height: 30px;
-  line-height: 30px;
-  border-radius: 5px;
-  font-size: 12px;
+.activeText{
+    float:left;
+    width:52%;
+    height:100px;
+    border: 1px solid #eee;
+    padding:18px;
+    p{
+      span{
+        background: #1890FF;
+        color:#fff;
+      }
+    }
 }
 //批量导入样式
 .form-item {

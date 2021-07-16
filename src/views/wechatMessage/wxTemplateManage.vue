@@ -33,26 +33,26 @@
       >
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="templateId" label="模板ID"></el-table-column>
-        <el-table-column prop="name" label="模板名称"></el-table-column>
-        <el-table-column prop="content" label="模板内容">
+        <el-table-column prop="name" label="模板名称" width="120"></el-table-column>
+        <el-table-column  label="模板内容" width="200">
           <template slot-scope="scope">
-            <wordPopover :str="scope.row.content"></wordPopover>
+                  <span v-html="scope.row.content"></span>
           </template>
         </el-table-column>
-        <el-table-column prop="exam" label="模板示例">
+        <el-table-column  label="模板示例"  width="240">
           <template slot-scope="scope">
-            <wordPopover :str="scope.row.exam"></wordPopover>
+            <span v-html="scope.row.exam"></span>
           </template>
         </el-table-column>
-        <el-table-column prop="belong" label="所属公众号"></el-table-column>
+        <el-table-column prop="belong" label="所属公众号" width="150"></el-table-column>
         <el-table-column prop="status" label="模板状态" width="100">
           <template slot-scope="scope">
             {{ scope.row.status == '1' ? '正常' : '停用' }}
           </template>
         </el-table-column>
-        <el-table-column prop="time" label="创建时间"></el-table-column>
-        <el-table-column prop="operate" label="操作">
-          <template slot-scope="scope">
+        <el-table-column prop="time" label="创建时间" width="170"></el-table-column>
+        <el-table-column prop="operate" label="操作" width="200"  fixed="right">
+          <template>
             <el-button type="primary" size="small">修改</el-button>
             <el-button type="info" size="small">停用</el-button>
           </template>
@@ -89,21 +89,19 @@ export default {
         {
           templateId: '56soAr_IWQlpaJM72GPA6ZSmcTcUOWfsgao6EBzM15w',
           name: '密码修改提醒',
-          content: `{{first.DATA}}
-          您的{{productName.DATA}}密码已于{{time.DATA}}成功修改。请知悉并确定这是您本人的操作。
-          {{remark.DATA}}`,
-          exam: `你好，samueldeng
-          您的企业邮箱密码已于3月14日20:22成功修改。请知悉并确定这是您本人的操作。`,
+          content: `{{first.DATA}}</br></br>{{accountType.DATA}}:</br>充值金额:{{amount.DATA}}</br>充值状态:{{result.DAATA}</br>{REMARK.DATA}}}
+          `,
+          exam: `您好，您已成功进行话费充值。</br></br>手机号：13912345678</br>充值金额：50元</br>充值状态：充值成功</br>备注：如有疑问，请致电10086联系我们。`,
           belong: '云短消息服务平台',
           status: '1',
           time: '2021-05-17 16:52:01'
         },
         {
-          templateId: '56soAr_IWQlpaJM72GPA6ZSmcTcUOWfsgao6EBzM15w',
+         templateId: '56soAr_IWQlpaJM72GPA6ZSmcTcUOWfsgao6EBzM15w',
           name: '密码修改提醒',
-          content: `ahhahahahahahhahahahahahahha`,
-          exam: `你好，samueldeng
-          您的企业邮箱密码已于3月14日20:22成功修改。请知悉并确定这是您本人的操作。`,
+          content: `{{first.DATA}}</br></br>{{accountType.DATA}}:</br>充值金额:{{amount.DATA}}</br>充值状态:{{result.DAATA}</br>{REMARK.DATA}}}
+          `,
+          exam: `您好，您已成功进行话费充值。</br></br>手机号：13912345678</br>充值金额：50元</br>充值状态：充值成功</br>备注：如有疑问，请致电10086联系我们。`,
           belong: '云短消息服务平台',
           status: '1',
           time: '2021-05-17 16:52:01'

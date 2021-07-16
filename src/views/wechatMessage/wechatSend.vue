@@ -10,7 +10,7 @@
             label-width="100px"
           >
             <el-row :gutter="20">
-              <el-col :span="14" style="height:560px;">
+              <el-col :span="14">
                 <el-row :gutter="20">
                   <el-col :span="16">
                     <el-form-item
@@ -31,6 +31,7 @@
                     </el-form-item>
                   </el-col>
                 </el-row>
+
                 <el-row :gutter="20">
                   <el-col :span="16">
                     <el-form-item prop="qudao" label="选择渠道">
@@ -50,6 +51,7 @@
                     </el-form-item>
                   </el-col>
                 </el-row>
+
                 <el-row :gutter="20">
                   <el-col :span="16">
                     <el-form-item prop="classify" label="信息分类">
@@ -69,6 +71,27 @@
                     </el-form-item>
                   </el-col>
                 </el-row>
+
+                 <el-row :gutter="20">
+                  <el-col :span="16">
+                    <el-form-item prop="auditor" label="审核人员">
+                      <el-select
+                        v-model="formData.auditor"
+                        size="small"
+                        filterable
+                      >
+                        <el-option
+                          v-for="item in auditList"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                        >
+                        </el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+
                 <el-row :gutter="20">
                   <el-col :span="16">
                     <el-form-item prop="sign" label="公众号">
@@ -88,6 +111,7 @@
                     </el-form-item>
                   </el-col>
                 </el-row>
+
                 <el-row :gutter="20">
                   <el-col :span="16">
                     <el-form-item prop="search" label="微信模板">
@@ -95,7 +119,6 @@
                         v-model="formData.wechatModule"
                         clearable
                         placeholder="请选择微信模板"
-                        @change="showDialog"
                         size="small"
                         filterable
                       >
@@ -110,6 +133,7 @@
                     </el-form-item>
                   </el-col>
                 </el-row>
+
                  <el-row :gutter="20">
                   <el-col :span="16">
                     <el-form-item prop="search" label="发送方式">
@@ -117,7 +141,6 @@
                         v-model="formData.sendWay"
                         clearable
                         placeholder="请选择发送方式"
-                        @change="showDialog"
                         size="small"
                         filterable
                       >
@@ -131,7 +154,180 @@
                       </el-select>
                     </el-form-item>
                   </el-col>
-                </el-row>
+                 </el-row>
+
+                <el-row :gutter="20">
+                   <el-col :span="24">
+                              <div class="leftBox" style="width:100%;margin-top:20px;float:left">
+                                    <el-row :gutter="20">
+                                          <el-col :span="18">
+                                            <el-form-item prop="module" label="选择模板">
+                                              <el-select
+                                                filterable
+                                                size="small"
+                                                v-model="formData.module"
+                                                placeholder="请选择模板"
+                                              >
+                                                <el-option
+                                                  v-for="(item,index) in sendModuleArr"
+                                                  :key="index+'only'"
+                                                  :label="item.name"
+                                                  :value="item.value"
+                                                >
+                                                </el-option>
+                                              </el-select>
+                                            </el-form-item>
+                                          </el-col>
+                                    </el-row>
+
+                                    <span style="display:block;float:left;margin:0 16px;font-size:14px;">模板内容：</span>
+                                    <div style="display:inline-block;width:58%;border:1px solid #eee">
+                                           <el-row :gutter="20" style="margin-top:20px">
+                                                  <el-col :span="22">
+                                                    <div style="border:1px solid rgba(255, 229, 143, 1);margin-left:28px;padding:8px 10px;font-size:12px;background:rgba(255, 251, 230, 1);border-radius:3px;">
+                                                      <i class="el-icon-warning" style="color:#FAAD14;font-size:12px;"></i>
+                                                      <span style="margin-left:5px;">微信接口限制，模板消息内容请控制在200字以内!</span>
+                                                      </div>
+                                                  </el-col>
+                                            </el-row>
+                                              <el-row :gutter="20" style="margin-top:20px">
+                                                  <el-col :span="22">
+                                              <el-form-item prop="firstData" label="first.Data">
+                                                                    <el-input
+                                                                            type="textarea"
+                                                                            style="width:80%;position:relative;"
+                                                                            v-model="formData.firstData"
+                                                                            placeholder="请输入"
+                                                                    ></el-input>
+                                                                    <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                                      <el-color-picker   v-model="color1"></el-color-picker>
+                                                                      <p class="demonstration">颜色</p>
+                                                                    </div>
+                                                      </el-form-item>
+                                                  </el-col>
+                                              </el-row>
+
+                                              <el-row :gutter="20">
+                                                  <el-col :span="22">
+                                                      <el-form-item prop="changeTime" label="变动时间">
+                                                          <el-input
+                                                                  type="textarea"
+                                                                  style="width:80%;position:relative;"
+                                                                  v-model="formData.changeTime"
+                                                                  placeholder="请输入变动时间"
+                                                          ></el-input>
+                                                            <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                            <el-color-picker   v-model="color2"></el-color-picker>
+                                                            <p class="demonstration">颜色</p>
+                                                          </div>
+                                                      </el-form-item>
+                                                  </el-col>
+                                              </el-row>
+
+                                              <el-row :gutter="20">
+                                                  <el-col :span="22">
+                                                      <el-form-item prop="changeMoney" label="变动金额">
+                                                          <el-input
+                                                                  type="textarea"
+                                                                  style="width:80%;position:relative;"
+                                                                  v-model.trim="formData.changeMoney"
+                                                                  placeholder="请输入，空格可换行"
+                                                          ></el-input>
+                                                            <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                            <el-color-picker   v-model="color3"></el-color-picker>
+                                                            <p class="demonstration">颜色</p>
+                                                          </div>
+                                                      </el-form-item>
+                                                  </el-col>
+                                              </el-row>
+
+                                              <el-row :gutter="20">
+                                                  <el-col :span="22">
+                                                      <el-form-item prop="typeData" label="type.DATA">
+                                                          <el-input
+                                                                  type="textarea"
+                                                                  style="width:80%;position:relative;"
+                                                                  v-model.trim="formData.typeData"
+                                                                  placeholder="请输入，空格可换行"
+                                                          ></el-input>
+                                                            <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                            <el-color-picker   v-model="color4"></el-color-picker>
+                                                            <p class="demonstration">颜色</p>
+                                                          </div>
+                                                      </el-form-item>
+                                                  </el-col>
+                                              </el-row>
+
+                                               <el-row :gutter="20">
+                                                  <el-col :span="22">
+                                                      <el-form-item prop="accountMoney" label="账户余额">
+                                                          <el-input
+                                                                  type="textarea"
+                                                                  style="width:80%;position:relative;"
+                                                                  v-model.trim="formData.accountMoney"
+                                                                  placeholder="请输入，空格可换行"
+                                                          ></el-input>
+                                                            <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                            <el-color-picker   v-model="color3"></el-color-picker>
+                                                            <p class="demonstration">颜色</p>
+                                                          </div>
+                                                      </el-form-item>
+                                                  </el-col>
+                                              </el-row>
+
+                                              <el-row :gutter="20">
+                                                  <el-col :span="22">
+                                                      <el-form-item prop="remarkData" label="remark.DATA">
+                                                          <el-input
+                                                                  type="textarea"
+                                                                  style="width:80%;position:relative;"
+                                                                  v-model.trim="formData.remarkData"
+                                                                  placeholder="请输入，空格可换行"
+                                                          ></el-input>
+                                                            <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
+                                                            <el-color-picker   v-model="color4"></el-color-picker>
+                                                            <p class="demonstration">颜色</p>
+                                                          </div>
+                                                      </el-form-item>
+                                                  </el-col>
+                                              </el-row>
+                                      </div>
+
+                                      <el-row :gutter="20">
+                                          <el-col :span="20">
+                                            <el-form-item prop="outWxChain" label="插入链接">
+                                              <el-radio-group v-model="formData.outWxChain" @change="changeChain(formData.outWxChain)">
+                                                <el-radio :label="1">无</el-radio>
+                                                <el-radio :label="2">跳转链接（支持外链）</el-radio>
+                                                <el-radio :label="3">跳转小程序</el-radio>
+                                              </el-radio-group>
+                                            </el-form-item>
+                                          </el-col>
+                                      </el-row>
+
+                                     <el-row :gutter="20">
+                                        <el-col :span="16">
+                                          <el-form-item prop="inputWxChain"  v-if="formData.outWxChain=='2'">
+                                            <el-input  v-model="formData.inputWxChain"  placeholder="输入链接，必须以'http://'或'https://'开头"></el-input>
+                                          </el-form-item>
+                                        </el-col>
+                                      </el-row>
+
+                                      <el-row :gutter="20">
+                                          <el-col :span="16">
+                                            <el-form-item prop="inputWxAppChain"  v-if="formData.outWxChain=='3'">
+                                              <el-input  v-model="formData.inputWxAppChain"  placeholder="请输入已关联的小程序appid"></el-input>
+                                            </el-form-item>
+                                            <el-form-item prop="inputWxAppPath"  v-if="formData.outWxChain=='3'" style="margin-top:8px;">
+                                              <el-input  v-model="formData.inputWxAppPath"  placeholder="请输入小程序页面路径，例：pages/index"></el-input>
+                                            </el-form-item>
+                                          </el-col>
+                                     </el-row>
+                              </div>
+                             
+                  </el-col>
+              </el-row>
+
                 <el-row :gutter="20">
                   <el-col :span="16">
                       <el-form-item
@@ -158,6 +354,7 @@
                       </p>
                   </el-col>
                 </el-row>
+
                 <el-row :gutter="20">
                   <el-col :span="16">
                     <el-form-item
@@ -180,7 +377,48 @@
                       </el-input>
                     </el-form-item>
                   </el-col>
-                </el-row>
+                </el-row> 
+              </el-col>
+              <el-col :span="9">
+                    <div class="rightBox" style="width:100%;margin-top:20px;margin:0 auto">
+                                      <div class="preview" style="height:600px;margin-top:-40px;">
+                                          <div class="scrollBar">
+                                            <div class="contentPhone">
+                                              <div style="width: 100%; height: 350px">
+                                                <div class="previewWx">
+                                                     <p>账户资金变动提醒</p>
+                                                     <p style="margin-top:20px;">{{formData.firstData?formData.firstData:'您好，您于2013/10/29 15:24有一笔现金账户充值到账：'}}</p>
+                                                     <p style="margin-top:20px;"> 变动时间：<span :style="{'color':color1}">{{
+                                                        formData.changeTime?formData.changeTime  : '${changeTime}'
+                                                       }}</span>
+                                                     </p>
+                                                     <p>变动金额:<span :style="{'color':color2}">{{
+                                                        formData.changeMoney?formData.changeMoney  : '${changeMoney}'
+                                                       }}</span>
+                                                     </p>
+                                                       <p>现金账户余额：<span :style="{'color':color3}">{{
+                                                        formData.accountMoney?formData.accountMoney  : '${accountMoney}'
+                                                       }}</span>
+                                                     </p>
+                                                     <p>交易金额：<span :style="{'color':color4}">{{
+                                                        formData.changeMoney?formData.changeMoney  : '${changeMoney}'
+                                                       }}</span>
+                                                     </p>
+                                                      <p style="margin:10px 0;">{{formData.desc}}</p>
+                                                      <p v-if="isActive==0" style="border-top:1px solid #eee;line-height:20px;padding-top:8px;">
+                                                        <span style="float:left;">详情</span>
+                                                        <span style="float:right;">></span>
+                                                      </p>
+                                                       <p v-else-if="isActive==1" style="border-top:1px solid #eee;line-height:20px;padding-top:8px;">
+                                                        <span style="float:left;"><i class="iconfont icon-nongyeyinhang" style="color:#1b8e91"></i>农业银行</span>
+                                                        <span style="float:right;"><i class="iconfont icon-xiaochengxu1" style="color:#9ea6c7"> </i>小程序></span>
+                                                      </p>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                    </div>
+                              </div>
               </el-col>
             </el-row>
           </el-form>
@@ -209,20 +447,56 @@ export default {
       searchDialog: false, // 精确搜索弹框显隐
       pagesize: 10,
       currpage: 1,
+      color1:'#000',
+      color2:'#000',
+      color3:'#000',
+      color4:'#000',
+      color5:'#000',
+      sendModuleArr:[],
       formData: {
+        taskName:'',
         qudao: '0',
         classify: '0',
+        auditor:'',
         wechatSubscript: '0',
         wechatModule: '0',
         sendWay:'0',
         phone:'',
         content: '',
-        sendType: 1
+        sendType: 1,
+        module:'',
+
+        //微信模板
+        firstData:'',
+        changeTime:'',
+        changeMoney:'',
+        typeData:'',
+        accountMoney:'',
+        remarkData:'',
+        outWxChain:1,
+        inputWxChain:'',
+        inputWxAppChain:'',
+        phone:'',
+        content:'',
       }, // 外部表单
       searchFormData: {
         sel: '0'
       }, // 精确搜索表单
       tableData: [], // 表格数据
+      auditList:[
+        {
+          value: '0',
+          label: 'admin'
+        },
+         {
+          value: '1',
+          label: '张三'
+        },
+         {
+          value: '2',
+          label: '李四'
+        }
+      ],
       channelList:[
          {
           value: '0',

@@ -17,7 +17,14 @@ const appPush = [
         name: 'pushSearch',
         component: () => import('@/views/appPush/pushSearch'),
         meta: { title: '推送查询' }
+      },
+      {
+        path: 'appStatistic',
+        name: 'appStatistic',
+        component: () => import('@/views/appPush/appStatistic'),
+        meta: { title: 'APP统计' }
       }
+      
     ]
   }
 ]

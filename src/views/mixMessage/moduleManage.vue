@@ -94,7 +94,7 @@
                                                  <el-input  id="insertInput" v-model="hasModuleContent" type="textarea"></el-input>
                                            </el-form-item> -->
                                            <span style="display:block;float:left;">模板内容：</span>
-                                           <div class="activeText" contenteditable="true"  id="insertInput" ref="smsContent" @mousedown="insertInput" autofocus @focus="insertInput">
+                                           <div class="activeText" contenteditable="true"  id="insertInput" ref="smsContent" @keydown="insertInput"  @mousedown="insertInput" autofocus @focus="insertInput">
                                                   您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:
                                             </div>
                                       </el-col>
@@ -838,9 +838,6 @@ export default {
        sendMailMoney:'',
        sendMailAccount:'',
 
-    
-
-
         batchSendList: [
           {
             startTime:'',
@@ -860,17 +857,24 @@ export default {
   mounted() {
   },
   methods: {
-    insertInput() {
+   insertInput() {
       setTimeout(() => {
         // 更新range
         let sel = window.getSelection()
         this.range = sel.getRangeAt(0)
         this.offsetWord = this.range.startOffset
         let nodes = this.$refs.smsContent.childNodes
+        let lastNode = nodes[nodes.length - 1]
+        if (lastNode.nodeType === 1 && lastNode.className == 'space') {
+          this.$refs.smsContent.innerHTML = this.$refs.smsContent.innerHTML.replace(lastNode.outerHTML, lastNode.innerText)
+        }
         for (let index = 0; index < nodes.length; index++) {
           const node = nodes[index]
-          if (node.nodeType === 3 && node === this.range.startContainer || node.nodeType === 1 && node.childNodes[0] === this.range.startContainer) {
+          if (node.nodeType === 3 && node === this.range.startContainer) {
             this.nodeIndex = index
+          } else if (node.nodeType === 1 && node.childNodes[0] === this.range.startContainer) {
+            this.nodeIndex = index + 1
+            this.offsetWord = 0
           }
         }
       }, 100)
@@ -878,6 +882,7 @@ export default {
    insertHtmlAtCaret(item) {
       let nodes = this.$refs.smsContent.childNodes
       let node = nodes[this.nodeIndex]
+      console.log(node, this.nodeIndex)
       if (node.nodeType !== 3) return // 非文字节点不能插入标签
       let el = document.createElement("span")
       el.className="appendSpanClass"
@@ -885,11 +890,16 @@ export default {
       el.innerText = '${' + item.name + '}'
       var frag = document.createDocumentFragment()
       frag.appendChild(el)
+      let nullText = document.createElement("span")
+      nullText.innerHTML = '&nbsp;'
+      nullText.className = 'space'
+      nullText.id = 'space' + item.value
+      frag.appendChild(nullText)
       // 根据记录位置和节点 修正range
       this.range.setStart(node, this.offsetWord)
       this.range.setEnd(node, this.offsetWord)
       this.range.insertNode(frag)
-      this.nodeIndex += 2
+      this.nodeIndex += 3
       this.offsetWord = 0
     },
     // 国内短信和App默认输入框拼接展示文字
@@ -954,7 +964,7 @@ export default {
 
     },
     //实现多选
-    clickIndex(item, index){
+   clickIndex(item, index){
       // if (!this.range){
       //   let content = this.$refs.smsContent
       //   let el = document.createElement("span")
@@ -969,11 +979,15 @@ export default {
         let nodes = this.$refs.smsContent.childNodes
         for (let index = 0; index < nodes.length; index++) {
           const node = nodes[index]
+          const nextNode = index + 1 < nodes.length ? nodes[index + 1] : false
           if (node.nodeType === 1 && node.id == item.value) {
             this.$refs.smsContent.removeChild(node)
             if (index <= this.nodeIndex) {
-              this.nodeIndex --
+              this.nodeIndex = this.nodeIndex - 2
             }
+          }
+          if (nextNode && nextNode.nodeType === 1 && nextNode.className == 'space' && nextNode.id == 'space' + item.value) {
+            this.$refs.smsContent.removeChild(nextNode)
           }
         }
         //微信模板预览

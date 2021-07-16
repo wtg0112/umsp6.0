@@ -28,12 +28,12 @@ const routes = [
       ...homeMessage,
       ...wechatMessage,
       ...appPush,
-      ...monitorManager,
       ...mailMessage,
       ...fiveGenerationMessage,
       ...systemManage,
       ...reportManage,
       ...mixMessage,
+      ...monitorManager,
       ...messageMarket
     ]
   }

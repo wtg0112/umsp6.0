@@ -84,7 +84,7 @@
             <el-form-item prop="eCode" label="提交状态">
               <el-select v-model="formData.eCode" size="small" filterable>
                 <el-option
-                  v-for="item in options"
+                  v-for="item in submitList"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -128,22 +128,12 @@
           <el-table-column prop="account" label="用户"></el-table-column>
           <el-table-column prop="channel" label="渠道名称"></el-table-column>
           <el-table-column prop="classify" label="信息分类"></el-table-column>
-          <el-table-column prop="number" label="号码"></el-table-column>
-          <el-table-column
-            prop="startTime"
-            label="短信发送时间"
-            sortable
-            column-key="date"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="sCodeTime"
-            label="状态报告时间"
-            sortable
-            column-key="date"
-          >
-          </el-table-column>
+          <el-table-column prop="sendType" label="发送类型"></el-table-column>
+          <el-table-column prop="systemType" label="系统类型"></el-table-column>
+          <el-table-column prop="ClientId" label="ClientId"></el-table-column>
+          <el-table-column prop="startTime" label="发送时间" sortable column-key="date"></el-table-column>
           <el-table-column prop="content" label="内容"></el-table-column>
+          <el-table-column prop="task" label="任务"></el-table-column>
         </el-table>
         <el-pagination
           background
@@ -166,6 +156,48 @@ export default {
   name:'pushSearch',
   data() {
     return {
+      sendTypeList:[
+         {
+          value: '',
+          label: '全部'
+        },
+        {
+          value: '0',
+          label: '注册ID'
+        },
+        {
+          value: '1',
+          label: '别名'
+        },
+        {
+          value: '2',
+          label: '用户名'
+        },
+         {
+          value: '3',
+          label: '标签'
+        }
+      ],
+      channelNameList:[
+        {
+          value: '',
+          label: '全部'
+        },
+        {
+          value: '0',
+          label: '国都演示'
+        },
+        {
+          value: '1',
+          label: '核心系统'
+        },
+        {
+          value: '2',
+          label: '甘肃农信社'
+        }
+
+      ],
+      userList:[],
       formData: {
         qudao: '',
         user: '',
@@ -179,140 +211,191 @@ export default {
           label: '全部'
         },
         {
-          value: '选项1',
-          label: '黄金糕'
+          value: '0',
+          label: '成功'
         },
         {
-          value: '选项2',
-          label: '双皮奶'
+          value: '1',
+          label: '未知'
         },
         {
-          value: '选项3',
-          label: '蚵仔煎'
+          value: '2',
+          label: '失败'
         }
+      ],
+      submitList:[
+         {
+          value: '',
+          label: '全部'
+        },
+        {
+          value: '0',
+          label: '成功'
+        },
+        {
+          value: '1',
+          label: '失败'
+        }
+
       ],
       pagesize: 10,
       currpage: 1,
       tableData: [
         {
           id: '001',
+          account:'张三',
+          channel:'电信',
+          classify:'微信公众号',
+          sendType:'2',
+          systemType:'2',
+          ClientId:'18201243943',
           sCodeTime: '2016-05-02',
           startTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          number: '13320045267',
-          content: '本消息为测试消息'
+          content: '本消息为测试消息',
+          task:'任务一'
         },
         {
           id: '001',
-          sCodeTime: '2016-05-02',
-          startTime: '2021-06-17',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          number: '13320045267',
-          content: '本消息为测试消息'
-        },
-        {
-          id: '001',
+          account:'张三',
+          channel:'电信',
+          classify:'微信公众号',
+          sendType:'2',
+          systemType:'2',
+          ClientId:'18201243943',
           sCodeTime: '2016-05-02',
           startTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          number: '13320045267',
-          content: '本消息为测试消息'
+          content: '本消息为测试消息',
+          task:'任务一'
         },
         {
           id: '001',
-          sCodeTime: '2016-05-02',
-          startTime: '2021-06-18',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          number: '13320045267',
-          content: '本消息为测试消息'
-        },
-        {
-          id: '001',
+          account:'张三',
+          channel:'电信',
+          classify:'微信公众号',
+          sendType:'2',
+          systemType:'2',
+          ClientId:'18201243943',
           sCodeTime: '2016-05-02',
           startTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          number: '13320045267',
-          content: '本消息为测试消息'
+          content: '本消息为测试消息',
+          task:'任务一'
         },
         {
           id: '001',
+          account:'张三',
+          channel:'电信',
+          classify:'微信公众号',
+          sendType:'2',
+          systemType:'2',
+          ClientId:'18201243943',
           sCodeTime: '2016-05-02',
           startTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          number: '13320045267',
-          content: '本消息为测试消息'
+          content: '本消息为测试消息',
+          task:'任务一'
+        },
+        {
+         id: '001',
+          account:'张三',
+          channel:'电信',
+          classify:'微信公众号',
+          sendType:'2',
+          systemType:'2',
+          ClientId:'18201243943',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          content: '本消息为测试消息',
+          task:'任务一'
         },
         {
           id: '001',
+          account:'张三',
+          channel:'电信',
+          classify:'微信公众号',
+          sendType:'2',
+          systemType:'2',
+          ClientId:'18201243943',
           sCodeTime: '2016-05-02',
           startTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          number: '13320045267',
-          content: '本消息为测试消息'
+          content: '本消息为测试消息',
+          task:'任务一'
+        },
+        {
+         id: '001',
+          account:'张三',
+          channel:'电信',
+          classify:'微信公众号',
+          sendType:'2',
+          systemType:'2',
+          ClientId:'18201243943',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          content: '本消息为测试消息',
+          task:'任务一'
         },
         {
           id: '001',
+          account:'张三',
+          channel:'电信',
+          classify:'微信公众号',
+          sendType:'2',
+          systemType:'2',
+          ClientId:'18201243943',
           sCodeTime: '2016-05-02',
           startTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          number: '13320045267',
-          content: '本消息为测试消息'
+          content: '本消息为测试消息',
+          task:'任务一'
         },
         {
           id: '001',
+          account:'张三',
+          channel:'电信',
+          classify:'微信公众号',
+          sendType:'2',
+          systemType:'2',
+          ClientId:'18201243943',
           sCodeTime: '2016-05-02',
           startTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          number: '13320045267',
-          content: '本消息为测试消息'
+          content: '本消息为测试消息',
+          task:'任务一'
+        },
+        {
+         id: '001',
+          account:'张三',
+          channel:'电信',
+          classify:'微信公众号',
+          sendType:'2',
+          systemType:'2',
+          ClientId:'18201243943',
+          sCodeTime: '2016-05-02',
+          startTime: '2021-06-16',
+          content: '本消息为测试消息',
+          task:'任务一'
         },
         {
           id: '001',
+          account:'张三',
+          channel:'电信',
+          classify:'微信公众号',
+          sendType:'2',
+          systemType:'2',
+          ClientId:'18201243943',
           sCodeTime: '2016-05-02',
           startTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          number: '13320045267',
-          content: '本消息为测试消息'
+          content: '本消息为测试消息',
+          task:'任务一'
         },
         {
           id: '001',
+          account:'张三',
+          channel:'电信',
+          classify:'微信公众号',
+          sendType:'2',
+          systemType:'2',
+          ClientId:'18201243943',
           sCodeTime: '2016-05-02',
           startTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          number: '13320045267',
-          content: '本消息为测试消息'
-        },
-        {
-          id: '001',
-          sCodeTime: '2016-05-02',
-          startTime: '2021-06-16',
-          account: 'wtg',
-          channel: '电信',
-          classify: '短信',
-          number: '13320045267',
-          content: '本消息为测试消息'
+          content: '本消息为测试消息',
+          task:'任务一'
         }
       ]
     }

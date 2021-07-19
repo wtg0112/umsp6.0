@@ -83,7 +83,7 @@
                                <el-col>
                                     <span style="display:block;float:left;margin-left:20px;margin-right:10px;">业务变量：</span>
                                     <div style="width:52%;height:110px;border:1px solid #eee;float:left" >
-                                        <div v-for="(item,index) in labelListArr" :key="index+'info3'" :class="item.active?'labelActive labelLi':' labelLi'" @click.prevent="clickIndex(item,index)">{{item.name}}</div>
+                                        <div v-for="(item,index) in labelListArr" :key="index+'info3'" :class="item.active?'labelActive labelLi':' labelLi'" @click.prevent="clickIndex(item,index,$refs.smsContent)">{{item.name}}</div>
                                     </div>
                                </el-col>
                               </el-row>
@@ -93,8 +93,8 @@
                                            <!-- <el-form-item prop="moduleType" label="模板内容">
                                                  <el-input  id="insertInput" v-model="hasModuleContent" type="textarea"></el-input>
                                            </el-form-item> -->
-                                           <span style="display:block;float:left;">模板内容：</span>
-                                           <div class="activeText" contenteditable="true"  id="insertInput" ref="smsContent" @keydown="insertInput"  @mousedown="insertInput" autofocus @focus="insertInput">
+                                           <span style="display:block;float:left;margin-left:20px;margin-right:10px">模板内容：</span>
+                                           <div class="activeText" contenteditable="true"  id="insertInput" ref="smsContent" @input="syncHtml(0)" @keydown="insertInput(0,$refs.smsContent)" @mousedown="insertInput(1,$refs.smsContent)" autofocus @focus="insertInput(2,$refs.smsContent)">
                                                   您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:
                                             </div>
                                       </el-col>
@@ -106,9 +106,7 @@
                                               <div class="scrollBar">
                                                 <div class="contentPhone">
                                                   <div style="width: 100%; height: 350px">
-                                                    <div class="previewPhone">
-                                                      <span>{{notePhoneShow}}</span>
-                                                    </div>
+                                                    <div class="previewPhone" v-html="notePhoneShow"></div>
                                                   </div>
                                                 </div>
                                               </div>
@@ -252,7 +250,8 @@
                                                   <el-input
                                                           type="textarea"
                                                           style="width:80%;position:relative;"
-                                                          v-model.trim="sendRuleForm.desc"                                                      placeholder="请输入"
+                                                          v-model.trim="sendRuleForm.desc" 
+                                                          placeholder="请输入"
                                                   ></el-input>
                                                     <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
                                                     <el-color-picker   v-model="color5"></el-color-picker>
@@ -284,22 +283,22 @@
                                                      <p style="margin-top:20px;">尊敬的客户：</p>
                                                      <p style="margin-top:20px;">您尾号 <span :style="{'color':color1}">{{
                                                         sendRuleForm.sendWxName
-                                                         ? sendRuleForm.sendWxName  : '${name}'
+                                                         ? sendRuleForm.sendWxName  : ''
                                                        }}</span>借记卡最新交易如下：
                                                      </p>
                                                      <p>交易时间：<span :style="{'color':color2}">{{
                                                         sendRuleForm.sendWxTime
-                                                         ? sendRuleForm.sendWxTime  : '${time}'
+                                                         ? sendRuleForm.sendWxTime  : ''
                                                        }}</span>
                                                      </p>
                                                        <p>交易类型：<span :style="{'color':color3}">{{
                                                         sendRuleForm.sendWxType
-                                                         ? sendRuleForm.sendWxType  : '${type}'
+                                                         ? sendRuleForm.sendWxType  : ''
                                                        }}</span>
                                                      </p>
                                                      <p>交易金额：<span :style="{'color':color4}">{{
                                                         sendRuleForm.sendWxMoney
-                                                         ? sendRuleForm.sendWxMoney  : '${money}'
+                                                         ? sendRuleForm.sendWxMoney  : ''
                                                        }}</span>
                                                      </p>
                                                       <p style="margin:10px 0;">{{sendRuleForm.desc}}</p>
@@ -350,7 +349,7 @@
                                                   <el-input
                                                           type="textarea"
                                                           style="width:80%;position:relative;"
-                                                          v-model.trim="sendRuleForm.sendWxName"
+                                                          v-model.trim="sendRuleForm.sendWxNoName"
                                                           placeholder="请输入尾号"
                                                   ></el-input>
                                                   <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
@@ -366,7 +365,7 @@
                                                   <el-input
                                                           type="textarea"
                                                           style="width:80%;position:relative;"
-                                                          v-model.trim="sendRuleForm.sendWxTime"
+                                                          v-model.trim="sendRuleForm.sendWxNoTime"
                                                           placeholder="请输入交易时间"
                                                   ></el-input>
                                                     <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
@@ -382,7 +381,7 @@
                                                   <el-input
                                                           type="textarea"
                                                           style="width:80%;position:relative;"
-                                                          v-model.trim="sendRuleForm.sendWxType"
+                                                          v-model.trim="sendRuleForm.sendWxNoType"
                                                           placeholder="请输入交易类型"
                                                   ></el-input>
                                                     <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
@@ -398,7 +397,7 @@
                                                   <el-input
                                                           type="textarea"
                                                           style="width:80%;position:relative;"
-                                                          v-model.trim="sendRuleForm.sendWxMoney"
+                                                          v-model.trim="sendRuleForm.sendWxNoMoney"
                                                           placeholder="请输入交易金额"
                                                   ></el-input>
                                                     <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
@@ -414,7 +413,7 @@
                                                   <el-input
                                                           type="textarea"
                                                           style="width:80%;position:relative;"
-                                                          v-model.trim="sendRuleForm.desc"
+                                                          v-model.trim="sendRuleForm.descNo"
                                                           placeholder="请输入"
                                                   ></el-input>
                                                     <div style="margin-left:10px;float:right;height:40px;line-height:18px;width:15%;text-align:center;">
@@ -428,7 +427,7 @@
                                   <el-row :gutter="20">
                                       <el-col :span="20">
                                         <el-form-item prop="outWxChain" label="插入链接">
-                                          <el-radio-group v-model="sendRuleForm.outWxChain" @change="changeChain(sendRuleForm.outWxChain)">
+                                          <el-radio-group v-model="sendRuleForm.outWxNoChain" @change="changeChain(sendRuleForm.outWxNoChain)">
                                             <el-radio :label="1">无</el-radio>
                                             <el-radio :label="2">跳转链接（支持外链）</el-radio>
                                             <el-radio :label="3">跳转小程序</el-radio>
@@ -439,17 +438,17 @@
 
                                      <el-row :gutter="20">
                                         <el-col :span="16">
-                                          <el-form-item prop="inputWxChain"  v-if="sendRuleForm.outWxChain=='2'">
+                                          <el-form-item prop="inputWxChain"  v-if="sendRuleForm.outWxNoChain=='2'">
                                             <el-input  v-model="sendRuleForm.inputWxChain"  placeholder="输入链接，必须以'http://'或'https://'开头"></el-input>
                                           </el-form-item>
                                         </el-col>
                                       </el-row>
                                         <el-row :gutter="20">
                                         <el-col :span="16">
-                                          <el-form-item prop="inputWxAppChain"  v-if="sendRuleForm.outWxChain=='3'">
+                                          <el-form-item prop="inputWxAppChain"  v-if="sendRuleForm.outWxNoChain=='3'">
                                             <el-input  v-model="sendRuleForm.inputWxAppChain"  placeholder="请输入已关联的小程序appid"></el-input>
                                           </el-form-item>
-                                          <el-form-item prop="inputWxAppPath"  v-if="sendRuleForm.outWxChain=='3'" style="margin-top:8px;">
+                                          <el-form-item prop="inputWxAppPath"  v-if="sendRuleForm.outWxNoChain=='3'" style="margin-top:8px;">
                                             <el-input  v-model="sendRuleForm.inputWxAppPath"  placeholder="请输入小程序页面路径，例：pages/index"></el-input>
                                           </el-form-item>
                                         </el-col>
@@ -464,26 +463,26 @@
                                                      <p>交易提醒</p>
                                                      <p style="margin-top:20px;">尊敬的客户：</p>
                                                      <p style="margin-top:20px;">您尾号 <span :style="{'color':color1}">{{
-                                                        sendRuleForm.sendWxName
-                                                         ? sendRuleForm.sendWxName  : '${name}'
+                                                        sendRuleForm.sendWxNoName
+                                                         ? sendRuleForm.sendWxNoName  : ''
                                                        }}</span>借记卡最新交易如下：
                                                      </p>
                                                      <p>交易时间：<span :style="{'color':color2}">{{
-                                                        sendRuleForm.sendWxTime
-                                                         ? sendRuleForm.sendWxTime  : '${time}'
+                                                        sendRuleForm.sendWxNoTime
+                                                         ? sendRuleForm.sendWxNoTime  : ''
                                                        }}</span>
                                                      </p>
                                                        <p>交易类型：<span :style="{'color':color3}">{{
-                                                        sendRuleForm.sendWxType
-                                                         ? sendRuleForm.sendWxType  : '${type}'
+                                                        sendRuleForm.sendWxNoType
+                                                         ? sendRuleForm.sendWxNoType  : ''
                                                        }}</span>
                                                      </p>
                                                      <p>交易金额：<span :style="{'color':color4}">{{
-                                                        sendRuleForm.sendWxMoney
-                                                         ? sendRuleForm.sendWxMoney  : '${money}'
+                                                        sendRuleForm.sendWxNoMoney
+                                                         ? sendRuleForm.sendWxNoMoney  : ''
                                                        }}</span>
                                                      </p>
-                                                      <p style="margin:10px 0;">{{sendRuleForm.desc}}</p>
+                                                      <p style="margin:10px 0;">{{sendRuleForm.descNo}}</p>
                                                       <p v-if="isActive==0" style="border-top:1px solid #eee;line-height:20px;padding-top:8px;">
                                                         <span style="float:left;">详情</span>
                                                         <span style="float:right;">></span>
@@ -498,11 +497,6 @@
                                           </div>
                                     </div>
                               </div>
-
-
-
-
-
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="APP模板预览" name="third">
@@ -542,17 +536,20 @@
                                <el-col>
                                     <span style="display:block;float:left;margin:0 15px;">业务变量：</span>
                                     <div style="width:52%;height:110px;border:1px solid #eee;float:left" >
-                                        <div v-for="(item,index) in labelListArr" :key="index+'-one'" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index)">{{item.name}}</div>
+                                        <div v-for="(item,index) in labelListArr" :key="index+'-one'" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index,$refs.appContent)">{{item.name}}</div>
                                     </div>
                                </el-col>
                               </el-row>
 
                               <el-row :gutter="20" style="margin-top:20px">
                                       <el-col :span="22">
-                                           <el-form-item prop="moduleType" label="模板内容">
-                                                 <el-input  id="insertAppInput" v-model="hasAppContent" type="textarea"></el-input>
-                                           </el-form-item>
-                                      
+                                           <!-- <el-form-item prop="moduleType" label="模板内容">
+                                                 <el-input  class="activeText" id="insertAppInput" v-model="hasAppContent" type="textarea"></el-input>
+                                           </el-form-item> -->
+                                             <span style="display:block;float:left;margin-left:20px;margin-right:10px">模板内容：</span>
+                                            <div class="activeText" contenteditable="true"  id="insertAppInput" ref="appContent" @input="syncAppHtml(0)" @keydown="insertInput(0,$refs.appContent)" @mousedown="insertInput(1,$refs.appContent)" autofocus @focus="insertInput(2,$refs.appContent)">
+                                                   您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:
+                                            </div>
                                       </el-col>
                                 </el-row>
                               </div>
@@ -561,28 +558,7 @@
                                           <div class="scrollBar">
                                             <div class="contentPhone">
                                               <div style="width: 100%; height: 350px">
-                                                <div class="previewPhone">
-                                                   <span>【国都互联】您尾号为
-                                                     {{
-                                                       sendRuleForm.sendNoteName
-                                                      ? sendRuleForm.sendNoteName  : '${name}'
-                                                    }}
-                                                    的京卡于
-                                                     {{
-                                                       sendRuleForm.sendNoteTime
-                                                      ? sendRuleForm.sendNoteTime  : '${time}'
-                                                    }}
-                                                    通过手机银行转账支出
-                                                     {{
-                                                       sendRuleForm.sendNoteMoney
-                                                      ? sendRuleForm.sendNoteMoney  : '${money}'
-                                                    }}元。
-                                                     活期余额
-                                                      {{
-                                                       sendRuleForm.sendActiveMoney
-                                                      ? sendRuleForm.sendActiveMoney  : '${money}'
-                                                    }}元。</span>
-                                                </div>
+                                                  <div class="previewPhone" v-html="appPhoneShow"></div>
                                               </div>
                                             </div>
                                           </div>
@@ -670,6 +646,7 @@ export default {
   data() {
     return {
       notePhoneShow:'您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:',
+      appPhoneShow:'您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:',
       hasAppContent:'',
       hasModuleContent:'' ,
       moduleTypeList:[
@@ -740,7 +717,38 @@ export default {
           value: 5
         },
       ],
-      labelListArr:[
+      labelListArr:[],
+      labelListArrOne:[
+        {
+          name: '储蓄卡尾号',
+          value: 0
+        },
+        {
+          name: '交易时间',
+          value: 1
+        },
+        {
+          name: '交易类型',
+          value: 2
+        },
+         {
+          name: '交易金额',
+          value: 3
+        },
+        {
+          name: '账户余额',
+          value: 4
+        },
+        {
+          name: '智能贴片',
+          value: 5
+        },
+         {
+          name: '链接变量',
+          value: 6
+        }
+      ],
+       labelListArrTwo:[
         {
           name: '储蓄卡尾号',
           value: 0
@@ -796,7 +804,7 @@ export default {
       color4:'#000',
       color5:'#000',
       sendRuleForm: {
-        moduleAppType:['通知栏消息','透传消息'],
+        moduleAppType:[],
          infoList: '',
          moduleName:'',
          moduleType:'0',
@@ -826,17 +834,25 @@ export default {
         inputWxAppPath:'',
         activeData:'',
 
-       sendAppName:'',
-       sendAppTime:'',
-       sendAppType:'',
-       sendAppMoney:'',
-       sendAppAccount:'',
+        // 无变量
+        sendWxNoName:'',
+        sendWxNoTime:'',
+        sendWxNoType:'',
+        sendWxNoMoney:'',
+        outWxNoChain:1,
+        descNo:'',
 
-       sendMailName:'',
-       sendMailTime:'',
-       sendMailType:'',
-       sendMailMoney:'',
-       sendMailAccount:'',
+        sendAppName:'',
+        sendAppTime:'',
+        sendAppType:'',
+        sendAppMoney:'',
+        sendAppAccount:'',
+
+        sendMailName:'',
+        sendMailTime:'',
+        sendMailType:'',
+        sendMailMoney:'',
+        sendMailAccount:'',
 
         batchSendList: [
           {
@@ -855,19 +871,26 @@ export default {
   },
 
   mounted() {
+      this.labelListArr=this.labelListArrOne
   },
   methods: {
-   insertInput() {
+    syncHtml () {
+      this.notePhoneShow = this.$refs.smsContent.innerHTML
+    },
+    syncAppHtml(){
+      this.appPhoneShow =  this.$refs.appContent.innerHTML
+    },
+   insertInput(e,refName) {
       setTimeout(() => {
         // 更新range
         let sel = window.getSelection()
         this.range = sel.getRangeAt(0)
         this.offsetWord = this.range.startOffset
-        let nodes = this.$refs.smsContent.childNodes
-        let lastNode = nodes[nodes.length - 1]
-        if (lastNode.nodeType === 1 && lastNode.className == 'space') {
-          this.$refs.smsContent.innerHTML = this.$refs.smsContent.innerHTML.replace(lastNode.outerHTML, lastNode.innerText)
-        }
+        let nodes = refName.childNodes
+        // let lastNode = nodes[nodes.length - 1]
+        // if (lastNode.nodeType === 1 && lastNode.className == 'space') {
+        //   this.$refs.smsContent.innerHTML = this.$refs.smsContent.innerHTML.replace(lastNode.outerHTML, lastNode.innerText)
+        // }
         for (let index = 0; index < nodes.length; index++) {
           const node = nodes[index]
           if (node.nodeType === 3 && node === this.range.startContainer) {
@@ -879,28 +902,47 @@ export default {
         }
       }, 100)
     },
-   insertHtmlAtCaret(item) {
-      let nodes = this.$refs.smsContent.childNodes
+   insertHtmlAtCaret(item,refName) {
+      let nodes = refName.childNodes
       let node = nodes[this.nodeIndex]
-      console.log(node, this.nodeIndex)
-      if (node.nodeType !== 3) return // 非文字节点不能插入标签
+      let prevNode = nodes[this.nodeIndex - 1]
+      let isAddIndex = false
+      console.log('添加前', nodes, this.nodeIndex)
+      // 如果上一个节点是标签节点 最后加索引的时候 多加一次索引
+      // if (prevNode && prevNode.nodeType === 1 && prevNode.className === "appendSpanClass") isAddIndex = true
+      // 非文字节点不能插入标签 以及两个相连标签之前不能插入标签（当鼠标点击两个标签之前的时候）
+      if (!(node && node.nodeType === 3) || this.range.startContainer === refName) return
       let el = document.createElement("span")
       el.className="appendSpanClass"
       el.id = item.value
+      el.contentEditable = false
       el.innerText = '${' + item.name + '}'
       var frag = document.createDocumentFragment()
       frag.appendChild(el)
-      let nullText = document.createElement("span")
-      nullText.innerHTML = '&nbsp;'
-      nullText.className = 'space'
-      nullText.id = 'space' + item.value
-      frag.appendChild(nullText)
+      // let nullText = document.createElement("span")
+      // nullText.innerHTML = '&nbsp;'
+      // nullText.className = 'space'
+      // nullText.id = 'space' + item.value
+      // frag.appendChild(nullText)
       // 根据记录位置和节点 修正range
       this.range.setStart(node, this.offsetWord)
       this.range.setEnd(node, this.offsetWord)
       this.range.insertNode(frag)
-      this.nodeIndex += 3
+      // for (let index = 0; index < nodes.length; index++) {
+      //   const ele = nodes[index]
+      //   if (ele.nodeType === 3 && ele.data == '') {
+      //     this.$refs.smsContent.removeChild(ele)
+      //   }
+      // }
+      this.nodeIndex += 2
+      // if (isAddIndex) this.nodeIndex ++
       this.offsetWord = 0
+       if(refName==this.$refs.smsContent){
+          this.notePhoneShow = refName.innerHTML
+       }else{
+          this.appPhoneShow = refName.innerHTML
+       }
+      console.log('添加后', nodes, this.nodeIndex)
     },
     // 国内短信和App默认输入框拼接展示文字
     NoteDeafultText(){
@@ -964,49 +1006,44 @@ export default {
 
     },
     //实现多选
-   clickIndex(item, index){
-      // if (!this.range){
-      //   let content = this.$refs.smsContent
-      //   let el = document.createElement("span")
-      //   el.innerText = '${' + item.name + '}'
-      //   el.style.background="#1890FF"
-      //   el.style.color="#fff"
-      //   el.style.padding="4px"
-      //   content.innerHTML = content.innerHTML+el.outerHTML
-      // }
+   clickIndex(item, index,refName){
       if(item.active){
         Vue.set(item,'active',false)
-        let nodes = this.$refs.smsContent.childNodes
-        for (let index = 0; index < nodes.length; index++) {
-          const node = nodes[index]
-          const nextNode = index + 1 < nodes.length ? nodes[index + 1] : false
-          if (node.nodeType === 1 && node.id == item.value) {
-            this.$refs.smsContent.removeChild(node)
-            if (index <= this.nodeIndex) {
-              this.nodeIndex = this.nodeIndex - 2
-            }
+         if(this.tabActiveChange=='first' || this.tabActiveChange=='third'){
+             let nodes =refName.childNodes
+                for (let index = 0; index < nodes.length; index++) {
+                  const node = nodes[index]
+                  // const nextNode = index + 1 < nodes.length ? nodes[index + 1] : false
+                  if (node.nodeType === 1 && node.id == item.value) {
+                        refName.removeChild(node)
+                    if (index <= this.nodeIndex) {
+                      this.nodeIndex = this.nodeIndex - 1
+                    }
+                  }
+                  // if (nextNode && nextNode.nodeType === 1 && nextNode.className == 'space' && nextNode.id == 'space' + item.value) {
+                  //   this.$refs.smsContent.removeChild(nextNode)
+                  // }
+                }
+          }else{
+                //微信模板预览
+            this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
+            this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''
+            this.sendRuleForm.sendWxType=this.labelWxArr[2].active?'${'+this.labelWxArr[2].name+'}':''
+            this.sendRuleForm.sendWxMoney=this.labelWxArr[3].active?'${'+this.labelWxArr[3].name+'}':''
           }
-          if (nextNode && nextNode.nodeType === 1 && nextNode.className == 'space' && nextNode.id == 'space' + item.value) {
-            this.$refs.smsContent.removeChild(nextNode)
-          }
-        }
-        //微信模板预览
-         this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
-         this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''
-         this.sendRuleForm.sendWxType=this.labelWxArr[2].active?'${'+this.labelWxArr[2].name+'}':''
-         this.sendRuleForm.sendWxMoney=this.labelWxArr[3].active?'${'+this.labelWxArr[3].name+'}':''
 
       } else{
         Vue.set(item,'active',true)
-        this.insertHtmlAtCaret(item)
-        
-        // 微信模板预览
-        this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
-         this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''
-         this.sendRuleForm.sendWxType=this.labelWxArr[2].active?'${'+this.labelWxArr[2].name+'}':''
-         this.sendRuleForm.sendWxMoney=this.labelWxArr[3].active?'${'+this.labelWxArr[3].name+'}':''
-         this.sendRuleForm.desc='如需更多服务请拨打银行客户服务热线'
-
+          if(this.tabActiveChange=='first' || this.tabActiveChange=='third'){
+              this.insertHtmlAtCaret(item,refName)
+          }else{
+              this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
+              this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''
+              this.sendRuleForm.sendWxType=this.labelWxArr[2].active?'${'+this.labelWxArr[2].name+'}':''
+              this.sendRuleForm.sendWxMoney=this.labelWxArr[3].active?'${'+this.labelWxArr[3].name+'}':''
+              this.sendRuleForm.desc='如需更多服务请拨打银行客户服务热线'
+            
+          }
       }
     },
     nextStep(){
@@ -1014,7 +1051,11 @@ export default {
 
     },
     handleClick(tab,index){
-
+       if(tab.index=='0'){
+         this.labelListArr=this.labelListArrOne
+       }else if(tab.index=='2'){
+         this.labelListArr=this.labelListArrTwo
+       }
     },
      leftmove() {
                 if (this.moveIndex < 0) {
@@ -1189,7 +1230,7 @@ export default {
 }
 </style>
 <style lang="less">
-.appendSpanClass{
+.activeText .appendSpanClass{
    background:#1890FF;
    color:#fff;
    padding:4px;
@@ -1202,6 +1243,7 @@ export default {
  #insertAppInput{
    width:67%;
    height:160px;
+   line-height: 26px;
  }
 
 .delBtn {

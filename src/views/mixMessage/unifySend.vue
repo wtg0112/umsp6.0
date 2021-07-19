@@ -1,7 +1,7 @@
 <template>
   <div class="realLeft">
-    <!-- 客户ID弹框 -->
-        <el-dialog  title="选择客户ID" :visible.sync="customerIdShow">
+          <!-- 客户ID弹框 -->
+            <el-dialog  title="选择客户ID" :visible.sync="customerIdShow">
                            <el-card class="box-card">
                                <!-- @selection-change="handleSelectionChange" -->
                                   <el-table
@@ -29,7 +29,7 @@
                                       <el-button type="primary" size="small" @click="confirm">确定</el-button>
                                   </el-footer>
                            </el-card>
-          </el-dialog>
+            </el-dialog>
           <!-- 标签弹框 -->
             <el-dialog  title="选择标签" :visible.sync="labelShow">
                            <el-card class="box-card">
@@ -116,37 +116,37 @@
                             <el-button type="primary" size="small"  @click="confirmLabel">确定</el-button>
                           </el-footer>
                     </el-card>
-          </el-dialog>
-         <!-- 用户分组弹框 -->
-       <el-dialog  title="选择客户分组" :visible.sync="groupShow">
-                        <el-card class="box-card">
-                              <el-table
-                                      ref="singleTable"
-                                      :data="cusotmerGroupList.slice((currentpage - 1) * pagesizeOne, currentpage * pagesizeOne)"
-                                      highlight-current-row
-                                      @current-change="handleGroupChange"
-                                     >
-                                      <el-table-column type="index" width="50"></el-table-column>
-                                      <el-table-column prop="cusGroup" label="客户分组"></el-table-column>
-                                      <el-table-column prop="groupName" label="分组名称"></el-table-column>
-                                </el-table>
-                                <el-pagination
-                                  background
-                                  layout="prev, pager, next, sizes, total"
-                                  :page-sizes="[5, 10, 15, 20]"
-                                  :page-size="pagesizeOne"
-                                  :total="cusotmerGroupList.length"
-                                  @current-change="groupCurrentChange"
-                                  @size-change="groupSizeChange"
-                                >
-                                </el-pagination>
+           </el-dialog>
+           <!-- 用户分组弹框 -->
+           <el-dialog  title="选择客户分组" :visible.sync="groupShow">
+                            <el-card class="box-card">
+                                  <el-table
+                                          ref="singleTable"
+                                          :data="cusotmerGroupList.slice((currentpage - 1) * pagesizeOne, currentpage * pagesizeOne)"
+                                          highlight-current-row
+                                          @current-change="handleGroupChange"
+                                        >
+                                          <el-table-column type="index" width="50"></el-table-column>
+                                          <el-table-column prop="cusGroup" label="客户分组"></el-table-column>
+                                          <el-table-column prop="groupName" label="分组名称"></el-table-column>
+                                    </el-table>
+                                    <el-pagination
+                                      background
+                                      layout="prev, pager, next, sizes, total"
+                                      :page-sizes="[5, 10, 15, 20]"
+                                      :page-size="pagesizeOne"
+                                      :total="cusotmerGroupList.length"
+                                      @current-change="groupCurrentChange"
+                                      @size-change="groupSizeChange"
+                                    >
+                                    </el-pagination>
 
-                                <el-footer style="margin-top:20px;text-align:right;">
-                                  <el-button type="primary" plain  size="small"  @click="cancelGroup()">取消</el-button>
-                                  <el-button type="primary" size="small" @click="confirmGroup">确定</el-button>
-                              </el-footer>
-                        </el-card>
-          </el-dialog> 
+                                    <el-footer style="margin-top:20px;text-align:right;">
+                                      <el-button type="primary" plain  size="small"  @click="cancelGroup()">取消</el-button>
+                                      <el-button type="primary" size="small" @click="confirmGroup">确定</el-button>
+                                  </el-footer>
+                            </el-card>
+           </el-dialog> 
       <el-form
             :model="sendRuleForm"
             :rules="ruleFormRule"
@@ -334,7 +334,7 @@
                                     >
                                       <el-option
                                         v-for="item in sendModuleArr"
-                                        :key="item.value"
+                                        :key="item.value+'info1'"
                                         :label="item.name"
                                         :value="item.value"
                                       >
@@ -351,7 +351,7 @@
                                <el-col>
                                     <span style="display:block;float:left;">业务变量：</span>
                                     <div style="width:52%;height:110px;border:1px solid #eee;float:left" >
-                                        <div v-for="(item,index) in labelListArr" :key="index" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index)">{{item.name}}</div>
+                                        <div v-for="(item,index) in labelListArr" :key="index+'info3'"  :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index,$refs.smsContent)">{{item.name}}</div>
                                     </div>
                                </el-col>
                               </el-row>
@@ -359,7 +359,9 @@
                               <el-row :gutter="20" style="margin-top:20px">
                                       <el-col :span="22">
                                          <span style="display:block;float:left;">模板内容：</span>
-                                         <div class="activeText" contenteditable="true"  id="insertInput"   ref="smsContent" @mousedown="insertInput"  v-html="contentNote"  @input="contentNote=$event.target.innerHTML"></div>
+                                         <div class="activeText" contenteditable="true"  id="insertInput"   ref="smsContent" @input="syncHtml(0)" @keydown="insertInput(0,$refs.smsContent)" @mousedown="insertInput(1,$refs.smsContent)" autofocus @focus="insertInput(2,$refs.smsContent)">
+                                                您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:
+                                         </div>
                                       </el-col>
                                 </el-row>
                               </div>
@@ -369,9 +371,7 @@
                                               <div class="scrollBar">
                                                 <div class="contentPhone">
                                                   <div style="width: 100%; height: 350px">
-                                                    <div class="previewPhone">
-                                                      <span v-html="contentNote"></span>
-                                                    </div>
+                                                    <div class="previewPhone"  v-html="notePhoneShow"></div>
                                                   </div>
                                                 </div>
                                               </div>
@@ -422,7 +422,7 @@
                                               >
                                                 <el-option
                                                   v-for="item in sendModuleArr"
-                                                  :key="item.value"
+                                                  :key="item.value+'info2'"
                                                   :label="item.name"
                                                   :value="item.value"
                                                 >
@@ -594,7 +594,7 @@
                                               >
                                                 <el-option
                                                   v-for="item in sendModuleArr"
-                                                  :key="item.value"
+                                                  :key="item.value+'info3'"
                                                   :label="item.name"
                                                   :value="item.value"
                                                 >
@@ -800,7 +800,7 @@
                                <el-col>
                                     <span style="display:block;float:left;margin:0 15px;">业务变量：</span>
                                     <div style="width:52%;height:110px;border:1px solid #eee;float:left" >
-                                        <div v-for="(item,index) in labelListArr" :key="index" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index)">{{item.name}}</div>
+                                        <div v-for="(item,index) in labelListArr" :key="index+'-one'" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index,$refs.appContent)">{{item.name}}</div>
                                     </div>
                                </el-col>
                               </el-row>
@@ -808,8 +808,9 @@
                               <el-row :gutter="20" style="margin-top:20px">
                                       <el-col :span="22">
                                            <span style="display:block;float:left;margin-left:20px;margin-right:9px;">模板内容：</span>
-                                           <div class="activeText" contenteditable="true"  id="insertAppInput"   ref="smsContent" @mousedown="insertInput"  v-html="hasAppContent"  @input="hasAppContent=$event.target.innerHTML"></div>
-                                      
+                                           <div class="activeText" contenteditable="true"  id="insertAppInput" ref="appContent" @input="syncAppHtml(0)" @keydown="insertInput(0,$refs.appContent)" @mousedown="insertInput(1,$refs.appContent)" autofocus @focus="insertInput(2,$refs.appContent)">
+                                                   您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:
+                                          </div>
                                       </el-col>
                                 </el-row>
                               </div>
@@ -818,9 +819,7 @@
                                           <div class="scrollBar">
                                             <div class="contentPhone">
                                               <div style="width: 100%; height: 350px">
-                                                <div class="previewPhone">
-                                                   <span v-html="hasAppContent"></span>
-                                                </div>
+                                                <div class="previewPhone" v-html="appPhoneShow"></div>
                                               </div>
                                             </div>
                                           </div>
@@ -962,19 +961,9 @@ export default {
   name: 'unifuSend',
   data() {
     return {
-      contentNote:'您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:',
-      hasAppContent:'您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:',
+      notePhoneShow:'您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:',
+      appPhoneShow:'您尾号为的京卡于通过手机银行元。活期余额元。活动，活动链接:',
       isActive:0,
-      strategyList:[
-         {
-          name: '根据标签精准发送策略',
-          value: 0
-        },
-        {
-          name: '普通发送策略',
-          value: 1
-        },
-      ],
       labelWxRadio:[
          {
           name: '链接变量',
@@ -1009,11 +998,10 @@ export default {
         {
           name: '智能贴片',
           value: 5
-        },
-        
-
+        }
       ],
-      labelListArr:[
+      labelListArr:[],
+      labelListArrOne:[
         {
           name: '储蓄卡尾号',
           value: 0
@@ -1043,39 +1031,7 @@ export default {
           value: 6
         }
       ],
-      channelArr: [
-        {
-          name: '国都演示',
-          value: 0
-        },
-        {
-          name: '核心系统',
-          value: 1
-        },
-        {
-          name: '甘肃农信社',
-          value: 2
-        }
-      ],
-      infoArr: [
-        {
-          name: '实时消息',
-          value: 0
-        },
-        {
-          name: '营销消息',
-          value: 1
-        },
-        {
-          name: '动账消息',
-          value: 2
-        },
-        {
-          name: '报警消息',
-          value: 3
-        }
-      ],
-        labelListArr:[
+       labelListArrTwo:[
         {
           name: '储蓄卡尾号',
           value: 0
@@ -1290,6 +1246,14 @@ export default {
         inputWxAppPath:'',
         activeData:'',
 
+        // 无变量
+        sendWxNoName:'',
+        sendWxNoTime:'',
+        sendWxNoType:'',
+        sendWxNoMoney:'',
+        outWxNoChain:1,
+        descNo:'',
+
        sendAppName:'',
        sendAppTime:'',
        sendAppType:'',
@@ -1387,21 +1351,79 @@ export default {
     }
   },
 
-  mounted() {},
+  mounted() {
+    this.labelListArr=this.labelListArrOne
+  },
   methods: {
-     insertInput() {
+      syncHtml () {
+        this.notePhoneShow = this.$refs.smsContent.innerHTML
+      },
+      syncAppHtml(){
+        this.appPhoneShow =  this.$refs.appContent.innerHTML
+      },
+     insertInput(e,refName) {
       setTimeout(() => {
+        // 更新range
         let sel = window.getSelection()
         this.range = sel.getRangeAt(0)
+        this.offsetWord = this.range.startOffset
+        let nodes = refName.childNodes
+        // let lastNode = nodes[nodes.length - 1]
+        // if (lastNode.nodeType === 1 && lastNode.className == 'space') {
+        //   this.$refs.smsContent.innerHTML = this.$refs.smsContent.innerHTML.replace(lastNode.outerHTML, lastNode.innerText)
+        // }
+        for (let index = 0; index < nodes.length; index++) {
+          const node = nodes[index]
+          if (node.nodeType === 3 && node === this.range.startContainer) {
+            this.nodeIndex = index
+          } else if (node.nodeType === 1 && node.childNodes[0] === this.range.startContainer) {
+            this.nodeIndex = index + 1
+            this.offsetWord = 0
+          }
+        }
       }, 100)
     },
-    insertHtmlAtCaret(item) {
+   insertHtmlAtCaret(item,refName) {
+      let nodes = refName.childNodes
+      let node = nodes[this.nodeIndex]
+      let prevNode = nodes[this.nodeIndex - 1]
+      let isAddIndex = false
+      console.log('添加前', nodes, this.nodeIndex)
+      // 如果上一个节点是标签节点 最后加索引的时候 多加一次索引
+      // if (prevNode && prevNode.nodeType === 1 && prevNode.className === "appendSpanClass") isAddIndex = true
+      // 非文字节点不能插入标签 以及两个相连标签之前不能插入标签（当鼠标点击两个标签之前的时候）
+      if (!(node && node.nodeType === 3) || this.range.startContainer === refName) return
       let el = document.createElement("span")
       el.className="appendSpanClass"
+      el.id = item.value
+      el.contentEditable = false
       el.innerText = '${' + item.name + '}'
       var frag = document.createDocumentFragment()
       frag.appendChild(el)
+      // let nullText = document.createElement("span")
+      // nullText.innerHTML = '&nbsp;'
+      // nullText.className = 'space'
+      // nullText.id = 'space' + item.value
+      // frag.appendChild(nullText)
+      // 根据记录位置和节点 修正range
+      this.range.setStart(node, this.offsetWord)
+      this.range.setEnd(node, this.offsetWord)
       this.range.insertNode(frag)
+      // for (let index = 0; index < nodes.length; index++) {
+      //   const ele = nodes[index]
+      //   if (ele.nodeType === 3 && ele.data == '') {
+      //     this.$refs.smsContent.removeChild(ele)
+      //   }
+      // }
+      this.nodeIndex += 2
+      // if (isAddIndex) this.nodeIndex ++
+      this.offsetWord = 0
+       if(refName==this.$refs.smsContent){
+          this.notePhoneShow = refName.innerHTML
+       }else{
+          this.appPhoneShow = refName.innerHTML
+       }
+      console.log('添加后', nodes, this.nodeIndex)
     },
     //单选的两个按钮
     clickRadioIndex(index){
@@ -1413,30 +1435,47 @@ export default {
       }
     },
     //实现多选
-     clickIndex(item,index){
-         if (!this.range) return
-     if(item.active){
-         Vue.set(item,'active',false)
-         //删除可编辑div的标签
-        let content = this.$refs.smsContent
-        let el = document.createElement("span")
-        el.className="appendSpanClass"
-        el.innerText = '${' + item.name + '}'
-        content.innerHTML = content.innerHTML.replace(el.outerHTML, '')
-      }else{
-         Vue.set(item,'active',true)
-         this.insertHtmlAtCaret(item)
+   clickIndex(item, index,refName){
+      if(item.active){
+        Vue.set(item,'active',false)
+         if(this.tabActiveChange=='first' || this.tabActiveChange=='third'){
+             let nodes =refName.childNodes
+                for (let index = 0; index < nodes.length; index++) {
+                  const node = nodes[index]
+                  // const nextNode = index + 1 < nodes.length ? nodes[index + 1] : false
+                  if (node.nodeType === 1 && node.id == item.value) {
+                        refName.removeChild(node)
+                    if (index <= this.nodeIndex) {
+                      this.nodeIndex = this.nodeIndex - 1
+                    }
+                  }
+                  // if (nextNode && nextNode.nodeType === 1 && nextNode.className == 'space' && nextNode.id == 'space' + item.value) {
+                  //   this.$refs.smsContent.removeChild(nextNode)
+                  // }
+                }
+          }else{
+                //微信模板预览
+            this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
+            this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''
+            this.sendRuleForm.sendWxType=this.labelWxArr[2].active?'${'+this.labelWxArr[2].name+'}':''
+            this.sendRuleForm.sendWxMoney=this.labelWxArr[3].active?'${'+this.labelWxArr[3].name+'}':''
+          }
 
-         this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
-         this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''
-         this.sendRuleForm.sendWxType=this.labelWxArr[2].active?'${'+this.labelWxArr[2].name+'}':''
-         this.sendRuleForm.sendWxMoney=this.labelWxArr[3].active?'${'+this.labelWxArr[3].name+'}':''
-         this.sendRuleForm.desc='如需更多服务请拨打银行客户服务热线'
-
-     }
-
+      } else{
+        Vue.set(item,'active',true)
+          if(this.tabActiveChange=='first' || this.tabActiveChange=='third'){
+            console.log("123123123131",refName)
+              this.insertHtmlAtCaret(item,refName)
+          }else{
+              this.sendRuleForm.sendWxName=this.labelWxArr[0].active?'${'+this.labelWxArr[0].name+'}':''
+              this.sendRuleForm.sendWxTime=this.labelWxArr[1].active?'${'+this.labelWxArr[1].name+'}':''
+              this.sendRuleForm.sendWxType=this.labelWxArr[2].active?'${'+this.labelWxArr[2].name+'}':''
+              this.sendRuleForm.sendWxMoney=this.labelWxArr[3].active?'${'+this.labelWxArr[3].name+'}':''
+              this.sendRuleForm.desc='如需更多服务请拨打银行客户服务热线'
+            
+          }
+      }
     },
-    
     handleSelectionChange(val) {
         this.multipleSelection = val;
     },
@@ -1511,7 +1550,11 @@ export default {
 
     },
     handleClick(tab,index){
-
+       if(tab.index=='0'){
+         this.labelListArr=this.labelListArrOne
+       }else if(tab.index=='2'){
+             this.labelListArr=this.labelListArrTwo
+       }
     },
      leftmove() {
                 if (this.moveIndex < 0) {

@@ -74,64 +74,64 @@
                 </el-form-item>
             </el-col>
             <el-col :span="12" v-if="formData.sendWay=='0'">
-              <draggable v-model="shuntConnect" dragable="true" :move="getdata" @update="datadragEnd">
-                      <transition-group>
-                            <div  v-for="(filter,index) in shuntFilters" :key="filter.name+'only1'" style="margin:5px 0;">
-                                  <span  class="dragLabel" style="padding:7px 14px;margin-bottom:10px;">{{filter.name}}<i class="el-icon-close" style="margin-left:4px;" @click="closeDrag(index)"></i></span>
-                                  <span  class="dragLabel"  style="padding:0px;border:none;margin-bottom:10px" v-if="index==shuntFilters.length-1"></span>
-                                  <span  class="dragLabel" style="padding:7px 14px;margin-bottom:10px" v-else>{{relateList}}</span>
-                            </div>
-                      </transition-group>
+              <draggable v-model="shuntFilters" :options="dragOptions" >
+                 <div  v-for="(filter,index) in shuntFilters" :key="filter.name+'only1'"   class="handle-move" style="margin:5px 0;overflow:hidden;float:left;">
+                  <span class="dragLabel" style="padding:7px 14px;margin-bottom:10px;">{{filter.name}}<i class="el-icon-close" style="margin-left:4px;" @click="closeDrag(index)"></i></span>
+                  <span class="dragLabel unmove" style="padding:0px;border:none;margin-bottom:10px" v-if="index==shuntFilters.length-1"></span>
+                  <span class="dragLabel unmove" style="padding:7px 14px;margin-bottom:10px" v-else>{{relateList}}</span>
+                </div>
               </draggable>
-              <el-button size="small" style="margin-left:10px;"  @click="addInfoType" v-if="infoTypeShow==false"  v-show="typeBtnShow">
-                <i class="el-icon-circle-plus"></i>
-               添加信息类型</el-button>
-               <el-select
-                style="width:150px;margin-left:10px"
-                       v-show="infoTypeShow"
-                        size="small"
-                        v-model="formData.infoType"
-                        placeholder="请选择信息类型"
-                        @change="infoTypeChange(formData.infoType)"
-                        >
-                        <el-option
-                            v-for="item in infoTypeList"
-                            :key="item.name+'-info1'"
-                            :label="item.name"
-                            :value="item.name"
-                        >
-                        </el-option>
-                </el-select>
+             <div>
+                <el-button size="small" style="margin-left:10px;margin-top:2px;"  @click="addInfoType" v-if="infoTypeShow==false"  v-show="typeBtnShow">
+                          <i class="el-icon-circle-plus"></i>
+                        添加信息类型</el-button>
+                        <el-select
+                          style="width:150px;margin-left:10px;margin-top:3px"
+                                v-show="infoTypeShow"
+                                  size="small"
+                                  v-model="formData.infoType"
+                                  placeholder="请选择信息类型"
+                                  @change="infoTypeChange(formData.infoType)"
+                                  >
+                                  <el-option
+                                      v-for="item in infoTypeList"
+                                      :key="item.name+'-info1'"
+                                      :label="item.name"
+                                      :value="item.name"
+                                  >
+                                  </el-option>
+                          </el-select>
+              </div>
 
             </el-col>
 
              <el-col :span="13" v-else-if="formData.sendWay=='1'">
-                <draggable v-model="seriesConnect" dragable="true" :move="getdata" @update="datadragEnd1">
-                      <transition-group>
-                            <div  v-for="(item,index) in seriesFilters" :key="item.name+'only'">
+                <draggable v-model="seriesFilters">
+                            <div  v-for="(item,index) in seriesFilters" :key="item.name+'only'"   class="handle-move" style="margin:5px 0;overflow:hidden;float:left;">
                                   <span  class="dragLabel1" style="padding:0px 14px;margin-bottom:10px">{{item.name}}<i class="el-icon-close" style="margin-left:4px;" @click="closeDrag1(index)"></i></span>
                             </div>
-                      </transition-group>
               </draggable>
-              <el-button size="small" style="margin-left:10px;" @click="addSeriesType" v-if="seriseTypeShow==false"  v-show="seriseBtnShow">
-                <i class="el-icon-circle-plus"></i>
-               添加信息类型</el-button>
-              <el-select
-                style="width:150px;margin-left:10px;"
-                       v-show="seriseTypeShow"
-                        size="small"
-                        v-model="formData.seriesType"
-                        placeholder="请选择信息类型"
-                        @change="infoTypeChange1(formData.seriesType)"
-                        >
-                        <el-option
-                            v-for="item in infoTypeList"
-                            :key="item.name+'-info2'"
-                            :label="item.name"
-                            :value="item.name"
-                        >
-                        </el-option>
-                </el-select>
+              <div>
+                  <el-button size="small" style="margin-left:10px;margin-top:5px" @click="addSeriesType" v-if="seriseTypeShow==false"  v-show="seriseBtnShow">
+                    <i class="el-icon-circle-plus"></i>
+                  添加信息类型</el-button>
+                  <el-select
+                    style="width:150px;margin-left:10px;margin-top:5px;"
+                          v-show="seriseTypeShow"
+                            size="small"
+                            v-model="formData.seriesType"
+                            placeholder="请选择信息类型"
+                            @change="infoTypeChange1(formData.seriesType)"
+                            >
+                            <el-option
+                                v-for="item in infoTypeList"
+                                :key="item.name+'-info2'"
+                                :label="item.name"
+                                :value="item.name"
+                            >
+                            </el-option>
+                    </el-select>
+              </div>
             </el-col>
           </el-row>
 
@@ -384,22 +384,32 @@ export default {
   components:{draggable},
   data() {
     return {
+      dragOptions: {
+        animation: 150,
+        group:'title',
+        handle: '.handle-move',
+        dragClass:'dragClass'
+      },
       typeBtnShow:true,
       infoTypeShow:false,
       seriseBtnShow:true,
       seriseTypeShow:false,
       infoTypeList:[
-         {
-           name:'彩信',
-           value:'0'
+           {
+            name:'彩信',
+            value:'0'
         },
-        {
-            name:'App推送',
+           {
+            name:'邮箱',
             value:'1'
         },
         {
-           name:'邮箱订阅',
+            name:'App推送',
             value:'2'
+        },
+        {
+           name:'邮箱订阅',
+            value:'3'
         }
       ],
       rangRelation:[
@@ -815,6 +825,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.dragClass{
+  .unmove{
+    display:none;
+  }
+}
+#dragIdRange{
+  width:500px;
+  height:100px;
+  background: #eee;
+}
 .index_relation_2tj39{
     display: flex;
     align-items: center;
@@ -855,41 +875,6 @@ export default {
 
  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .sendTimeList{
   margin-left:35px;

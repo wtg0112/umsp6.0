@@ -137,226 +137,227 @@
 
          <el-row :gutter="20" style="margin-top: 0;">
           <p style="margin-left:34px;border-left:7px solid #409EFF;padding-left:6px;font-size:15px;">触发条件（无触发条件代表默认执行）</p>
-                <div style="width:40px;">
-                      <div class="index_relation_2tj39 sc-filter-relation">
-                        <span class="index_split_3eT-R sc-filter-split"></span>
-                        <div class="index_relationController_1Z39E">
-                          <div class="index_option_1NCau index_option0_2_g3P   " value="and" title="and">且</div
-                          ><div class="index_option_1NCau index_option1_16UPU index_active_1ypig  " value="or" title="or">或</div>
+          <div style=" width:100%;display: flex;">
+                      <div style="width:10%;border-right:2px solid #eee;position: relative;">
+                        <div class="centerBlock">
+                           <div class="moveRelate" v-for="(i,index) in twoRelate" :key="i"  :class="isActive==index?'activeRelate relateAnd':' relateAnd'"  @click="clickChange(index)">{{i}}</div>
+                        </div>
+                      </div>
+                        <div style="width:88%">
+                          <div class="operateSendTime"    v-for="(item, index) in formData.touchCondition" :key="index">
+                                <el-row class="sendTimeList" >
+                                        <el-col :span="4">
+                                          <el-form-item
+                                            ref="cashCouponRuleListClear"
+                                            style="margin-bottom:0px;margin-left:0px;"
+                                            :prop="'touchCondition.' + index + '.sendType'"
+                                          > 
+                                                <el-select
+                                                    size="small"
+                                                    v-model="formData.touchCondition[index].sendType"
+                                                    placeholder="请选择类型"
+                                                    @change="selectCondition(formData.touchCondition[index].sendType)"
+                                                    >
+                                                    <el-option
+                                                        v-for="item in sendTypeList"
+                                                        :key="item.value"
+                                                        :label="item.name"
+                                                        :value="item.value"
+                                                    >
+                                                    </el-option>
+                                              </el-select>
+                                          </el-form-item>
+                                        </el-col>
+
+                                        <el-col :span="4" style="margin-left:10px;">
+                                          <el-form-item
+                                            style="margin-bottom:0px;"
+                                            :prop="'touchCondition.' + index + '.ifName'"
+                                          >
+                                            <el-select
+                                                size="small"
+                                                v-model="formData.touchCondition[index].ifName"
+                                                placeholder="请选择条件名称"
+                                                >
+                                                <el-option
+                                                    v-for="item in ifNameList"
+                                                    :key="item.value"
+                                                    :label="item.name"
+                                                    :value="item.value"
+                                                >
+                                                </el-option>
+                                            </el-select>
+                                          </el-form-item>
+                                        </el-col>
+                                      <div v-if="formData.touchCondition[index].sendType=='0'">
+                                            <div v-if="formData.touchCondition[index].ifName=='0'">
+                                                      <el-col :span="4" style="margin-left:10px;">
+                                                          <el-input-number v-model="num" controls-position="right" @change="handleChange" :min="1" :max="60"></el-input-number>
+                                                      </el-col>
+                                                      <el-col :span="4" style="margin-left:30px;">
+                                                        <el-form-item
+                                                          style="margin-bottom:0px;"
+                                                          :prop="'touchCondition.' + index + '.clickTime'"
+                                                        >
+                                                          <el-select
+                                                              size="small"
+                                                              v-model="formData.touchCondition[index].clickTime"
+                                                              placeholder="请选择"
+                                                              >
+                                                              <el-option
+                                                                  v-for="item in clickTimeList"
+                                                                  :key="item.value"
+                                                                  :label="item.name"
+                                                                  :value="item.value"
+                                                              >
+                                                              </el-option>
+                                                          </el-select>
+                                                        </el-form-item>
+                                                      </el-col>
+                                                      <el-col :span="4" style="margin-left:10px;">
+                                                        <el-form-item
+                                                          style="margin-bottom:0px;"
+                                                          :prop="'touchCondition.' + index + '.clickStatus'"
+                                                        >
+                                                          <el-select
+                                                              size="small"
+                                                              v-model="formData.touchCondition[index].clickStatus"
+                                                              placeholder="请选择判断描述"
+                                                              >
+                                                              <el-option
+                                                                  v-for="item in clickStatusList"
+                                                                  :key="item.value"
+                                                                  :label="item.name"
+                                                                  :value="item.value"
+                                                              >
+                                                              </el-option>
+                                                          </el-select>
+                                                        </el-form-item>
+                                                      </el-col>
+                                            </div>
+                                            <div v-if="formData.touchCondition[index].ifName=='1'">
+                                                      <el-col :span="4" style="margin-left:10px;">
+                                                          <el-input-number v-model="num" controls-position="right" @change="handleChange" :min="1" :max="60"></el-input-number>
+                                                      </el-col>
+                                                      <el-col :span="4" style="margin-left:30px;">
+                                                        <el-form-item
+                                                          style="margin-bottom:0px;"
+                                                          :prop="'touchCondition.' + index + '.reportTime'"
+                                                        >
+                                                          <el-select
+                                                              size="small"
+                                                              v-model="formData.touchCondition[index].reportTime"
+                                                              placeholder="请选择"
+                                                              >
+                                                              <el-option
+                                                                  v-for="item in reportTimeList"
+                                                                  :key="item.value"
+                                                                  :label="item.name"
+                                                                  :value="item.value"
+                                                              >
+                                                              </el-option>
+                                                          </el-select>
+                                                        </el-form-item>
+                                                      </el-col>
+                                                      <el-col :span="4" style="margin-left:10px;">
+                                                        <el-form-item
+                                                          style="margin-bottom:0px;"
+                                                          :prop="'touchCondition.' + index + '.reportStatus'"
+                                                        >
+                                                          <el-select
+                                                              size="small"
+                                                              v-model="formData.touchCondition[index].reportStatus"
+                                                              placeholder="请选择判断描述"
+                                                              >
+                                                              <el-option
+                                                                  v-for="item in reportStatusList"
+                                                                  :key="item.value"
+                                                                  :label="item.name"
+                                                                  :value="item.value"
+                                                              >
+                                                              </el-option>
+                                                          </el-select>
+                                                        </el-form-item>
+                                                      </el-col>
+                                            </div>
+                                      </div>
+
+                                      <div v-else-if="formData.touchCondition[index].sendType=='1'">
+                                                      <el-col :span="4" style="margin-left:10px;">
+                                                        <el-form-item
+                                                          style="margin-bottom:0px;"
+                                                          :prop="'touchCondition.' + index + '.labelRelate'"
+                                                        >
+                                                          <el-select
+                                                              size="small"
+                                                              v-model="formData.touchCondition[index].labelRelate"
+                                                              placeholder="请选择"
+                                                              >
+                                                              <el-option
+                                                                  v-for="item in labelRelation"
+                                                                  :key="item.value"
+                                                                  :label="item.name"
+                                                                  :value="item.value"
+                                                              >
+                                                              </el-option>
+                                                          </el-select>
+                                                        </el-form-item>
+                                                      </el-col>
+                                                      <el-col :span="4" style="margin-left:10px;">
+                                                        <el-form-item :prop="'touchCondition.' + index + '.labelInput'" >
+                                                            <el-input
+                                                              v-model="formData.touchCondition[index].labelInput"
+                                                              placeholder="请输入条件描述"
+                                                              size="small"
+                                                            ></el-input>
+                                                          </el-form-item>
+                                                      </el-col>
+                                      </div>
+
+                                      <div v-if="formData.touchCondition[index].sendType=='2'">
+                                              <el-col :span="4" style="margin-left:10px;">
+                                                            <el-form-item
+                                                              style="margin-bottom:0px;"
+                                                              :prop="'touchCondition.' + index + '.rangRelate'"
+                                                            >
+                                                              <el-select
+                                                                  size="small"
+                                                                  v-model="formData.touchCondition[index].rangRelate"
+                                                                  placeholder="请选择"
+                                                                  >
+                                                                  <el-option
+                                                                      v-for="item in rangRelation"
+                                                                      :key="item.value"
+                                                                      :label="item.name"
+                                                                      :value="item.value"
+                                                                  >
+                                                                  </el-option>
+                                                              </el-select>
+                                                            </el-form-item>
+                                                          </el-col>
+                                                          <el-col :span="4" style="margin-left:10px;">
+                                                            <el-form-item :prop="'touchCondition.' + index + '.changeDsc'" >
+                                                                <el-input
+                                                                  v-model="formData.touchCondition[index].changeDsc"
+                                                                  placeholder="请输入条件描述"
+                                                                  size="small"
+                                                                ></el-input>
+                                                              </el-form-item>
+                                                          </el-col>
+                                      </div>
+                                </el-row>
+
+                              
                           </div>
                       </div>
-                </div>
-                <div class="operateSendTime"    v-for="(item, index) in formData.touchCondition" :key="index">
-                          <el-row class="sendTimeList" >
-                                  <el-col :span="4">
-                                    <el-form-item
-                                      ref="cashCouponRuleListClear"
-                                      style="margin-bottom:0px;margin-left:0px;"
-                                      :prop="'touchCondition.' + index + '.sendType'"
-                                    > 
-                                          <el-select
-                                              size="small"
-                                              v-model="formData.touchCondition[index].sendType"
-                                              placeholder="请选择类型"
-                                              @change="selectCondition(formData.touchCondition[index].sendType)"
-                                              >
-                                              <el-option
-                                                  v-for="item in sendTypeList"
-                                                  :key="item.value"
-                                                  :label="item.name"
-                                                  :value="item.value"
-                                              >
-                                              </el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                  </el-col>
-
-                                  <el-col :span="4" style="margin-left:10px;">
-                                    <el-form-item
-                                      style="margin-bottom:0px;"
-                                      :prop="'touchCondition.' + index + '.ifName'"
-                                    >
-                                      <el-select
-                                          size="small"
-                                          v-model="formData.touchCondition[index].ifName"
-                                          placeholder="请选择条件名称"
-                                          >
-                                          <el-option
-                                              v-for="item in ifNameList"
-                                              :key="item.value"
-                                              :label="item.name"
-                                              :value="item.value"
-                                          >
-                                          </el-option>
-                                      </el-select>
-                                    </el-form-item>
-                                  </el-col>
-                                 <div v-if="formData.touchCondition[index].sendType=='0'">
-                                      <div v-if="formData.touchCondition[index].ifName=='0'">
-                                                <el-col :span="4" style="margin-left:10px;">
-                                                    <el-input-number v-model="num" controls-position="right" @change="handleChange" :min="1" :max="60"></el-input-number>
-                                                </el-col>
-                                                <el-col :span="4" style="margin-left:0px;">
-                                                  <el-form-item
-                                                    style="margin-bottom:0px;"
-                                                    :prop="'touchCondition.' + index + '.clickTime'"
-                                                  >
-                                                    <el-select
-                                                        size="small"
-                                                        v-model="formData.touchCondition[index].clickTime"
-                                                        placeholder="请选择"
-                                                        >
-                                                        <el-option
-                                                            v-for="item in clickTimeList"
-                                                            :key="item.value"
-                                                            :label="item.name"
-                                                            :value="item.value"
-                                                        >
-                                                        </el-option>
-                                                    </el-select>
-                                                  </el-form-item>
-                                                </el-col>
-                                                <el-col :span="4" style="margin-left:10px;">
-                                                  <el-form-item
-                                                    style="margin-bottom:0px;"
-                                                    :prop="'touchCondition.' + index + '.clickStatus'"
-                                                  >
-                                                    <el-select
-                                                        size="small"
-                                                        v-model="formData.touchCondition[index].clickStatus"
-                                                        placeholder="请选择判断描述"
-                                                        >
-                                                        <el-option
-                                                            v-for="item in clickStatusList"
-                                                            :key="item.value"
-                                                            :label="item.name"
-                                                            :value="item.value"
-                                                        >
-                                                        </el-option>
-                                                    </el-select>
-                                                  </el-form-item>
-                                                </el-col>
-                                      </div>
-                                      <div v-if="formData.touchCondition[index].ifName=='1'">
-                                                <el-col :span="4" style="margin-left:10px;">
-                                                    <el-input-number v-model="num" controls-position="right" @change="handleChange" :min="1" :max="60"></el-input-number>
-                                                </el-col>
-                                                <el-col :span="4" style="margin-left:0px;">
-                                                  <el-form-item
-                                                    style="margin-bottom:0px;"
-                                                    :prop="'touchCondition.' + index + '.reportTime'"
-                                                  >
-                                                    <el-select
-                                                        size="small"
-                                                        v-model="formData.touchCondition[index].reportTime"
-                                                        placeholder="请选择"
-                                                        >
-                                                        <el-option
-                                                            v-for="item in reportTimeList"
-                                                            :key="item.value"
-                                                            :label="item.name"
-                                                            :value="item.value"
-                                                        >
-                                                        </el-option>
-                                                    </el-select>
-                                                  </el-form-item>
-                                                </el-col>
-                                                <el-col :span="4" style="margin-left:10px;">
-                                                  <el-form-item
-                                                    style="margin-bottom:0px;"
-                                                    :prop="'touchCondition.' + index + '.reportStatus'"
-                                                  >
-                                                    <el-select
-                                                        size="small"
-                                                        v-model="formData.touchCondition[index].reportStatus"
-                                                        placeholder="请选择判断描述"
-                                                        >
-                                                        <el-option
-                                                            v-for="item in reportStatusList"
-                                                            :key="item.value"
-                                                            :label="item.name"
-                                                            :value="item.value"
-                                                        >
-                                                        </el-option>
-                                                    </el-select>
-                                                  </el-form-item>
-                                                </el-col>
-                                      </div>
-                                 </div>
-
-                                <div v-else-if="formData.touchCondition[index].sendType=='1'">
-                                                <el-col :span="4" style="margin-left:10px;">
-                                                  <el-form-item
-                                                    style="margin-bottom:0px;"
-                                                    :prop="'touchCondition.' + index + '.labelRelate'"
-                                                  >
-                                                    <el-select
-                                                        size="small"
-                                                        v-model="formData.touchCondition[index].labelRelate"
-                                                        placeholder="请选择"
-                                                        >
-                                                        <el-option
-                                                            v-for="item in labelRelation"
-                                                            :key="item.value"
-                                                            :label="item.name"
-                                                            :value="item.value"
-                                                        >
-                                                        </el-option>
-                                                    </el-select>
-                                                  </el-form-item>
-                                                </el-col>
-                                                <el-col :span="4" style="margin-left:10px;">
-                                                  <el-form-item :prop="'touchCondition.' + index + '.labelInput'" >
-                                                      <el-input
-                                                        v-model="formData.touchCondition[index].labelInput"
-                                                        placeholder="请输入条件描述"
-                                                        size="small"
-                                                      ></el-input>
-                                                    </el-form-item>
-                                                </el-col>
-                                </div>
-
-                                <div v-if="formData.touchCondition[index].sendType=='2'">
-                                        <el-col :span="4" style="margin-left:10px;">
-                                                      <el-form-item
-                                                        style="margin-bottom:0px;"
-                                                        :prop="'touchCondition.' + index + '.rangRelate'"
-                                                      >
-                                                        <el-select
-                                                            size="small"
-                                                            v-model="formData.touchCondition[index].rangRelate"
-                                                            placeholder="请选择"
-                                                            >
-                                                            <el-option
-                                                                v-for="item in rangRelation"
-                                                                :key="item.value"
-                                                                :label="item.name"
-                                                                :value="item.value"
-                                                            >
-                                                            </el-option>
-                                                        </el-select>
-                                                      </el-form-item>
-                                                    </el-col>
-                                                    <el-col :span="4" style="margin-left:10px;">
-                                                      <el-form-item :prop="'touchCondition.' + index + '.changeDsc'" >
-                                                          <el-input
-                                                            v-model="formData.touchCondition[index].changeDsc"
-                                                            placeholder="请输入条件描述"
-                                                            size="small"
-                                                          ></el-input>
-                                                        </el-form-item>
-                                                    </el-col>
-                                </div>
-                          </el-row>
-
-                        
-                    </div>
+            </div>
+                      
                       <el-row style="text-align:center;margin-top:40px;border-top:1px solid #eee;">
                             <el-footer style="margin-top:20px;" >
                                <el-button @click="handleAddType"><i  class="el-icon-circle-plus" style="color:#409EFE;margin-right:4px;"></i>新增子策略</el-button>
                                <el-button @click="handleDeleteType(getIndex)"><i  class="el-icon-delete-solid" style="color:#FF0066;margin-right:4px;"></i>删除当前子策略</el-button> 
                             </el-footer>
-                            </el-row>
+                      </el-row>
           
       </el-row>
        <el-row  style="border-top:1px solid #eee">
@@ -384,6 +385,7 @@ export default {
   components:{draggable},
   data() {
     return {
+      twoRelate:['且','或'],
       dragOptions: {
         animation: 150,
         group:'title',
@@ -670,6 +672,7 @@ export default {
       ],
       addGroupData: {},
       conditionData: {},
+      isActive:0,
       activeNames: ['1', '2'],
       diyTags: [], // 自定义标签
       sysTags: [], // 系统标签
@@ -708,6 +711,9 @@ export default {
     this.selectCondition('0')
   },
   methods: {
+    clickChange(index){
+      this.isActive=index
+    },
     addInfoType(){
      this.infoTypeShow=true;
      this.typeBtnShow=false
@@ -835,33 +841,15 @@ export default {
   height:100px;
   background: #eee;
 }
-.index_relation_2tj39{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    padding: 10px 0;
-    .index_split_3eT-R{
-      display: inline-block;
-     width: 2px;
-     background: #e9f0f7;
-     height: 100%;
-     position: relative;
-     left: 10px;
-    }
 
+.centerBlock{
+   position: absolute;
+   top: 50%;
+   left:92%;
+   transform:translateY(-50%);
 }
 
-.index_relationController_1Z39E{
-    position: relative;
-    z-index: 9;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: column;
-    border-radius: 2px;
-
- .index_option_1NCau{
+ .relateAnd{
     cursor: pointer;
     width: 18px;
     height: 18px;
@@ -874,7 +862,18 @@ export default {
     font-size: 12px;
 
  }
-}
+ .activeRelate{
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #44a0ff;
+    color: #fff;
+    font-size: 12px;
+
+ }
 
 .sendTimeList{
   margin-left:35px;

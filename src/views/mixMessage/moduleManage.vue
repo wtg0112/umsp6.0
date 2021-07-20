@@ -872,6 +872,8 @@ export default {
 
   mounted() {
       this.labelListArr=this.labelListArrOne
+      this.$refs.smsContent.focus()
+    
   },
   methods: {
     syncHtml () {
@@ -891,14 +893,24 @@ export default {
         // if (lastNode.nodeType === 1 && lastNode.className == 'space') {
         //   this.$refs.smsContent.innerHTML = this.$refs.smsContent.innerHTML.replace(lastNode.outerHTML, lastNode.innerText)
         // }
+          this.labelListArr = this.labelListArr.map(item => {
+          return {
+            ...item,
+            active: false
+          }
+        })
         for (let index = 0; index < nodes.length; index++) {
           const node = nodes[index]
+           if (node.nodeType === 1 && node.className == "appendSpanClass") {
+                this.$set(this.labelListArr[node.id], 'active', true)
+          }
           if (node.nodeType === 3 && node === this.range.startContainer) {
             this.nodeIndex = index
           } else if (node.nodeType === 1 && node.childNodes[0] === this.range.startContainer) {
             this.nodeIndex = index + 1
             this.offsetWord = 0
           }
+    
         }
       }, 100)
     },

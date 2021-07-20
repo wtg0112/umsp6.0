@@ -83,7 +83,7 @@
                                <el-col>
                                     <span style="display:block;float:left;margin-left:20px;margin-right:10px;">业务变量：</span>
                                     <div style="width:52%;height:110px;border:1px solid #eee;float:left" >
-                                        <div v-for="(item,index) in labelListArr" :key="index+'info3'" :class="item.active?'labelActive labelLi':' labelLi'" @click.prevent="clickIndex(item,index,$refs.smsContent)">{{item.name}}</div>
+                                        <div v-for="(item,index) in labelListArr" :key="index+'info3'" :class="item.active?'labelActive labelLi':' labelLi'" @click.prevent="clickIndex(item,index,$refs.smsContent)">{{item.name}}<i class="el-icon-close" style="margin-left:4px;" @click="closeLabelItem(index)"></i></div>
                                     </div>
                                </el-col>
                               </el-row>
@@ -536,7 +536,7 @@
                                <el-col>
                                     <span style="display:block;float:left;margin:0 15px;">业务变量：</span>
                                     <div style="width:52%;height:110px;border:1px solid #eee;float:left" >
-                                        <div v-for="(item,index) in labelListArr" :key="index+'-one'" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index,$refs.appContent)">{{item.name}}</div>
+                                        <div v-for="(item,index) in labelListArr" :key="index+'-one'" :class="item.active?'labelActive labelLi':' labelLi'" @click="clickIndex(item,index,$refs.appContent)">{{item.name}}<i class="el-icon-close" style="margin-left:4px;" @click="closeAppItem(index)"></i></div>
                                     </div>
                                </el-col>
                               </el-row>
@@ -876,6 +876,15 @@ export default {
     
   },
   methods: {
+    closeLabelItem(index){
+       if (this.labelListArr.length > 0) {
+         this.labelListArr.splice(index, 1)
+       }
+    },
+    closeAppItem(index){
+      this.closeLabelItem(index)
+
+    },
     syncHtml () {
       this.notePhoneShow = this.$refs.smsContent.innerHTML
     },
